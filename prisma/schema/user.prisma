@@ -1,0 +1,13 @@
+model USER{
+    id        String   @id @default(uuid())
+    email     String   @unique 
+    name      String
+    password  String?
+    avatar    String?
+    provider  Provider
+    accountType AccountType
+    isVerified Boolean  @default(false)
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+    deletedAt DateTime?
+}

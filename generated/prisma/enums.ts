@@ -9,7 +9,20 @@
 * 🟢 You can import this file directly.
 */
 
+export const Provider = {
+  LOCAL: 'LOCAL',
+  GOOGLE: 'GOOGLE'
+} as const
+
+export type Provider = (typeof Provider)[keyof typeof Provider]
 
 
-// This file is empty because there are no enums in the schema.
-export {}
+export const AccountType = {
+  SUPER_ADMIN: 'SUPER_ADMIN',
+  ORG_OWNER: 'ORG_OWNER',
+  TEAM_LEADER: 'TEAM_LEADER',
+  TEAM_MEMBER: 'TEAM_MEMBER',
+  USER: 'USER'
+} as const
+
+export type AccountType = (typeof AccountType)[keyof typeof AccountType]
