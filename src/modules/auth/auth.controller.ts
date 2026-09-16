@@ -1,15 +1,33 @@
 import type { Request, Response } from "express";
-import { login, register } from "./auth.service.js";
+import { catchAsync } from "../../utils/catchAsync.js";
+import { sendResponse } from "../../utils/sendResponse.js";
+import { authService } from "./auth.service.js";
 
-export const registerController = async (
-	request: Request,
-	response: Response,
-) => {
-	const result = await register(request.body);
-	response.status(201).json({ success: true, data: result });
-};
+const registerController = catchAsync(
+	async (request: Request, response: Response) => {
+		const result = await authService.registerUserIntoDB(request.body);
+		sendResponse(response, {
+			success: true,
+			statusCode: 201,
+			message: "User registered successfully",
+			data: result,
+		});
+	},
+);
 
-export const loginController = async (request: Request, response: Response) => {
-	const result = await login(request.body);
-	response.status(200).json({ success: true, data: result });
+const loginController = catchAsync(
+	async (request: Request, response: Response) => {
+		const result = await authService.loginIntoDB(request.body);
+		sendResponse(response, {
+			success: true,
+			statusCode: 200,
+			message: "User logged in successfully",
+			data: result,
+		});
+	},
+);
+
+export const authController = {
+	registerController,
+	loginController,
 };

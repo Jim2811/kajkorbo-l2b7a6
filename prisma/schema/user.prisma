@@ -5,10 +5,10 @@ model USER {
     password    String?
     avatar      String?
     provider    Provider
-    accountType AccountType
+    accountType AccountType @default(USER)
     isVerified  Boolean     @default(false)
     createdAt   DateTime    @default(now())
-    updatedAt   DateTime    @updatedAt
+    updatedAt   DateTime?    @updatedAt
     deletedAt   DateTime?
     @@index([email, accountType], name: "email_accountType_index")
     @@map("users")

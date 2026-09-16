@@ -26,3 +26,43 @@ export const AccountType = {
 } as const
 
 export type AccountType = (typeof AccountType)[keyof typeof AccountType]
+
+
+export const PlanType = {
+  FREE: 'FREE',
+  PREMIUM: 'PREMIUM',
+  ENTERPRISE: 'ENTERPRISE'
+} as const
+
+export type PlanType = (typeof PlanType)[keyof typeof PlanType]
+
+
+export const Role = {
+  USER: 'USER',
+  SUPER_ADMIN: 'SUPER_ADMIN',
+  ORG_OWNER: 'ORG_OWNER',
+  TEAM_LEADER: 'TEAM_LEADER',
+  TEAM_MEMBER: 'TEAM_MEMBER'
+} as const
+
+export type Role = (typeof Role)[keyof typeof Role]
+
+
+export const MemberStatus = {
+  IVITED: 'IVITED',
+  ACTIVE: 'ACTIVE',
+  REMOVED: 'REMOVED'
+} as const
+
+export type MemberStatus = (typeof MemberStatus)[keyof typeof MemberStatus]
+
+
+export const ProjectStatus = {
+  PLANNED: 'PLANNED',
+  ACTIVE: 'ACTIVE',
+  ON_HOLD: 'ON_HOLD',
+  COMPLETED: 'COMPLETED',
+  ARCHIVED: 'ARCHIVED'
+} as const
+
+export type ProjectStatus = (typeof ProjectStatus)[keyof typeof ProjectStatus]

@@ -193,7 +193,7 @@ export type USERGroupByOutputType = {
   accountType: $Enums.AccountType
   isVerified: boolean
   createdAt: Date
-  updatedAt: Date
+  updatedAt: Date | null
   deletedAt: Date | null
   _count: USERCountAggregateOutputType | null
   _min: USERMinAggregateOutputType | null
@@ -228,7 +228,7 @@ export type USERWhereInput = {
   accountType?: Prisma.EnumAccountTypeFilter<"USER"> | $Enums.AccountType
   isVerified?: Prisma.BoolFilter<"USER"> | boolean
   createdAt?: Prisma.DateTimeFilter<"USER"> | Date | string
-  updatedAt?: Prisma.DateTimeFilter<"USER"> | Date | string
+  updatedAt?: Prisma.DateTimeNullableFilter<"USER"> | Date | string | null
   deletedAt?: Prisma.DateTimeNullableFilter<"USER"> | Date | string | null
 }
 
@@ -242,7 +242,7 @@ export type USEROrderByWithRelationInput = {
   accountType?: Prisma.SortOrder
   isVerified?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
-  updatedAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
 }
 
@@ -259,7 +259,7 @@ export type USERWhereUniqueInput = Prisma.AtLeast<{
   accountType?: Prisma.EnumAccountTypeFilter<"USER"> | $Enums.AccountType
   isVerified?: Prisma.BoolFilter<"USER"> | boolean
   createdAt?: Prisma.DateTimeFilter<"USER"> | Date | string
-  updatedAt?: Prisma.DateTimeFilter<"USER"> | Date | string
+  updatedAt?: Prisma.DateTimeNullableFilter<"USER"> | Date | string | null
   deletedAt?: Prisma.DateTimeNullableFilter<"USER"> | Date | string | null
 }, "id" | "email">
 
@@ -273,7 +273,7 @@ export type USEROrderByWithAggregationInput = {
   accountType?: Prisma.SortOrder
   isVerified?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
-  updatedAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.USERCountOrderByAggregateInput
   _max?: Prisma.USERMaxOrderByAggregateInput
@@ -293,7 +293,7 @@ export type USERScalarWhereWithAggregatesInput = {
   accountType?: Prisma.EnumAccountTypeWithAggregatesFilter<"USER"> | $Enums.AccountType
   isVerified?: Prisma.BoolWithAggregatesFilter<"USER"> | boolean
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"USER"> | Date | string
-  updatedAt?: Prisma.DateTimeWithAggregatesFilter<"USER"> | Date | string
+  updatedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"USER"> | Date | string | null
   deletedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"USER"> | Date | string | null
 }
 
@@ -304,10 +304,10 @@ export type USERCreateInput = {
   password?: string | null
   avatar?: string | null
   provider: $Enums.Provider
-  accountType: $Enums.AccountType
+  accountType?: $Enums.AccountType
   isVerified?: boolean
   createdAt?: Date | string
-  updatedAt?: Date | string
+  updatedAt?: Date | string | null
   deletedAt?: Date | string | null
 }
 
@@ -318,10 +318,10 @@ export type USERUncheckedCreateInput = {
   password?: string | null
   avatar?: string | null
   provider: $Enums.Provider
-  accountType: $Enums.AccountType
+  accountType?: $Enums.AccountType
   isVerified?: boolean
   createdAt?: Date | string
-  updatedAt?: Date | string
+  updatedAt?: Date | string | null
   deletedAt?: Date | string | null
 }
 
@@ -335,7 +335,7 @@ export type USERUpdateInput = {
   accountType?: Prisma.EnumAccountTypeFieldUpdateOperationsInput | $Enums.AccountType
   isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
@@ -349,7 +349,7 @@ export type USERUncheckedUpdateInput = {
   accountType?: Prisma.EnumAccountTypeFieldUpdateOperationsInput | $Enums.AccountType
   isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
@@ -360,10 +360,10 @@ export type USERCreateManyInput = {
   password?: string | null
   avatar?: string | null
   provider: $Enums.Provider
-  accountType: $Enums.AccountType
+  accountType?: $Enums.AccountType
   isVerified?: boolean
   createdAt?: Date | string
-  updatedAt?: Date | string
+  updatedAt?: Date | string | null
   deletedAt?: Date | string | null
 }
 
@@ -377,7 +377,7 @@ export type USERUpdateManyMutationInput = {
   accountType?: Prisma.EnumAccountTypeFieldUpdateOperationsInput | $Enums.AccountType
   isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
@@ -391,7 +391,7 @@ export type USERUncheckedUpdateManyInput = {
   accountType?: Prisma.EnumAccountTypeFieldUpdateOperationsInput | $Enums.AccountType
   isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
@@ -437,32 +437,12 @@ export type USERMinOrderByAggregateInput = {
   deletedAt?: Prisma.SortOrder
 }
 
-export type StringFieldUpdateOperationsInput = {
-  set?: string
-}
-
-export type NullableStringFieldUpdateOperationsInput = {
-  set?: string | null
-}
-
 export type EnumProviderFieldUpdateOperationsInput = {
   set?: $Enums.Provider
 }
 
 export type EnumAccountTypeFieldUpdateOperationsInput = {
   set?: $Enums.AccountType
-}
-
-export type BoolFieldUpdateOperationsInput = {
-  set?: boolean
-}
-
-export type DateTimeFieldUpdateOperationsInput = {
-  set?: Date | string
-}
-
-export type NullableDateTimeFieldUpdateOperationsInput = {
-  set?: Date | string | null
 }
 
 
@@ -538,7 +518,7 @@ export type $USERPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     accountType: $Enums.AccountType
     isVerified: boolean
     createdAt: Date
-    updatedAt: Date
+    updatedAt: Date | null
     deletedAt: Date | null
   }, ExtArgs["result"]["uSER"]>
   composites: {}

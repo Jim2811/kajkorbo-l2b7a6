@@ -3,7 +3,7 @@
 node_modules/
 
 # Generated Prisma client
-generated/
+generated
 
 # Build output
 dist/

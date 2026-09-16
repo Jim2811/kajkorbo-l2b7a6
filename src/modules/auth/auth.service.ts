@@ -1,102 +1,49 @@
 import bcrypt from "bcryptjs";
-import jwt, { type SignOptions } from "jsonwebtoken";
-import { AccountType, Provider } from "../../../generated/prisma/enums.js";
-import { env } from "../../config/env.js";
-import { AppError } from "../../errors/app-error.js";
-import { prisma } from "../../lib/prisma.js";
+import { prisma } from "../../lib/prisma";
 
-type AuthInput = {
-	name?: unknown;
-	email?: unknown;
-	password?: unknown;
-};
-
-const parseCredentials = (input: AuthInput, requireName: boolean) => {
-	const name = typeof input.name === "string" ? input.name.trim() : "";
-	const email =
-		typeof input.email === "string" ? input.email.trim().toLowerCase() : "";
-	const password = typeof input.password === "string" ? input.password : "";
-
-	if ((requireName && name.length < 2) || !email || !password) {
-		throw new AppError(
-			requireName
-				? "Name, email, and password are required"
-				: "Email and password are required",
-			400,
-			"VALIDATION_ERROR",
-		);
-	}
-
-	if (!/^\S+@\S+\.\S+$/.test(email) || password.length < 8) {
-		throw new AppError(
-			"Use a valid email and a password of at least 8 characters",
-			400,
-			"VALIDATION_ERROR",
-		);
-	}
-
-	return { name, email, password };
-};
-
-const publicUser = (user: {
-	id: string;
-	name: string;
-	email: string;
-	accountType: AccountType;
-	isVerified: boolean;
-}) => ({
-	id: user.id,
-	name: user.name,
-	email: user.email,
-	accountType: user.accountType,
-	isVerified: user.isVerified,
-});
-
-const accessToken = (user: { id: string; accountType: AccountType }) =>
-	jwt.sign({ sub: user.id, accountType: user.accountType }, env.jwtSecret, {
-		expiresIn: env.jwtExpiresIn as SignOptions["expiresIn"],
-	} as SignOptions);
-
-export const register = async (input: AuthInput) => {
-	const credentials = parseCredentials(input, true);
+import type { IUser } from "./auth.interface";
+const registerUserIntoDB = async (payload: IUser) => {
+	const { name, email, avatar, accountType } = payload;
 	const existingUser = await prisma.uSER.findUnique({
-		where: { email: credentials.email },
+		where: {
+			email,
+		},
 	});
-
 	if (existingUser) {
-		throw new AppError(
-			"An account with this email already exists",
-			409,
-			"EMAIL_EXISTS",
-		);
+		throw new Error("User already exists");
 	}
-
-	const password = await bcrypt.hash(credentials.password, 12);
-	const user = await prisma.uSER.create({
+	const hashedPassword = await bcrypt.hash(payload.password, 10);
+	const newUser = await prisma.uSER.create({
 		data: {
-			name: credentials.name,
-			email: credentials.email,
-			password,
-			provider: Provider.LOCAL,
-			accountType: AccountType.USER,
+			name,
+			email,
+			avatar: avatar ?? null,
+			provider: "LOCAL",
+			accountType,
+			password: hashedPassword,
 		},
 	});
 
-	return { user: publicUser(user), accessToken: accessToken(user) };
+	return newUser;
 };
 
-export const login = async (input: AuthInput) => {
-	const credentials = parseCredentials(input, false);
-	const user = await prisma.uSER.findUnique({
-		where: { email: credentials.email },
+const loginIntoDB = async (payload: { email: string; password: string }) => {
+	const { email, password } = payload;
+	const existingUser = await prisma.uSER.findUnique({
+		where: {
+			email,
+		},
 	});
-	const passwordMatches = user?.password
-		? await bcrypt.compare(credentials.password, user.password)
-		: false;
-
-	if (!user || !passwordMatches) {
-		throw new AppError("Invalid email or password", 401, "INVALID_CREDENTIALS");
+	if (!existingUser) {
+		throw new Error("User does not exist");
 	}
-
-	return { user: publicUser(user), accessToken: accessToken(user) };
+	const isPasswordValid = await bcrypt.compare(password, existingUser.password as string);
+	if (!isPasswordValid) {
+		throw new Error("Invalid password");
+	}
+	return existingUser;
+}
+export const authService = {
+	registerUserIntoDB,
+	loginIntoDB,
 };
