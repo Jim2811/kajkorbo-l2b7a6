@@ -1,0 +1,11 @@
+model Project{
+    id            String   @id @default(uuid())
+    organizationId String
+    name           String
+    description    String?
+    status         ProjectStatus @default(PLANNED) 
+    createdAt      DateTime @default(now())
+    updatedAt      DateTime @updatedAt
+    deletedAt      DateTime?
+    @@index([organizationId], name: "organizationId_index")
+}

@@ -2,10 +2,39 @@ enum Provider {
     LOCAL
     GOOGLE
 }
+
 enum AccountType {
     SUPER_ADMIN
     ORG_OWNER
     TEAM_LEADER
     TEAM_MEMBER
     USER
+}
+
+enum PlanType {
+    FREE
+    PREMIUM
+    ENTERPRISE
+}
+
+enum Role {
+    USER
+    SUPER_ADMIN
+    ORG_OWNER
+    TEAM_LEADER
+    TEAM_MEMBER
+}
+
+enum MemberStatus {
+    IVITED
+    ACTIVE
+    REMOVED
+}
+
+enum ProjectStatus {
+    PLANNED
+    ACTIVE
+    ON_HOLD
+    COMPLETED
+    ARCHIVED
 }
