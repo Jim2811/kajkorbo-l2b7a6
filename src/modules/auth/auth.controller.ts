@@ -28,7 +28,22 @@ const loginController = catchAsync(
 	},
 );
 
+const refreshTokenController = catchAsync(
+	async (request: Request, response: Response) => {
+		const result = await authService.refreshAccessToken(
+			request.body.refreshToken,
+		);
+		sendResponse(response, {
+			success: true,
+			statusCode: httpStatus.OK,
+			message: "Access token refreshed successfully",
+			data: result,
+		});
+	},
+);
+
 export const authController = {
 	registerController,
 	loginController,
+	refreshTokenController,
 };
