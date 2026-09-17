@@ -6,7 +6,9 @@
   "scripts": {
     "dev": "tsx --watch src/server.ts",
     "format:check": "npx @biomejs/biome format ./src",
-    "format:fix": "npx @biomejs/biome format --write ./src"
+    "format:fix": "npx @biomejs/biome format --write ./src",
+    "lint:check": "npx @biomejs/biome lint ./src",
+    "lint:fix": "npx @biomejs/biome lint --write ./src"
   },
   "keywords": [],
   "author": "",

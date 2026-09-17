@@ -1,34 +1,31 @@
-import type { ErrorRequestHandler } from "express";
-import { AppError } from "../errors/app-error.js";
+// biome-ignore assist/source/organizeImports: <explanation>
+import { AppError } from "../utils/AppError.js";
+import httpStatus from "http-status";
+import type { NextFunction, Request, Response } from "express";
 
-export const globalErrorHandler: ErrorRequestHandler = (
-	error,
-	_request,
-	response,
-	_next,
+export const globalErrorHandler = (
+	error: unknown,
+	_req: Request,
+	res: Response,
+	next: NextFunction,
 ) => {
-	if (error instanceof AppError) {
-		response.status(error.statusCode).json({
-			success: false,
-			error: { code: error.code, message: error.message },
-		});
-		return;
+	if (res.headersSent) {
+		return next(error as Error);
 	}
 
-	if (error?.code === "P2002") {
-		response.status(409).json({
-			success: false,
-			error: {
-				code: "CONFLICT",
-				message: "An account with this email already exists",
-			},
-		});
-		return;
-	}
+	const isAppError = error instanceof AppError;
+	const statusCode = isAppError
+		? error.statusCode
+		: httpStatus.INTERNAL_SERVER_ERROR;
+	const message =
+		error instanceof Error ? error.message : "Something went wrong";
+	const code = isAppError ? error.code : "INTERNAL_SERVER_ERROR";
 
-	console.error(error);
-	response.status(500).json({
+	return res.status(statusCode).json({
 		success: false,
-		error: { code: "INTERNAL_SERVER_ERROR", message: "Something went wrong" },
+		statusCode,
+		error: { code, message },
+		message,
+		errorDetails: isAppError ? error.errorDetails : message,
 	});
 };

@@ -1,4 +1,5 @@
 import type { Request, Response } from "express";
+import httpStatus from "http-status";
 import { catchAsync } from "../../utils/catchAsync.js";
 import { sendResponse } from "../../utils/sendResponse.js";
 import { authService } from "./auth.service.js";
@@ -8,7 +9,7 @@ const registerController = catchAsync(
 		const result = await authService.registerUserIntoDB(request.body);
 		sendResponse(response, {
 			success: true,
-			statusCode: 201,
+			statusCode: httpStatus.CREATED,
 			message: "User registered successfully",
 			data: result,
 		});
@@ -20,7 +21,7 @@ const loginController = catchAsync(
 		const result = await authService.loginIntoDB(request.body);
 		sendResponse(response, {
 			success: true,
-			statusCode: 200,
+			statusCode: httpStatus.OK,
 			message: "User logged in successfully",
 			data: result,
 		});
