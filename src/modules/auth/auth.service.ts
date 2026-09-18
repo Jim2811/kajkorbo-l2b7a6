@@ -118,8 +118,22 @@ const refreshAccessToken = async (refreshToken: string) => {
 		throw new AppError(401, "Invalid or expired refresh token");
 	}
 };
+
+const getMyProfile = async (userId: string) => {
+	const user = await prisma.uSER.findUnique({
+		where: { id: userId },
+	});
+
+	if (!user) {
+		throw new AppError(404, "User not found");
+	}
+
+	return getSafeUser(user);
+};
+
 export const authService = {
 	registerUserIntoDB,
 	loginIntoDB,
 	refreshAccessToken,
+	getMyProfile,
 };

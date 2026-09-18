@@ -16,4 +16,6 @@ export const env = {
 	jwtExpiresIn: process.env.JWT_EXPIRES_IN ?? "15m",
 	jwtRefreshExpiresIn: process.env.JWT_REFRESH_EXPIRES_IN ?? "7d",
 	port: Number(process.env.PORT ?? 3000),
+	googleClientId: required("GOOGLE_CLIENT_ID"),
+	googleClientSecret: required("GOOGLE_CLIENT_SECRET"),
 };

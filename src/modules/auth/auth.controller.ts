@@ -42,8 +42,21 @@ const refreshTokenController = catchAsync(
 	},
 );
 
+const meController = catchAsync(
+	async (request: Request, response: Response) => {
+		const result = await authService.getMyProfile(request.userId);
+		sendResponse(response, {
+			success: true,
+			statusCode: httpStatus.OK,
+			message: "Profile retrieved successfully",
+			data: result,
+		});
+	},
+);
+
 export const authController = {
 	registerController,
 	loginController,
 	refreshTokenController,
+	meController,
 };
