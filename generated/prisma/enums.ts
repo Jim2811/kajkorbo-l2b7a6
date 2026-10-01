@@ -17,17 +17,6 @@ export const Provider = {
 export type Provider = (typeof Provider)[keyof typeof Provider]
 
 
-export const AccountType = {
-  SUPER_ADMIN: 'SUPER_ADMIN',
-  ORG_OWNER: 'ORG_OWNER',
-  TEAM_LEADER: 'TEAM_LEADER',
-  TEAM_MEMBER: 'TEAM_MEMBER',
-  USER: 'USER'
-} as const
-
-export type AccountType = (typeof AccountType)[keyof typeof AccountType]
-
-
 export const PlanType = {
   FREE: 'FREE',
   PREMIUM: 'PREMIUM',

@@ -1,14 +1,13 @@
-import type { AccountType } from "../../../generated/prisma/enums.js";
+import type { Role } from "../../../generated/prisma/enums.js";
 
-export interface IUser {
-	id: string;
+export interface IRegisterUserPayload {
 	email: string;
 	name: string;
 	password: string;
+	role?: Role;
 	avatar?: string;
-	provider?: string;
-	accountType: AccountType;
-	isVerified: boolean;
-	createdAt: Date;
-	updatedAt: Date;
+}
+
+export interface IGoogleUser {
+	idToken: string;
 }

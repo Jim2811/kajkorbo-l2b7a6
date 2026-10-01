@@ -12,9 +12,14 @@ const required = (name: string): string => {
 
 export const env = {
 	databaseUrl: required("DATABASE_URL"),
-	jwtSecret: required("JWT_SECRET"),
-	jwtExpiresIn: process.env.JWT_EXPIRES_IN ?? "15m",
-	jwtRefreshExpiresIn: process.env.JWT_REFRESH_EXPIRES_IN ?? "7d",
+	jwt_access_secret: process.env.JWT_ACCESS_SECRET ?? required("JWT_SECRET"),
+	jwt_refresh_secret:
+		process.env.JWT_REFRESH_SECRET ??
+		process.env.JWT_SECRET ??
+		required("JWT_SECRET"),
+	jwt_access_expires_in:
+		process.env.JWT_ACCESS_EXPIRES_IN ?? process.env.JWT_EXPIRES_IN ?? "1d",
+	jwt_refresh_expires_in: process.env.JWT_REFRESH_EXPIRES_IN ?? "7d",
 	port: Number(process.env.PORT ?? 3000),
 	googleClientId: required("GOOGLE_CLIENT_ID"),
 	googleClientSecret: required("GOOGLE_CLIENT_SECRET"),
