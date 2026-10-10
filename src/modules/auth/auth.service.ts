@@ -1,4 +1,4 @@
-import { Provider, Role } from './../../../generated/prisma/enums';
+import { Provider, Role } from "./../../../generated/prisma/enums";
 import bcrypt from "bcryptjs";
 import { env } from "../../config/env.js";
 import { prisma } from "../../lib/prisma";
@@ -11,7 +11,7 @@ import type { TokenPayload } from "google-auth-library";
 import type { SignOptions } from "jsonwebtoken";
 
 const registerUserIntoDB = async (payload: IRegisterUserPayload) => {
-	const { name, email, password, avatar, role } = payload;
+	const { name, email, password, avatar } = payload;
 	const existingUser = await prisma.uSER.findUnique({
 		where: {
 			email,
@@ -27,7 +27,7 @@ const registerUserIntoDB = async (payload: IRegisterUserPayload) => {
 			email,
 			avatar: avatar ?? null,
 			provider: "LOCAL",
-			role: Role.USER || Role.ORG_OWNER,
+			role: Role.USER,
 			password: hashedPassword,
 		},
 	});
@@ -55,10 +55,10 @@ const loginIntoDB = async (payload: { email: string; password: string }) => {
 	if (!user) {
 		throw new Error("User not found");
 	}
-	const comparePassword = await bcrypt.compare(
-		password,
-		user.password as string,
-	);
+	if (!user.password) {
+		throw new Error("This account does not have a password");
+	}
+	const comparePassword = await bcrypt.compare(password, user.password);
 	if (!comparePassword) {
 		throw new Error("Invalid password");
 	}
@@ -114,22 +114,21 @@ const googleLogin = async (payload: IGoogleUser) => {
 			email: googleIdTokenPayload.email as string,
 			role: Role.USER,
 			googleId: googleIdTokenPayload.sub,
-			provider: Provider.GOOGLE
+			provider: Provider.GOOGLE,
 		},
 	});
-	let user = ifUserExistWithGoogle
+	let user = ifUserExistWithGoogle;
 	if (!user) {
 		user = await prisma.uSER.create({
 			data: {
 				name: googleIdTokenPayload.name!,
 				email: googleIdTokenPayload.email!,
-				Role: Role.USER,
+				role: Role.USER,
 				googleId: googleIdTokenPayload.sub,
 				provider: Provider.GOOGLE,
 				isVerified: true,
-				
-			}
-		})
+			},
+		});
 	}
 	const jwtPayload = user;
 	const accessToken = jwtUtils.createToken(

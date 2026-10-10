@@ -5,7 +5,7 @@ export interface IRegisterUserPayload {
 	name: string;
 	password: string;
 	role?: Role;
-	avatar?: string;
+	avatar?: string | undefined;
 }
 
 export interface IGoogleUser {
