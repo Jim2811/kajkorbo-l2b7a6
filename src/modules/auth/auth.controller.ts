@@ -77,9 +77,30 @@ const googleLoginController = catchAsync(
 		});
 	},
 );
+
+const forgotPassController = catchAsync(async (req: Request, res: Response) => {
+	const result = await authService.forgotPassword(req.body);
+	sendResponse(res, {
+		statusCode: httpStatus.OK,
+		success: true,
+		message: result.message,
+		data: {},
+	});
+});
+const resetPassController = catchAsync(async (req: Request, res: Response) => {
+	await authService.resetPassword(req.body);
+	sendResponse(res, {
+		statusCode: httpStatus.OK,
+		success: true,
+		message: "Password reset successfully!",
+		data: {},
+	});
+});
 export const authController = {
 	registerController,
 	loginController,
 	meController,
 	googleLoginController,
+	forgotPassController,
+	resetPassController,
 };

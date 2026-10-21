@@ -32,3 +32,6 @@ authRouter.get(
 	authController.meController,
 );
 authRouter.post("/google", authController.googleLoginController);
+
+authRouter.post("/reset-password", authController.resetPassController)
+authRouter.post("/forgot-password", authController.forgotPassController)

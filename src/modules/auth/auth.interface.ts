@@ -11,3 +11,12 @@ export interface IRegisterUserPayload {
 export interface IGoogleUser {
 	idToken: string;
 }
+export interface IForgotPassword {
+	email: string;
+}
+
+export interface IResetPassword {
+	email: string;
+	newPassword: string;
+	otp: string;
+}

@@ -24,6 +24,19 @@ const optionalPort = (name: string, fallback: number): number => {
 	return port;
 };
 
+const optionalBoolean = (name: string, fallback: boolean): boolean => {
+	const value = process.env[name];
+	if (!value) {
+		return fallback;
+	}
+
+	if (value !== "true" && value !== "false") {
+		throw new Error(`${name} must be true or false`);
+	}
+
+	return value === "true";
+};
+
 export const env = {
 	databaseUrl: required("DATABASE_URL"),
 	jwt_access_secret: process.env.JWT_ACCESS_SECRET ?? required("JWT_SECRET"),
@@ -47,4 +60,12 @@ export const env = {
 	super_admin_name: process.env.SUPER_ADMIN_NAME!,
 	super_admin_email: process.env.SUPER_ADMIN_EMAIL!,
 	super_admin_pass: process.env.SUPER_ADMIN_PASS!,
+	smtp: {
+		host: process.env.SMTP_HOST ?? "smtp.gmail.com",
+		port: optionalPort("SMTP_PORT", 587),
+		secure: optionalBoolean("SMTP_SECURE", false),
+		user: required("SMTP_USER"),
+		password: required("SMTP_PASSWORD"),
+		from: process.env.SMTP_FROM ?? required("SMTP_USER"),
+	},
 };

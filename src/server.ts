@@ -7,14 +7,8 @@ const main = async () => {
 	try{
 		await prisma.$connect();
 		console.log("DB connected successfully!!!!!")
-		if (!redisClient.isOpen) {
-			try {
-				await redisClient.connect();
-				console.log("Redis connected!");
-			} catch (error) {
-				console.error("Redis is unavailable:", error);
-			}
-		}
+		await redisClient.connect();
+		console.log("Redis Client connected!")
 	
 		app.listen(env.port, () => {
 			console.log(`Server running on port ${env.port}`);
