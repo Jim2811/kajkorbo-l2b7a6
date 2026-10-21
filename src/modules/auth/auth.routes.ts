@@ -6,6 +6,7 @@ import { authController } from "./auth.controller.js";
 import {
 	loginValidationSchema,
 	registerValidationSchema,
+	verifyEmailValidationSchema,
 } from "./auth.validation.js";
 
 export const authRouter = Router();
@@ -14,6 +15,11 @@ authRouter.post(
 	"/register",
 	validateRequest(registerValidationSchema),
 	authController.registerController,
+);
+authRouter.post(
+	"/verify-email",
+	validateRequest(verifyEmailValidationSchema),
+	authController.verifyEmailController,
 );
 authRouter.post(
 	"/login",
@@ -33,5 +39,5 @@ authRouter.get(
 );
 authRouter.post("/google", authController.googleLoginController);
 
-authRouter.post("/reset-password", authController.resetPassController)
-authRouter.post("/forgot-password", authController.forgotPassController)
+authRouter.post("/reset-password", authController.resetPassController);
+authRouter.post("/forgot-password", authController.forgotPassController);

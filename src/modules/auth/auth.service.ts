@@ -1,24 +1,31 @@
-import { Provider, Role } from "./../../../generated/prisma/enums";
 import bcrypt from "bcryptjs";
+import type { TokenPayload } from "google-auth-library";
+import { Provider, Role } from "./../../../generated/prisma/enums";
 import { env } from "../../config/env.js";
+import {
+	sendEmailVerificationOtp,
+	sendPasswordResetOtp,
+	sendWelcomeEmail,
+} from "../../lib/email.js";
+import { googleClient } from "../../lib/googleAuth.js";
 import { prisma } from "../../lib/prisma";
 import redisClient from "../../lib/redis.js";
 import { AppError } from "../../utils/AppError.js";
 import { jwtUtils } from "../../utils/jwtUtils.js";
 import { generateOtp } from "../../utils/otp.js";
-import { sendPasswordResetOtp } from "../../lib/email.js";
-
 import type {
 	IForgotPassword,
 	IGoogleUser,
 	IRegisterUserPayload,
 	IResetPassword,
+	IVerifyEmail,
 } from "./auth.interface";
-import { googleClient } from "../../lib/googleAuth.js";
-import type { TokenPayload } from "google-auth-library";
 
 const PASSWORD_RESET_OTP_TTL_SECONDS = 10 * 60;
+const EMAIL_VERIFICATION_OTP_TTL_SECONDS = 10 * 60;
 const passwordResetOtpKey = (email: string) => `password-reset-otp:${email}`;
+const emailVerificationOtpKey = (email: string) =>
+	`email-verification-otp:${email}`;
 
 const registerUserIntoDB = async (payload: IRegisterUserPayload) => {
 	const { name, email, password, avatar } = payload;
@@ -41,6 +48,12 @@ const registerUserIntoDB = async (payload: IRegisterUserPayload) => {
 			password: hashedPassword,
 		},
 	});
+
+	const verificationOtp = generateOtp();
+	await redisClient.set(emailVerificationOtpKey(email), verificationOtp, {
+		EX: EMAIL_VERIFICATION_OTP_TTL_SECONDS,
+	});
+	await sendEmailVerificationOtp(email, verificationOtp);
 
 	const user = await prisma.uSER.findUnique({
 		where: {
@@ -68,6 +81,9 @@ const loginIntoDB = async (payload: { email: string; password: string }) => {
 	if (!user.password) {
 		throw new Error("This account does not have a password");
 	}
+	if (!user.isVerified) {
+		throw new AppError(403, "Please verify your email before logging in");
+	}
 	const comparePassword = await bcrypt.compare(password, user.password);
 	if (!comparePassword) {
 		throw new Error("Invalid password");
@@ -91,6 +107,41 @@ const loginIntoDB = async (payload: { email: string; password: string }) => {
 		accessToken,
 		refreshToken,
 	};
+};
+
+const verifyEmail = async (payload: IVerifyEmail) => {
+	const { email, otp } = payload;
+	const storedOtp = await redisClient.get(emailVerificationOtpKey(email));
+
+	if (!storedOtp || storedOtp !== otp) {
+		throw new AppError(400, "Invalid or expired verification OTP");
+	}
+
+	const user = await prisma.uSER.findUnique({
+		where: { email },
+	});
+
+	if (!user) {
+		throw new AppError(404, "User not found");
+	}
+	if (user.isVerified) {
+		await redisClient.del(emailVerificationOtpKey(email));
+		return prisma.uSER.findUnique({
+			where: { id: user.id },
+			omit: { password: true },
+		});
+	}
+
+	const verifiedUser = await prisma.uSER.update({
+		where: { id: user.id },
+		data: { isVerified: true },
+		omit: { password: true },
+	});
+
+	await sendWelcomeEmail(verifiedUser.email, verifiedUser.name);
+	await redisClient.del(emailVerificationOtpKey(email));
+
+	return verifiedUser;
 };
 
 const getMyProfile = async (userId: string) => {
@@ -212,6 +263,7 @@ const resetPassword = async (payload: IResetPassword) => {
 
 export const authService = {
 	registerUserIntoDB,
+	verifyEmail,
 	loginIntoDB,
 	getMyProfile,
 	googleLogin,

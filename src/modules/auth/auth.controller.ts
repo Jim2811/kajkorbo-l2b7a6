@@ -9,10 +9,22 @@ const registerController = catchAsync(async (req: Request, res: Response) => {
 	sendResponse(res, {
 		success: true,
 		statusCode: httpStatus.CREATED,
-		message: "User registered successfully!",
+		message: "User registered successfully. Please verify your email.",
 		data: { user },
 	});
 });
+
+const verifyEmailController = catchAsync(
+	async (req: Request, res: Response) => {
+		const user = await authService.verifyEmail(req.body);
+		sendResponse(res, {
+			success: true,
+			statusCode: httpStatus.OK,
+			message: "Email verified successfully. Welcome to Kajkorbo!",
+			data: { user },
+		});
+	},
+);
 
 const loginController = catchAsync(async (req: Request, res: Response) => {
 	const { user, accessToken, refreshToken } = await authService.loginIntoDB(
@@ -98,6 +110,7 @@ const resetPassController = catchAsync(async (req: Request, res: Response) => {
 });
 export const authController = {
 	registerController,
+	verifyEmailController,
 	loginController,
 	meController,
 	googleLoginController,
