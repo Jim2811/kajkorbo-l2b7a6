@@ -31,6 +31,7 @@ export type USERMinAggregateOutputType = {
   password: string | null
   googleId: string | null
   avatar: string | null
+  avatarPublicId: string | null
   provider: $Enums.Provider | null
   role: $Enums.Role | null
   isVerified: boolean | null
@@ -46,6 +47,7 @@ export type USERMaxAggregateOutputType = {
   password: string | null
   googleId: string | null
   avatar: string | null
+  avatarPublicId: string | null
   provider: $Enums.Provider | null
   role: $Enums.Role | null
   isVerified: boolean | null
@@ -61,6 +63,7 @@ export type USERCountAggregateOutputType = {
   password: number
   googleId: number
   avatar: number
+  avatarPublicId: number
   provider: number
   role: number
   isVerified: number
@@ -78,6 +81,7 @@ export type USERMinAggregateInputType = {
   password?: true
   googleId?: true
   avatar?: true
+  avatarPublicId?: true
   provider?: true
   role?: true
   isVerified?: true
@@ -93,6 +97,7 @@ export type USERMaxAggregateInputType = {
   password?: true
   googleId?: true
   avatar?: true
+  avatarPublicId?: true
   provider?: true
   role?: true
   isVerified?: true
@@ -108,6 +113,7 @@ export type USERCountAggregateInputType = {
   password?: true
   googleId?: true
   avatar?: true
+  avatarPublicId?: true
   provider?: true
   role?: true
   isVerified?: true
@@ -196,6 +202,7 @@ export type USERGroupByOutputType = {
   password: string | null
   googleId: string | null
   avatar: string | null
+  avatarPublicId: string | null
   provider: $Enums.Provider
   role: $Enums.Role
   isVerified: boolean
@@ -232,6 +239,7 @@ export type USERWhereInput = {
   password?: Prisma.StringNullableFilter<"USER"> | string | null
   googleId?: Prisma.StringNullableFilter<"USER"> | string | null
   avatar?: Prisma.StringNullableFilter<"USER"> | string | null
+  avatarPublicId?: Prisma.StringNullableFilter<"USER"> | string | null
   provider?: Prisma.EnumProviderFilter<"USER"> | $Enums.Provider
   role?: Prisma.EnumRoleFilter<"USER"> | $Enums.Role
   isVerified?: Prisma.BoolFilter<"USER"> | boolean
@@ -247,6 +255,7 @@ export type USEROrderByWithRelationInput = {
   password?: Prisma.SortOrderInput | Prisma.SortOrder
   googleId?: Prisma.SortOrderInput | Prisma.SortOrder
   avatar?: Prisma.SortOrderInput | Prisma.SortOrder
+  avatarPublicId?: Prisma.SortOrderInput | Prisma.SortOrder
   provider?: Prisma.SortOrder
   role?: Prisma.SortOrder
   isVerified?: Prisma.SortOrder
@@ -265,6 +274,7 @@ export type USERWhereUniqueInput = Prisma.AtLeast<{
   name?: Prisma.StringFilter<"USER"> | string
   password?: Prisma.StringNullableFilter<"USER"> | string | null
   avatar?: Prisma.StringNullableFilter<"USER"> | string | null
+  avatarPublicId?: Prisma.StringNullableFilter<"USER"> | string | null
   provider?: Prisma.EnumProviderFilter<"USER"> | $Enums.Provider
   role?: Prisma.EnumRoleFilter<"USER"> | $Enums.Role
   isVerified?: Prisma.BoolFilter<"USER"> | boolean
@@ -280,6 +290,7 @@ export type USEROrderByWithAggregationInput = {
   password?: Prisma.SortOrderInput | Prisma.SortOrder
   googleId?: Prisma.SortOrderInput | Prisma.SortOrder
   avatar?: Prisma.SortOrderInput | Prisma.SortOrder
+  avatarPublicId?: Prisma.SortOrderInput | Prisma.SortOrder
   provider?: Prisma.SortOrder
   role?: Prisma.SortOrder
   isVerified?: Prisma.SortOrder
@@ -301,6 +312,7 @@ export type USERScalarWhereWithAggregatesInput = {
   password?: Prisma.StringNullableWithAggregatesFilter<"USER"> | string | null
   googleId?: Prisma.StringNullableWithAggregatesFilter<"USER"> | string | null
   avatar?: Prisma.StringNullableWithAggregatesFilter<"USER"> | string | null
+  avatarPublicId?: Prisma.StringNullableWithAggregatesFilter<"USER"> | string | null
   provider?: Prisma.EnumProviderWithAggregatesFilter<"USER"> | $Enums.Provider
   role?: Prisma.EnumRoleWithAggregatesFilter<"USER"> | $Enums.Role
   isVerified?: Prisma.BoolWithAggregatesFilter<"USER"> | boolean
@@ -316,6 +328,7 @@ export type USERCreateInput = {
   password?: string | null
   googleId?: string | null
   avatar?: string | null
+  avatarPublicId?: string | null
   provider?: $Enums.Provider
   role?: $Enums.Role
   isVerified?: boolean
@@ -331,6 +344,7 @@ export type USERUncheckedCreateInput = {
   password?: string | null
   googleId?: string | null
   avatar?: string | null
+  avatarPublicId?: string | null
   provider?: $Enums.Provider
   role?: $Enums.Role
   isVerified?: boolean
@@ -346,6 +360,7 @@ export type USERUpdateInput = {
   password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   googleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   avatar?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  avatarPublicId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   provider?: Prisma.EnumProviderFieldUpdateOperationsInput | $Enums.Provider
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -361,6 +376,7 @@ export type USERUncheckedUpdateInput = {
   password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   googleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   avatar?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  avatarPublicId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   provider?: Prisma.EnumProviderFieldUpdateOperationsInput | $Enums.Provider
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -376,6 +392,7 @@ export type USERCreateManyInput = {
   password?: string | null
   googleId?: string | null
   avatar?: string | null
+  avatarPublicId?: string | null
   provider?: $Enums.Provider
   role?: $Enums.Role
   isVerified?: boolean
@@ -391,6 +408,7 @@ export type USERUpdateManyMutationInput = {
   password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   googleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   avatar?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  avatarPublicId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   provider?: Prisma.EnumProviderFieldUpdateOperationsInput | $Enums.Provider
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -406,6 +424,7 @@ export type USERUncheckedUpdateManyInput = {
   password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   googleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   avatar?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  avatarPublicId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   provider?: Prisma.EnumProviderFieldUpdateOperationsInput | $Enums.Provider
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -421,6 +440,7 @@ export type USERCountOrderByAggregateInput = {
   password?: Prisma.SortOrder
   googleId?: Prisma.SortOrder
   avatar?: Prisma.SortOrder
+  avatarPublicId?: Prisma.SortOrder
   provider?: Prisma.SortOrder
   role?: Prisma.SortOrder
   isVerified?: Prisma.SortOrder
@@ -436,6 +456,7 @@ export type USERMaxOrderByAggregateInput = {
   password?: Prisma.SortOrder
   googleId?: Prisma.SortOrder
   avatar?: Prisma.SortOrder
+  avatarPublicId?: Prisma.SortOrder
   provider?: Prisma.SortOrder
   role?: Prisma.SortOrder
   isVerified?: Prisma.SortOrder
@@ -451,6 +472,7 @@ export type USERMinOrderByAggregateInput = {
   password?: Prisma.SortOrder
   googleId?: Prisma.SortOrder
   avatar?: Prisma.SortOrder
+  avatarPublicId?: Prisma.SortOrder
   provider?: Prisma.SortOrder
   role?: Prisma.SortOrder
   isVerified?: Prisma.SortOrder
@@ -472,6 +494,7 @@ export type USERSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   password?: boolean
   googleId?: boolean
   avatar?: boolean
+  avatarPublicId?: boolean
   provider?: boolean
   role?: boolean
   isVerified?: boolean
@@ -487,6 +510,7 @@ export type USERSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   password?: boolean
   googleId?: boolean
   avatar?: boolean
+  avatarPublicId?: boolean
   provider?: boolean
   role?: boolean
   isVerified?: boolean
@@ -502,6 +526,7 @@ export type USERSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   password?: boolean
   googleId?: boolean
   avatar?: boolean
+  avatarPublicId?: boolean
   provider?: boolean
   role?: boolean
   isVerified?: boolean
@@ -517,6 +542,7 @@ export type USERSelectScalar = {
   password?: boolean
   googleId?: boolean
   avatar?: boolean
+  avatarPublicId?: boolean
   provider?: boolean
   role?: boolean
   isVerified?: boolean
@@ -525,7 +551,7 @@ export type USERSelectScalar = {
   deletedAt?: boolean
 }
 
-export type USEROmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "email" | "name" | "password" | "googleId" | "avatar" | "provider" | "role" | "isVerified" | "createdAt" | "updatedAt" | "deletedAt", ExtArgs["result"]["uSER"]>
+export type USEROmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "email" | "name" | "password" | "googleId" | "avatar" | "avatarPublicId" | "provider" | "role" | "isVerified" | "createdAt" | "updatedAt" | "deletedAt", ExtArgs["result"]["uSER"]>
 
 export type $USERPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "USER"
@@ -537,6 +563,7 @@ export type $USERPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     password: string | null
     googleId: string | null
     avatar: string | null
+    avatarPublicId: string | null
     provider: $Enums.Provider
     role: $Enums.Role
     isVerified: boolean
@@ -972,6 +999,7 @@ export interface USERFieldRefs {
   readonly password: Prisma.FieldRef<"USER", 'String'>
   readonly googleId: Prisma.FieldRef<"USER", 'String'>
   readonly avatar: Prisma.FieldRef<"USER", 'String'>
+  readonly avatarPublicId: Prisma.FieldRef<"USER", 'String'>
   readonly provider: Prisma.FieldRef<"USER", 'Provider'>
   readonly role: Prisma.FieldRef<"USER", 'Role'>
   readonly isVerified: Prisma.FieldRef<"USER", 'Boolean'>

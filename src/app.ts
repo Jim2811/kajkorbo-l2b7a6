@@ -1,7 +1,8 @@
-import express from "express";
 import cookieParser from "cookie-parser";
+import express from "express";
 import { globalErrorHandler } from "./middlewares/error-handler.js";
 import { authRouter } from "./modules/auth/auth.routes.js";
+import { organizationRouter } from "./modules/organization/organization.routes.js";
 import { AppError } from "./utils/AppError.js";
 
 export const app = express();
@@ -9,6 +10,7 @@ export const app = express();
 app.use(express.json());
 app.use(cookieParser());
 app.use("/api/v1/auth", authRouter);
+app.use("/api/v1/organizations", organizationRouter);
 
 app.use((request, _response, next) => {
 	next(

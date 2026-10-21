@@ -807,6 +807,7 @@ export const USERScalarFieldEnum = {
   password: 'password',
   googleId: 'googleId',
   avatar: 'avatar',
+  avatarPublicId: 'avatarPublicId',
   provider: 'provider',
   role: 'role',
   isVerified: 'isVerified',

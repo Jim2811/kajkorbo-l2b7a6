@@ -5,6 +5,7 @@ model USER {
     password    String?
     googleId    String?      @unique
     avatar      String?
+    avatarPublicId String?
     provider    Provider    @default(LOCAL)
     role Role @default(USER)
     isVerified  Boolean     @default(false)

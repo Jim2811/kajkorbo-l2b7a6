@@ -25,3 +25,14 @@ export interface IResetPassword {
 	newPassword: string;
 	otp: string;
 }
+
+export interface IUpdateProfilePayload {
+	name?: string;
+}
+
+export interface ICreateOrganizationPayload {
+	name: string;
+	email: string;
+	phone?: string;
+	address?: string;
+}

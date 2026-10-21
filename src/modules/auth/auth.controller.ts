@@ -65,6 +65,22 @@ const meController = catchAsync(async (req: Request, res: Response) => {
 	});
 });
 
+const updateProfileController = catchAsync(
+	async (req: Request, res: Response) => {
+		const user = await authService.updateProfile(
+			req.user?.id as string,
+			req.body,
+			req.file,
+		);
+		sendResponse(res, {
+			success: true,
+			statusCode: httpStatus.OK,
+			message: "Profile updated successfully",
+			data: { user },
+		});
+	},
+);
+
 const uploadAvatarController = catchAsync(
 	async (req: Request, res: Response) => {
 		if (!req.file) {
@@ -134,6 +150,7 @@ export const authController = {
 	verifyEmailController,
 	loginController,
 	meController,
+	updateProfileController,
 	uploadAvatarController,
 	googleLoginController,
 	forgotPassController,

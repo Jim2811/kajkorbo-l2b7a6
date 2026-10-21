@@ -7,6 +7,7 @@ import { authController } from "./auth.controller.js";
 import {
 	loginValidationSchema,
 	registerValidationSchema,
+	updateProfileValidationSchema,
 	verifyEmailValidationSchema,
 } from "./auth.validation.js";
 
@@ -37,6 +38,19 @@ authRouter.get(
 		Role.USER,
 	),
 	authController.meController,
+);
+authRouter.patch(
+	"/profile",
+	auth(
+		Role.SUPER_ADMIN,
+		Role.ORG_OWNER,
+		Role.TEAM_LEADER,
+		Role.TEAM_MEMBER,
+		Role.USER,
+	),
+	imageUpload.single("avatar"),
+	validateRequest(updateProfileValidationSchema),
+	authController.updateProfileController,
 );
 authRouter.post(
 	"/avatar",

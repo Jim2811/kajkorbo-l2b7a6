@@ -3,12 +3,16 @@ import type { TokenPayload } from "google-auth-library";
 import { Provider, Role } from "./../../../generated/prisma/enums";
 import { env } from "../../config/env.js";
 import {
+	deleteImage,
+	getPublicIdFromImageUrl,
+	uploadImage,
+} from "../../lib/cloudinary.js";
+import {
 	sendEmailVerificationOtp,
 	sendPasswordResetOtp,
 	sendWelcomeEmail,
 } from "../../lib/email.js";
 import { googleClient } from "../../lib/googleAuth.js";
-import { uploadImage } from "../../lib/cloudinary.js";
 import { prisma } from "../../lib/prisma";
 import redisClient from "../../lib/redis.js";
 import { AppError } from "../../utils/AppError.js";
@@ -19,6 +23,7 @@ import type {
 	IGoogleUser,
 	IRegisterUserPayload,
 	IResetPassword,
+	IUpdateProfilePayload,
 	IVerifyEmail,
 } from "./auth.interface";
 
@@ -158,14 +163,67 @@ const getMyProfile = async (userId: string) => {
 	return user;
 };
 
-const uploadAvatar = async (userId: string, file: Express.Multer.File) => {
-	const { secure_url: avatar } = await uploadImage(file.buffer, "kajkorbo/avatars");
-
-	return prisma.uSER.update({
+const updateProfile = async (
+	userId: string,
+	payload: IUpdateProfilePayload,
+	file?: Express.Multer.File,
+) => {
+	const currentUser = await prisma.uSER.findUnique({
 		where: { id: userId },
-		data: { avatar },
-		omit: { password: true },
+		select: { avatar: true, avatarPublicId: true },
 	});
+
+	if (!currentUser) {
+		throw new AppError(404, "User not found");
+	}
+
+	let avatar = currentUser.avatar;
+	let avatarPublicId = currentUser.avatarPublicId;
+	let uploadedPublicId: string | undefined;
+
+	if (file) {
+		const uploadedImage = await uploadImage(file.buffer, "kajkorbo/avatars");
+		avatar = uploadedImage.secure_url;
+		avatarPublicId = uploadedImage.public_id;
+		uploadedPublicId = uploadedImage.public_id;
+	}
+
+	const updateUser = () =>
+		prisma.uSER.update({
+			where: { id: userId },
+			data: {
+				...(payload.name !== undefined ? { name: payload.name } : {}),
+				...(file ? { avatar, avatarPublicId } : {}),
+			},
+			omit: { password: true },
+		});
+	let updatedUser: Awaited<ReturnType<typeof updateUser>>;
+	try {
+		updatedUser = await updateUser();
+	} catch (error) {
+		if (uploadedPublicId) {
+			try {
+				await deleteImage(uploadedPublicId);
+			} catch {
+				// Preserve the original database error.
+			}
+		}
+		throw error;
+	}
+
+	if (file && currentUser.avatar) {
+		const previousPublicId =
+			currentUser.avatarPublicId ?? getPublicIdFromImageUrl(currentUser.avatar);
+		if (previousPublicId && previousPublicId !== uploadedPublicId) {
+			await deleteImage(previousPublicId);
+		}
+	}
+
+	return updatedUser;
+};
+
+const uploadAvatar = async (userId: string, file: Express.Multer.File) => {
+	return updateProfile(userId, {}, file);
 };
 
 const googleLogin = async (payload: IGoogleUser) => {
@@ -278,6 +336,7 @@ export const authService = {
 	verifyEmail,
 	loginIntoDB,
 	getMyProfile,
+	updateProfile,
 	uploadAvatar,
 	googleLogin,
 	forgotPassword,
