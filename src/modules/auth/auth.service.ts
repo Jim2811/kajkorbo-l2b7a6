@@ -8,6 +8,7 @@ import {
 	sendWelcomeEmail,
 } from "../../lib/email.js";
 import { googleClient } from "../../lib/googleAuth.js";
+import { uploadImage } from "../../lib/cloudinary.js";
 import { prisma } from "../../lib/prisma";
 import redisClient from "../../lib/redis.js";
 import { AppError } from "../../utils/AppError.js";
@@ -156,6 +157,17 @@ const getMyProfile = async (userId: string) => {
 
 	return user;
 };
+
+const uploadAvatar = async (userId: string, file: Express.Multer.File) => {
+	const { secure_url: avatar } = await uploadImage(file.buffer, "kajkorbo/avatars");
+
+	return prisma.uSER.update({
+		where: { id: userId },
+		data: { avatar },
+		omit: { password: true },
+	});
+};
+
 const googleLogin = async (payload: IGoogleUser) => {
 	let googleIdTokenPayload: TokenPayload | null | undefined = null;
 	try {
@@ -266,6 +278,7 @@ export const authService = {
 	verifyEmail,
 	loginIntoDB,
 	getMyProfile,
+	uploadAvatar,
 	googleLogin,
 	forgotPassword,
 	resetPassword,

@@ -68,4 +68,9 @@ export const env = {
 		password: required("SMTP_PASSWORD"),
 		from: process.env.SMTP_FROM ?? required("SMTP_USER"),
 	},
+	cloudinary: {
+		cloudName: required("CLOUDINARY_CLOUD_NAME"),
+		apiKey: required("CLOUDINARY_API_KEY"),
+		apiSecret: required("CLOUDINARY_API_SECRET"),
+	},
 };

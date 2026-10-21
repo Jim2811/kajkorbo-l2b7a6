@@ -1,5 +1,6 @@
 import type { Request, Response } from "express";
 import httpStatus from "http-status";
+import { AppError } from "../../utils/AppError.js";
 import { catchAsync } from "../../utils/catchAsync.js";
 import { sendResponse } from "../../utils/sendResponse.js";
 import { authService } from "./auth.service.js";
@@ -63,6 +64,26 @@ const meController = catchAsync(async (req: Request, res: Response) => {
 		data: { profile },
 	});
 });
+
+const uploadAvatarController = catchAsync(
+	async (req: Request, res: Response) => {
+		if (!req.file) {
+			throw new AppError(400, "An image file is required");
+		}
+
+		const user = await authService.uploadAvatar(
+			req.user?.id as string,
+			req.file,
+		);
+		sendResponse(res, {
+			success: true,
+			statusCode: httpStatus.OK,
+			message: "Avatar uploaded successfully",
+			data: { user },
+		});
+	},
+);
+
 const googleLoginController = catchAsync(
 	async (req: Request, res: Response) => {
 		const payload = req.body;
@@ -113,6 +134,7 @@ export const authController = {
 	verifyEmailController,
 	loginController,
 	meController,
+	uploadAvatarController,
 	googleLoginController,
 	forgotPassController,
 	resetPassController,

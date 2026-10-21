@@ -1,6 +1,7 @@
 import { Router } from "express";
 import { Role } from "../../../generated/prisma/enums.js";
 import { auth } from "../../middlewares/auth.js";
+import { imageUpload } from "../../middlewares/upload.js";
 import { validateRequest } from "../../middlewares/validateRequest.js";
 import { authController } from "./auth.controller.js";
 import {
@@ -36,6 +37,18 @@ authRouter.get(
 		Role.USER,
 	),
 	authController.meController,
+);
+authRouter.post(
+	"/avatar",
+	auth(
+		Role.SUPER_ADMIN,
+		Role.ORG_OWNER,
+		Role.TEAM_LEADER,
+		Role.TEAM_MEMBER,
+		Role.USER,
+	),
+	imageUpload.single("avatar"),
+	authController.uploadAvatarController,
 );
 authRouter.post("/google", authController.googleLoginController);
 
