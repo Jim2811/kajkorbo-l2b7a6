@@ -10,6 +10,7 @@ import { AppError } from "../../utils/AppError.js";
 import type {
 	ICreateOrganizationPayload,
 	IHireOrganizationMemberPayload,
+	IUpdateOrganizationPayload,
 } from "./organization.interface.js";
 
 const createOrganization = async (
@@ -191,7 +192,72 @@ const hireOrganizationMember = async (
 	});
 };
 
+const updateOrganization = async (
+	organizationId: string,
+	ownerId: string,
+	payload: IUpdateOrganizationPayload,
+) => {
+	const organization = await prisma.organization.findFirst({
+		where: {
+			id: organizationId,
+			ownerId,
+			status: "ACTIVE",
+			deletedAt: null,
+		},
+	});
+
+	if (!organization) {
+		throw new AppError(404, "Active organization not found");
+	}
+
+	if (payload.email && payload.email !== organization.email) {
+		const organizationWithEmail = await prisma.organization.findUnique({
+			where: { email: payload.email },
+			select: { id: true },
+		});
+
+		if (organizationWithEmail && organizationWithEmail.id !== organizationId) {
+			throw new AppError(409, "An organization with this email already exists");
+		}
+	}
+
+	return prisma.organization.update({
+		where: { id: organizationId },
+		data: payload,
+	});
+};
+
+const deactivateOrganization = async (
+	organizationId: string,
+	ownerId: string,
+) => {
+	const organization = await prisma.organization.findFirst({
+		where: {
+			id: organizationId,
+			ownerId,
+			status: "ACTIVE",
+			deletedAt: null,
+		},
+		select: { id: true },
+	});
+
+	if (!organization) {
+		throw new AppError(404, "Active organization not found");
+	}
+
+	return prisma.organization.update({
+		where: { id: organization.id },
+		data: {
+			status: "DEACTIVATED",
+			isSuspended: false,
+			deletedAt: new Date(),
+		},
+	});
+};
+
 export const organizationService = {
 	createOrganization,
 	hireOrganizationMember,
+	updateOrganization,
+	deactivateOrganization,
 };

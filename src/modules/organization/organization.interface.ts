@@ -5,3 +5,12 @@ export type { ICreateOrganizationPayload };
 export interface IHireOrganizationMemberPayload {
 	email: string;
 }
+
+export interface IUpdateOrganizationPayload {
+	name?: string;
+	description?: string;
+	email?: string;
+	phone?: string | null;
+	address?: string | null;
+	logo?: string | null;
+}

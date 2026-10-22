@@ -4,7 +4,10 @@ import { auth } from "../../middlewares/auth.js";
 import { validateRequest } from "../../middlewares/validateRequest.js";
 import { createOrganizationValidationSchema } from "../auth/auth.validation.js";
 import { organizationController } from "./organization.controller.js";
-import { hireOrganizationMemberValidationSchema } from "./organization.validation.js";
+import {
+	hireOrganizationMemberValidationSchema,
+	updateOrganizationValidationSchema,
+} from "./organization.validation.js";
 
 export const organizationRouter = Router();
 
@@ -20,4 +23,23 @@ organizationRouter.post(
 	auth(Role.ORG_OWNER),
 	validateRequest(hireOrganizationMemberValidationSchema),
 	organizationController.hireOrganizationMemberController,
+);
+
+organizationRouter.patch(
+	"/:organizationId",
+	auth(Role.ORG_OWNER),
+	validateRequest(updateOrganizationValidationSchema),
+	organizationController.updateOrganizationController,
+);
+
+organizationRouter.patch(
+	"/:organizationId/deactivate",
+	auth(Role.ORG_OWNER),
+	organizationController.deactivateOrganizationController,
+);
+
+organizationRouter.delete(
+	"/:organizationId",
+	auth(Role.ORG_OWNER),
+	organizationController.deactivateOrganizationController,
 );

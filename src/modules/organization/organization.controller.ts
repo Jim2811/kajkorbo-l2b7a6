@@ -37,7 +37,42 @@ const hireOrganizationMemberController = catchAsync(
 	},
 );
 
+const updateOrganizationController = catchAsync(
+	async (req: Request, res: Response) => {
+		const organization = await organizationService.updateOrganization(
+			req.params.organizationId as string,
+			req.user?.id as string,
+			req.body,
+		);
+
+		sendResponse(res, {
+			success: true,
+			statusCode: httpStatus.OK,
+			message: "Organization updated successfully",
+			data: { organization },
+		});
+	},
+);
+
+const deactivateOrganizationController = catchAsync(
+	async (req: Request, res: Response) => {
+		const organization = await organizationService.deactivateOrganization(
+			req.params.organizationId as string,
+			req.user?.id as string,
+		);
+
+		sendResponse(res, {
+			success: true,
+			statusCode: httpStatus.OK,
+			message: "Organization deactivated successfully",
+			data: { organization },
+		});
+	},
+);
+
 export const organizationController = {
 	createOrganizationController,
 	hireOrganizationMemberController,
+	updateOrganizationController,
+	deactivateOrganizationController,
 };
