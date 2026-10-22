@@ -12,3 +12,26 @@ export interface ICreateTaskPayload {
 export interface IRejectTaskPayload {
 	reason: string;
 }
+
+export interface ICreateSubtaskPayload {
+	assignedUserId: string;
+	title: string;
+	description: string;
+	dueAt: string;
+}
+
+export interface ISubmitSubtaskPayload {
+	description: string;
+}
+
+export interface IReviewSubtaskPayload {
+	feedback?: string;
+}
+
+export interface IRequestSubtaskRevisionPayload {
+	feedback: string;
+}
+
+export interface IReassignSubtaskPayload {
+	assignedUserId: string;
+}
