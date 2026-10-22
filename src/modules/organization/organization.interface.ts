@@ -14,3 +14,16 @@ export interface IUpdateOrganizationPayload {
 	address?: string | null;
 	logo?: string | null;
 }
+
+export interface ICreateTeamPayload {
+	name: string;
+	description?: string;
+}
+
+export interface IAddTeamMemberPayload {
+	userId: string;
+}
+
+export interface IAssignTeamLeaderPayload {
+	userId: string;
+}

@@ -5,6 +5,9 @@ import { validateRequest } from "../../middlewares/validateRequest.js";
 import { createOrganizationValidationSchema } from "../auth/auth.validation.js";
 import { organizationController } from "./organization.controller.js";
 import {
+	addTeamMemberValidationSchema,
+	assignTeamLeaderValidationSchema,
+	createTeamValidationSchema,
 	hireOrganizationMemberValidationSchema,
 	updateOrganizationValidationSchema,
 } from "./organization.validation.js";
@@ -42,4 +45,37 @@ organizationRouter.delete(
 	"/:organizationId",
 	auth(Role.ORG_OWNER),
 	organizationController.deactivateOrganizationController,
+);
+
+organizationRouter.post(
+	"/:organizationId/teams",
+	auth(Role.ORG_OWNER),
+	validateRequest(createTeamValidationSchema),
+	organizationController.createTeamController,
+);
+
+organizationRouter.delete(
+	"/teams/:teamId",
+	auth(Role.ORG_OWNER),
+	organizationController.deleteTeamController,
+);
+
+organizationRouter.post(
+	"/teams/:teamId/members",
+	auth(Role.ORG_OWNER),
+	validateRequest(addTeamMemberValidationSchema),
+	organizationController.addTeamMemberController,
+);
+
+organizationRouter.delete(
+	"/teams/:teamId/members/:userId",
+	auth(Role.ORG_OWNER),
+	organizationController.removeTeamMemberController,
+);
+
+organizationRouter.patch(
+	"/teams/:teamId/leader",
+	auth(Role.ORG_OWNER),
+	validateRequest(assignTeamLeaderValidationSchema),
+	organizationController.assignTeamLeaderController,
 );

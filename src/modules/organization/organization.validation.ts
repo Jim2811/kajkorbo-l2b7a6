@@ -24,3 +24,16 @@ export const updateOrganizationValidationSchema = z
 	.refine((payload) => Object.keys(payload).length > 0, {
 		message: "At least one organization field is required",
 	});
+
+export const createTeamValidationSchema = z.object({
+	name: z.string().trim().min(1, "Team name is required"),
+	description: z.string().trim().min(1).optional(),
+});
+
+export const addTeamMemberValidationSchema = z.object({
+	userId: z.string().trim().min(1, "User ID is required"),
+});
+
+export const assignTeamLeaderValidationSchema = z.object({
+	userId: z.string().trim().min(1, "User ID is required"),
+});

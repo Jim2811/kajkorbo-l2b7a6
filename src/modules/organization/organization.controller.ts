@@ -70,9 +70,94 @@ const deactivateOrganizationController = catchAsync(
 	},
 );
 
+const createTeamController = catchAsync(async (req: Request, res: Response) => {
+	const team = await organizationService.createTeam(
+		req.params.organizationId as string,
+		req.user?.id as string,
+		req.body,
+	);
+
+	sendResponse(res, {
+		success: true,
+		statusCode: httpStatus.CREATED,
+		message: "Team created successfully",
+		data: { team },
+	});
+});
+
+const deleteTeamController = catchAsync(async (req: Request, res: Response) => {
+	const team = await organizationService.deleteTeam(
+		req.params.teamId as string,
+		req.user?.id as string,
+	);
+
+	sendResponse(res, {
+		success: true,
+		statusCode: httpStatus.OK,
+		message: "Team deleted successfully",
+		data: { team },
+	});
+});
+
+const addTeamMemberController = catchAsync(
+	async (req: Request, res: Response) => {
+		const membership = await organizationService.addTeamMember(
+			req.params.teamId as string,
+			req.user?.id as string,
+			req.body,
+		);
+
+		sendResponse(res, {
+			success: true,
+			statusCode: httpStatus.CREATED,
+			message: "Team member added successfully",
+			data: { membership },
+		});
+	},
+);
+
+const removeTeamMemberController = catchAsync(
+	async (req: Request, res: Response) => {
+		const membership = await organizationService.removeTeamMember(
+			req.params.teamId as string,
+			req.params.userId as string,
+			req.user?.id as string,
+		);
+
+		sendResponse(res, {
+			success: true,
+			statusCode: httpStatus.OK,
+			message: "Team member removed successfully",
+			data: { membership },
+		});
+	},
+);
+
+const assignTeamLeaderController = catchAsync(
+	async (req: Request, res: Response) => {
+		const team = await organizationService.assignTeamLeader(
+			req.params.teamId as string,
+			req.user?.id as string,
+			req.body,
+		);
+
+		sendResponse(res, {
+			success: true,
+			statusCode: httpStatus.OK,
+			message: "Team leader assigned successfully",
+			data: { team },
+		});
+	},
+);
+
 export const organizationController = {
 	createOrganizationController,
 	hireOrganizationMemberController,
 	updateOrganizationController,
 	deactivateOrganizationController,
+	createTeamController,
+	deleteTeamController,
+	addTeamMemberController,
+	removeTeamMemberController,
+	assignTeamLeaderController,
 };

@@ -8,7 +8,10 @@ import {
 import { prisma } from "../../lib/prisma.js";
 import { AppError } from "../../utils/AppError.js";
 import type {
+	IAddTeamMemberPayload,
+	IAssignTeamLeaderPayload,
 	ICreateOrganizationPayload,
+	ICreateTeamPayload,
 	IHireOrganizationMemberPayload,
 	IUpdateOrganizationPayload,
 } from "./organization.interface.js";
@@ -255,9 +258,279 @@ const deactivateOrganization = async (
 	});
 };
 
+const createTeam = async (
+	organizationId: string,
+	ownerId: string,
+	payload: ICreateTeamPayload,
+) => {
+	return prisma.$transaction(
+		async (transaction) => {
+			const organization = await transaction.organization.findFirst({
+				where: {
+					id: organizationId,
+					ownerId,
+					status: "ACTIVE",
+					deletedAt: null,
+				},
+				select: { id: true },
+			});
+
+			if (!organization) {
+				throw new AppError(
+					403,
+					"Only the active owner can manage this organization",
+				);
+			}
+
+			const entitlement = await transaction.organizationEntitlement.findUnique({
+				where: { organizationId },
+			});
+
+			if (!entitlement) {
+				throw new AppError(409, "Organization team capacity is not configured");
+			}
+
+			const availableCapacity =
+				entitlement.freeTeamCapacity +
+				entitlement.purchasedTeamCapacity -
+				entitlement.usedTeamCapacity;
+
+			if (availableCapacity <= 0) {
+				throw new AppError(
+					409,
+					"No team capacity is available. Purchase additional capacity first.",
+				);
+			}
+
+			const existingTeam = await transaction.team.findFirst({
+				where: {
+					organizationId,
+					name: payload.name,
+					deletedAt: null,
+				},
+				select: { id: true },
+			});
+
+			if (existingTeam) {
+				throw new AppError(409, "A team with this name already exists");
+			}
+
+			const team = await transaction.team.create({
+				data: { organizationId, ...payload },
+			});
+
+			await transaction.organizationEntitlement.update({
+				where: { organizationId },
+				data: { usedTeamCapacity: { increment: 1 } },
+			});
+
+			return team;
+		},
+		{ isolationLevel: "Serializable" },
+	);
+};
+
+const deleteTeam = async (teamId: string, ownerId: string) => {
+	return prisma.$transaction(async (transaction) => {
+		const team = await transaction.team.findFirst({
+			where: {
+				id: teamId,
+				organization: { ownerId, status: "ACTIVE", deletedAt: null },
+				status: { not: "DELETED" },
+				deletedAt: null,
+			},
+			select: { id: true, organizationId: true },
+		});
+
+		if (!team) {
+			throw new AppError(404, "Active team not found");
+		}
+
+		const deletedTeam = await transaction.team.update({
+			where: { id: team.id },
+			data: { status: "DELETED", deletedAt: new Date() },
+		});
+
+		await transaction.organizationEntitlement.updateMany({
+			where: {
+				organizationId: team.organizationId,
+				usedTeamCapacity: { gt: 0 },
+			},
+			data: { usedTeamCapacity: { decrement: 1 } },
+		});
+
+		return deletedTeam;
+	});
+};
+
+const addTeamMember = async (
+	teamId: string,
+	ownerId: string,
+	payload: IAddTeamMemberPayload,
+) => {
+	return prisma.$transaction(async (transaction) => {
+		const team = await transaction.team.findFirst({
+			where: {
+				id: teamId,
+				status: "ACTIVE",
+				deletedAt: null,
+				organization: { ownerId, status: "ACTIVE", deletedAt: null },
+			},
+			select: { id: true, organizationId: true },
+		});
+
+		if (!team) {
+			throw new AppError(404, "Active team not found");
+		}
+
+		const member = await transaction.organizationMember.findFirst({
+			where: {
+				organizationId: team.organizationId,
+				userId: payload.userId,
+				status: "ACTIVE",
+				deletedAt: null,
+			},
+			select: { userId: true },
+		});
+
+		if (!member) {
+			throw new AppError(409, "User must be an active organization member");
+		}
+
+		const existingTeamMember = await transaction.teamMember.findUnique({
+			where: { teamId_userId: { teamId, userId: payload.userId } },
+		});
+
+		if (
+			existingTeamMember?.status === "ACTIVE" &&
+			!existingTeamMember.deletedAt
+		) {
+			throw new AppError(409, "User is already a member of this team");
+		}
+
+		return existingTeamMember
+			? transaction.teamMember.update({
+					where: { id: existingTeamMember.id },
+					data: { status: "ACTIVE", role: "MEMBER", deletedAt: null },
+				})
+			: transaction.teamMember.create({
+					data: { teamId, userId: payload.userId },
+				});
+	});
+};
+
+const removeTeamMember = async (
+	teamId: string,
+	userId: string,
+	ownerId: string,
+) => {
+	return prisma.$transaction(async (transaction) => {
+		const team = await transaction.team.findFirst({
+			where: {
+				id: teamId,
+				status: "ACTIVE",
+				deletedAt: null,
+				organization: { ownerId, status: "ACTIVE", deletedAt: null },
+			},
+			select: { id: true },
+		});
+
+		if (!team) {
+			throw new AppError(404, "Active team not found");
+		}
+
+		const teamMember = await transaction.teamMember.findFirst({
+			where: { teamId, userId, status: "ACTIVE", deletedAt: null },
+		});
+
+		if (!teamMember) {
+			throw new AppError(404, "Active team membership not found");
+		}
+
+		if (teamMember.role === "LEADER") {
+			await transaction.team.update({
+				where: { id: teamId },
+				data: { leaderId: null },
+			});
+		}
+
+		return transaction.teamMember.update({
+			where: { id: teamMember.id },
+			data: { status: "REMOVED", deletedAt: new Date(), role: "MEMBER" },
+		});
+	});
+};
+
+const assignTeamLeader = async (
+	teamId: string,
+	ownerId: string,
+	payload: IAssignTeamLeaderPayload,
+) => {
+	return prisma.$transaction(async (transaction) => {
+		const team = await transaction.team.findFirst({
+			where: {
+				id: teamId,
+				status: "ACTIVE",
+				deletedAt: null,
+				organization: { ownerId, status: "ACTIVE", deletedAt: null },
+			},
+			select: { id: true, organizationId: true },
+		});
+
+		if (!team) {
+			throw new AppError(404, "Active team not found");
+		}
+
+		const teamMember = await transaction.teamMember.findFirst({
+			where: {
+				teamId,
+				userId: payload.userId,
+				status: "ACTIVE",
+				deletedAt: null,
+			},
+		});
+
+		const organizationMember = await transaction.organizationMember.findFirst({
+			where: {
+				organizationId: team.organizationId,
+				userId: payload.userId,
+				status: "ACTIVE",
+				deletedAt: null,
+			},
+		});
+
+		if (!teamMember || !organizationMember) {
+			throw new AppError(
+				409,
+				"Team leader must be an active member of the organization and team",
+			);
+		}
+
+		await transaction.teamMember.updateMany({
+			where: { teamId, status: "ACTIVE", deletedAt: null },
+			data: { role: "MEMBER" },
+		});
+
+		await transaction.teamMember.update({
+			where: { id: teamMember.id },
+			data: { role: "LEADER" },
+		});
+
+		return transaction.team.update({
+			where: { id: teamId },
+			data: { leaderId: payload.userId },
+		});
+	});
+};
+
 export const organizationService = {
 	createOrganization,
 	hireOrganizationMember,
 	updateOrganization,
 	deactivateOrganization,
+	createTeam,
+	deleteTeam,
+	addTeamMember,
+	removeTeamMember,
+	assignTeamLeader,
 };
