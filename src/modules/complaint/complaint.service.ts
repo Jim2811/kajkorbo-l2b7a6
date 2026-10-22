@@ -27,6 +27,20 @@ const getActiveOrganizationMember = async (
 		select: { role: true },
 	});
 
+const getComplaintVisibilityFilter = (
+	userId: string,
+	organizationId: string,
+	membershipRole: Role,
+) => ({
+	organizationId,
+	OR: [
+		{ complainantId: userId },
+		{ reportedUserId: userId },
+		{ reviewerId: userId },
+		...(membershipRole === Role.ORG_OWNER ? [{ organizationId }] : []),
+	],
+});
+
 const createComplaint = async (
 	complainantId: string,
 	payload: ICreateComplaintPayload,
@@ -226,9 +240,21 @@ const canViewComplaint = async (complaintId: string, userId: string) => {
 		userId,
 	);
 
-	if (
-		user?.role !== Role.SUPER_ADMIN &&
-		membership?.role !== Role.ORG_OWNER &&
+	if (user?.role === Role.SUPER_ADMIN) {
+		return complaint;
+	}
+
+	if (!membership) {
+		const isParticipant =
+			complaint.complainantId === userId ||
+			complaint.reportedUserId === userId ||
+			complaint.reviewerId === userId;
+
+		if (!isParticipant) {
+			throw new AppError(403, "You are not authorized to view this complaint");
+		}
+	} else if (
+		membership.role !== Role.ORG_OWNER &&
 		complaint.complainantId !== userId &&
 		complaint.reportedUserId !== userId &&
 		complaint.reviewerId !== userId
@@ -271,14 +297,11 @@ const listComplaints = async (userId: string, organizationId?: string) => {
 	}
 
 	return prisma.complaint.findMany({
-		where: {
+		where: getComplaintVisibilityFilter(
+			userId,
 			organizationId,
-			OR: [
-				{ complainantId: userId },
-				{ reportedUserId: userId },
-				...(membership.role === Role.ORG_OWNER ? [{ organizationId }] : []),
-			],
-		},
+			membership.role,
+		),
 		orderBy: { createdAt: "desc" },
 	});
 };
