@@ -4,6 +4,7 @@ import { globalErrorHandler } from "./middlewares/error-handler.js";
 import { authRouter } from "./modules/auth/auth.routes.js";
 import { billingRouter } from "./modules/billing/billing.routes.js";
 import { organizationRouter } from "./modules/organization/organization.routes.js";
+import { taskRouter } from "./modules/task/task.routes.js";
 import { AppError } from "./utils/AppError.js";
 
 export const app = express();
@@ -17,6 +18,7 @@ app.use(cookieParser());
 app.use("/api/v1/auth", authRouter);
 app.use("/api/v1/organizations", organizationRouter);
 app.use("/api/v1/billing", billingRouter);
+app.use("/api/v1/tasks", taskRouter);
 
 app.use((request, _response, next) => {
 	next(

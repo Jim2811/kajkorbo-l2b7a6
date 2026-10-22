@@ -9,6 +9,7 @@ model Task {
     startAt        DateTime?
     dueAt          DateTime
     status         TaskStatus   @default(DRAFT)
+    rejectionReason String?
     completedAt    DateTime?
     createdAt      DateTime     @default(now())
     updatedAt      DateTime     @updatedAt
