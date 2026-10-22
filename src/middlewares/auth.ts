@@ -1,10 +1,10 @@
-import { Role } from './../../generated/prisma/enums';
 import type { NextFunction, Request, Response } from "express";
 import type { JwtPayload } from "jsonwebtoken";
+import type { Role } from "./../../generated/prisma/enums";
 import { env } from "../config/env.js";
 import { prisma } from "../lib/prisma.js";
-import { catchAsync } from "../utils/catchAsync.js";
 import { AppError } from "../utils/AppError.js";
+import { catchAsync } from "../utils/catchAsync.js";
 import { jwtUtils } from "../utils/jwtUtils.js";
 
 declare global {
@@ -65,10 +65,14 @@ export const auth = (...requiredRoles: Role[]) =>
 				);
 			}
 
-			if (
-				requiredRoles.length > 0 &&
-				!requiredRoles.includes(user.role)
-			) {
+			if (user.status !== "ACTIVE" || user.deletedAt) {
+				throw new AppError(
+					403,
+					"Your account is not active and cannot access this resource.",
+				);
+			}
+
+			if (requiredRoles.length > 0 && !requiredRoles.includes(user.role)) {
 				throw new AppError(
 					403,
 					"Forbidden. You do not have permission to access this resource.",

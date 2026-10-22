@@ -8,8 +8,19 @@
  *
  * 🟢 You can import this file directly.
  */
+export type * from './models/AuditLog'
+export type * from './models/Payment'
+export type * from './models/OrganizationEntitlement'
+export type * from './models/Complaint'
+export type * from './models/Notification'
 export type * from './models/Organization'
+export type * from './models/OrganizationInvitation'
 export type * from './models/OrganizationMember'
 export type * from './models/Project'
+export type * from './models/Task'
+export type * from './models/Subtask'
+export type * from './models/SubtaskSubmission'
+export type * from './models/Team'
+export type * from './models/TeamMember'
 export type * from './models/USER'
 export type * from './commonInputTypes'

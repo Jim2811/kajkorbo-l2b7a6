@@ -13,14 +13,110 @@ enum Role {
     USER
     SUPER_ADMIN
     ORG_OWNER
+    ORG_MEMBER
     TEAM_LEADER
     TEAM_MEMBER
 }
 
+enum AccountStatus {
+    ACTIVE
+    BANNED
+    DEACTIVATED
+}
+
+enum OrganizationStatus {
+    ACTIVE
+    SUSPENDED
+    DEACTIVATED
+}
+
 enum MemberStatus {
-    IVITED
+    INVITED
     ACTIVE
     REMOVED
+}
+
+enum InvitationStatus {
+    PENDING
+    ACCEPTED
+    REJECTED
+    EXPIRED
+    CANCELLED
+}
+
+enum TeamStatus {
+    ACTIVE
+    ARCHIVED
+    DELETED
+}
+
+enum TeamMemberStatus {
+    ACTIVE
+    REMOVED
+}
+
+enum TeamMemberRole {
+    LEADER
+    MEMBER
+}
+
+enum TaskStatus {
+    DRAFT
+    ASSIGNED
+    ACCEPTED
+    IN_PROGRESS
+    UNDER_REVIEW
+    COMPLETED
+    REJECTED
+    CANCELLED
+}
+
+enum TaskPriority {
+    LOW
+    MEDIUM
+    HIGH
+    URGENT
+}
+
+enum SubtaskStatus {
+    ASSIGNED
+    IN_PROGRESS
+    SUBMITTED
+    REVISION_REQUIRED
+    APPROVED
+    CANCELLED
+}
+
+enum ComplaintStatus {
+    OPEN
+    UNDER_REVIEW
+    RESOLVED
+    DISMISSED
+}
+
+enum PaymentStatus {
+    PENDING
+    SUCCEEDED
+    FAILED
+    CANCELLED
+    REFUNDED
+    DISPUTED
+}
+
+enum AuditAction {
+    CREATE
+    UPDATE
+    DELETE
+    STATUS_CHANGE
+    INVITE
+    ACCEPT
+    REJECT
+    SUBMIT
+    APPROVE
+    REASSIGN
+    PAYMENT
+    BAN
+    UNBAN
 }
 
 enum ProjectStatus {

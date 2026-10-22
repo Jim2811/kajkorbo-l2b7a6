@@ -30,6 +30,7 @@ export const Role = {
   USER: 'USER',
   SUPER_ADMIN: 'SUPER_ADMIN',
   ORG_OWNER: 'ORG_OWNER',
+  ORG_MEMBER: 'ORG_MEMBER',
   TEAM_LEADER: 'TEAM_LEADER',
   TEAM_MEMBER: 'TEAM_MEMBER'
 } as const
@@ -37,13 +38,144 @@ export const Role = {
 export type Role = (typeof Role)[keyof typeof Role]
 
 
+export const AccountStatus = {
+  ACTIVE: 'ACTIVE',
+  BANNED: 'BANNED',
+  DEACTIVATED: 'DEACTIVATED'
+} as const
+
+export type AccountStatus = (typeof AccountStatus)[keyof typeof AccountStatus]
+
+
+export const OrganizationStatus = {
+  ACTIVE: 'ACTIVE',
+  SUSPENDED: 'SUSPENDED',
+  DEACTIVATED: 'DEACTIVATED'
+} as const
+
+export type OrganizationStatus = (typeof OrganizationStatus)[keyof typeof OrganizationStatus]
+
+
 export const MemberStatus = {
-  IVITED: 'IVITED',
+  INVITED: 'INVITED',
   ACTIVE: 'ACTIVE',
   REMOVED: 'REMOVED'
 } as const
 
 export type MemberStatus = (typeof MemberStatus)[keyof typeof MemberStatus]
+
+
+export const InvitationStatus = {
+  PENDING: 'PENDING',
+  ACCEPTED: 'ACCEPTED',
+  REJECTED: 'REJECTED',
+  EXPIRED: 'EXPIRED',
+  CANCELLED: 'CANCELLED'
+} as const
+
+export type InvitationStatus = (typeof InvitationStatus)[keyof typeof InvitationStatus]
+
+
+export const TeamStatus = {
+  ACTIVE: 'ACTIVE',
+  ARCHIVED: 'ARCHIVED',
+  DELETED: 'DELETED'
+} as const
+
+export type TeamStatus = (typeof TeamStatus)[keyof typeof TeamStatus]
+
+
+export const TeamMemberStatus = {
+  ACTIVE: 'ACTIVE',
+  REMOVED: 'REMOVED'
+} as const
+
+export type TeamMemberStatus = (typeof TeamMemberStatus)[keyof typeof TeamMemberStatus]
+
+
+export const TeamMemberRole = {
+  LEADER: 'LEADER',
+  MEMBER: 'MEMBER'
+} as const
+
+export type TeamMemberRole = (typeof TeamMemberRole)[keyof typeof TeamMemberRole]
+
+
+export const TaskStatus = {
+  DRAFT: 'DRAFT',
+  ASSIGNED: 'ASSIGNED',
+  ACCEPTED: 'ACCEPTED',
+  IN_PROGRESS: 'IN_PROGRESS',
+  UNDER_REVIEW: 'UNDER_REVIEW',
+  COMPLETED: 'COMPLETED',
+  REJECTED: 'REJECTED',
+  CANCELLED: 'CANCELLED'
+} as const
+
+export type TaskStatus = (typeof TaskStatus)[keyof typeof TaskStatus]
+
+
+export const TaskPriority = {
+  LOW: 'LOW',
+  MEDIUM: 'MEDIUM',
+  HIGH: 'HIGH',
+  URGENT: 'URGENT'
+} as const
+
+export type TaskPriority = (typeof TaskPriority)[keyof typeof TaskPriority]
+
+
+export const SubtaskStatus = {
+  ASSIGNED: 'ASSIGNED',
+  IN_PROGRESS: 'IN_PROGRESS',
+  SUBMITTED: 'SUBMITTED',
+  REVISION_REQUIRED: 'REVISION_REQUIRED',
+  APPROVED: 'APPROVED',
+  CANCELLED: 'CANCELLED'
+} as const
+
+export type SubtaskStatus = (typeof SubtaskStatus)[keyof typeof SubtaskStatus]
+
+
+export const ComplaintStatus = {
+  OPEN: 'OPEN',
+  UNDER_REVIEW: 'UNDER_REVIEW',
+  RESOLVED: 'RESOLVED',
+  DISMISSED: 'DISMISSED'
+} as const
+
+export type ComplaintStatus = (typeof ComplaintStatus)[keyof typeof ComplaintStatus]
+
+
+export const PaymentStatus = {
+  PENDING: 'PENDING',
+  SUCCEEDED: 'SUCCEEDED',
+  FAILED: 'FAILED',
+  CANCELLED: 'CANCELLED',
+  REFUNDED: 'REFUNDED',
+  DISPUTED: 'DISPUTED'
+} as const
+
+export type PaymentStatus = (typeof PaymentStatus)[keyof typeof PaymentStatus]
+
+
+export const AuditAction = {
+  CREATE: 'CREATE',
+  UPDATE: 'UPDATE',
+  DELETE: 'DELETE',
+  STATUS_CHANGE: 'STATUS_CHANGE',
+  INVITE: 'INVITE',
+  ACCEPT: 'ACCEPT',
+  REJECT: 'REJECT',
+  SUBMIT: 'SUBMIT',
+  APPROVE: 'APPROVE',
+  REASSIGN: 'REASSIGN',
+  PAYMENT: 'PAYMENT',
+  BAN: 'BAN',
+  UNBAN: 'UNBAN'
+} as const
+
+export type AuditAction = (typeof AuditAction)[keyof typeof AuditAction]
 
 
 export const ProjectStatus = {

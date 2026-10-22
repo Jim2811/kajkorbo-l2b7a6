@@ -1,0 +1,67 @@
+model Task {
+    id             String       @id @default(uuid())
+    organizationId String
+    teamId         String
+    creatorId       String
+    title          String
+    description    String
+    priority       TaskPriority @default(MEDIUM)
+    startAt        DateTime?
+    dueAt          DateTime
+    status         TaskStatus   @default(DRAFT)
+    completedAt    DateTime?
+    createdAt      DateTime     @default(now())
+    updatedAt      DateTime     @updatedAt
+    deletedAt      DateTime?
+
+    organization Organization @relation(fields: [organizationId], references: [id])
+    team         Team         @relation(fields: [teamId], references: [id])
+    creator      USER         @relation("TaskCreator", fields: [creatorId], references: [id])
+    subtasks     Subtask[]
+    complaints   Complaint[]
+
+    @@index([organizationId, status])
+    @@index([teamId, status])
+    @@index([creatorId])
+}
+
+model Subtask {
+    id           String        @id @default(uuid())
+    taskId       String
+    assignedUserId String
+    title        String
+    description  String
+    dueAt        DateTime
+    status       SubtaskStatus @default(ASSIGNED)
+    submittedAt  DateTime?
+    reviewedAt   DateTime?
+    createdAt    DateTime      @default(now())
+    updatedAt    DateTime      @updatedAt
+    deletedAt    DateTime?
+
+    task        Task                @relation(fields: [taskId], references: [id])
+    assignedUser USER                @relation(fields: [assignedUserId], references: [id])
+    submissions SubtaskSubmission[]
+    complaints  Complaint[]
+
+    @@index([taskId, status])
+    @@index([assignedUserId, status])
+}
+
+model SubtaskSubmission {
+    id          String   @id @default(uuid())
+    subtaskId   String
+    submittedById String
+    description String
+    feedback    String?
+    reviewedById String?
+    submittedAt DateTime @default(now())
+    reviewedAt  DateTime?
+    createdAt   DateTime @default(now())
+
+    subtask    Subtask @relation(fields: [subtaskId], references: [id])
+    submittedBy USER   @relation(fields: [submittedById], references: [id])
+    reviewedBy  USER?  @relation("SubmissionReviewer", fields: [reviewedById], references: [id])
+
+    @@index([subtaskId, submittedAt])
+}

@@ -1,15 +1,30 @@
 model Organization {
     id          String    @id @default(uuid())
     name        String
+    description String?
     email       String    @unique
     phone       String?
     address     String?
+    logo        String?
     slug        String?
+    ownerId     String    @unique
     plan        PlanType  @default(FREE)
+    status      OrganizationStatus @default(ACTIVE)
     isSuspended Boolean   @default(false)
     createdAt   DateTime  @default(now())
     updatedAt   DateTime  @updatedAt
     deletedAt   DateTime?
+
+    owner        USER                 @relation("OrganizationOwner", fields: [ownerId], references: [id])
+    members      OrganizationMember[]
+    invitations  OrganizationInvitation[]
+    teams        Team[]
+    tasks        Task[]
+    complaints   Complaint[]
+    payments     Payment[]
+    entitlement  OrganizationEntitlement?
+    notifications Notification[]
+    auditLogs    AuditLog[]
 
     @@map("organization")
 }

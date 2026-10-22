@@ -23,7 +23,9 @@ export const updateProfileValidationSchema = z.object({
 
 export const createOrganizationValidationSchema = z.object({
 	name: z.string().trim().min(1, "Organization name is required"),
+	description: z.string().trim().min(1).optional(),
 	email: z.string().trim().email("A valid organization email is required"),
 	phone: z.string().trim().min(1).optional(),
 	address: z.string().trim().min(1).optional(),
+	logo: z.string().trim().min(1).optional(),
 });

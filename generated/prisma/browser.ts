@@ -18,10 +18,40 @@ export { Prisma }
 export * as $Enums from './enums'
 export * from './enums';
 /**
+ * Model AuditLog
+ * 
+ */
+export type AuditLog = Prisma.AuditLogModel
+/**
+ * Model Payment
+ * 
+ */
+export type Payment = Prisma.PaymentModel
+/**
+ * Model OrganizationEntitlement
+ * 
+ */
+export type OrganizationEntitlement = Prisma.OrganizationEntitlementModel
+/**
+ * Model Complaint
+ * 
+ */
+export type Complaint = Prisma.ComplaintModel
+/**
+ * Model Notification
+ * 
+ */
+export type Notification = Prisma.NotificationModel
+/**
  * Model Organization
  * 
  */
 export type Organization = Prisma.OrganizationModel
+/**
+ * Model OrganizationInvitation
+ * 
+ */
+export type OrganizationInvitation = Prisma.OrganizationInvitationModel
 /**
  * Model OrganizationMember
  * 
@@ -32,6 +62,31 @@ export type OrganizationMember = Prisma.OrganizationMemberModel
  * 
  */
 export type Project = Prisma.ProjectModel
+/**
+ * Model Task
+ * 
+ */
+export type Task = Prisma.TaskModel
+/**
+ * Model Subtask
+ * 
+ */
+export type Subtask = Prisma.SubtaskModel
+/**
+ * Model SubtaskSubmission
+ * 
+ */
+export type SubtaskSubmission = Prisma.SubtaskSubmissionModel
+/**
+ * Model Team
+ * 
+ */
+export type Team = Prisma.TeamModel
+/**
+ * Model TeamMember
+ * 
+ */
+export type TeamMember = Prisma.TeamMemberModel
 /**
  * Model USER
  * 

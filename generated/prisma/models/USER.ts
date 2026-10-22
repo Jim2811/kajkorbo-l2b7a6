@@ -34,7 +34,10 @@ export type USERMinAggregateOutputType = {
   avatarPublicId: string | null
   provider: $Enums.Provider | null
   role: $Enums.Role | null
+  status: $Enums.AccountStatus | null
   isVerified: boolean | null
+  bannedAt: Date | null
+  bannedReason: string | null
   createdAt: Date | null
   updatedAt: Date | null
   deletedAt: Date | null
@@ -50,7 +53,10 @@ export type USERMaxAggregateOutputType = {
   avatarPublicId: string | null
   provider: $Enums.Provider | null
   role: $Enums.Role | null
+  status: $Enums.AccountStatus | null
   isVerified: boolean | null
+  bannedAt: Date | null
+  bannedReason: string | null
   createdAt: Date | null
   updatedAt: Date | null
   deletedAt: Date | null
@@ -66,7 +72,10 @@ export type USERCountAggregateOutputType = {
   avatarPublicId: number
   provider: number
   role: number
+  status: number
   isVerified: number
+  bannedAt: number
+  bannedReason: number
   createdAt: number
   updatedAt: number
   deletedAt: number
@@ -84,7 +93,10 @@ export type USERMinAggregateInputType = {
   avatarPublicId?: true
   provider?: true
   role?: true
+  status?: true
   isVerified?: true
+  bannedAt?: true
+  bannedReason?: true
   createdAt?: true
   updatedAt?: true
   deletedAt?: true
@@ -100,7 +112,10 @@ export type USERMaxAggregateInputType = {
   avatarPublicId?: true
   provider?: true
   role?: true
+  status?: true
   isVerified?: true
+  bannedAt?: true
+  bannedReason?: true
   createdAt?: true
   updatedAt?: true
   deletedAt?: true
@@ -116,7 +131,10 @@ export type USERCountAggregateInputType = {
   avatarPublicId?: true
   provider?: true
   role?: true
+  status?: true
   isVerified?: true
+  bannedAt?: true
+  bannedReason?: true
   createdAt?: true
   updatedAt?: true
   deletedAt?: true
@@ -205,7 +223,10 @@ export type USERGroupByOutputType = {
   avatarPublicId: string | null
   provider: $Enums.Provider
   role: $Enums.Role
+  status: $Enums.AccountStatus
   isVerified: boolean
+  bannedAt: Date | null
+  bannedReason: string | null
   createdAt: Date
   updatedAt: Date | null
   deletedAt: Date | null
@@ -242,10 +263,28 @@ export type USERWhereInput = {
   avatarPublicId?: Prisma.StringNullableFilter<"USER"> | string | null
   provider?: Prisma.EnumProviderFilter<"USER"> | $Enums.Provider
   role?: Prisma.EnumRoleFilter<"USER"> | $Enums.Role
+  status?: Prisma.EnumAccountStatusFilter<"USER"> | $Enums.AccountStatus
   isVerified?: Prisma.BoolFilter<"USER"> | boolean
+  bannedAt?: Prisma.DateTimeNullableFilter<"USER"> | Date | string | null
+  bannedReason?: Prisma.StringNullableFilter<"USER"> | string | null
   createdAt?: Prisma.DateTimeFilter<"USER"> | Date | string
   updatedAt?: Prisma.DateTimeNullableFilter<"USER"> | Date | string | null
   deletedAt?: Prisma.DateTimeNullableFilter<"USER"> | Date | string | null
+  ownedOrganization?: Prisma.XOR<Prisma.OrganizationNullableScalarRelationFilter, Prisma.OrganizationWhereInput> | null
+  memberships?: Prisma.OrganizationMemberListRelationFilter
+  invitations?: Prisma.OrganizationInvitationListRelationFilter
+  sentInvitations?: Prisma.OrganizationInvitationListRelationFilter
+  teamMemberships?: Prisma.TeamMemberListRelationFilter
+  ledTeams?: Prisma.TeamListRelationFilter
+  createdTasks?: Prisma.TaskListRelationFilter
+  assignedSubtasks?: Prisma.SubtaskListRelationFilter
+  submissions?: Prisma.SubtaskSubmissionListRelationFilter
+  reviewedSubmissions?: Prisma.SubtaskSubmissionListRelationFilter
+  complaintsFiled?: Prisma.ComplaintListRelationFilter
+  complaintsAgainst?: Prisma.ComplaintListRelationFilter
+  complaintsReviewed?: Prisma.ComplaintListRelationFilter
+  notifications?: Prisma.NotificationListRelationFilter
+  auditLogs?: Prisma.AuditLogListRelationFilter
 }
 
 export type USEROrderByWithRelationInput = {
@@ -258,10 +297,28 @@ export type USEROrderByWithRelationInput = {
   avatarPublicId?: Prisma.SortOrderInput | Prisma.SortOrder
   provider?: Prisma.SortOrder
   role?: Prisma.SortOrder
+  status?: Prisma.SortOrder
   isVerified?: Prisma.SortOrder
+  bannedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  bannedReason?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  ownedOrganization?: Prisma.OrganizationOrderByWithRelationInput
+  memberships?: Prisma.OrganizationMemberOrderByRelationAggregateInput
+  invitations?: Prisma.OrganizationInvitationOrderByRelationAggregateInput
+  sentInvitations?: Prisma.OrganizationInvitationOrderByRelationAggregateInput
+  teamMemberships?: Prisma.TeamMemberOrderByRelationAggregateInput
+  ledTeams?: Prisma.TeamOrderByRelationAggregateInput
+  createdTasks?: Prisma.TaskOrderByRelationAggregateInput
+  assignedSubtasks?: Prisma.SubtaskOrderByRelationAggregateInput
+  submissions?: Prisma.SubtaskSubmissionOrderByRelationAggregateInput
+  reviewedSubmissions?: Prisma.SubtaskSubmissionOrderByRelationAggregateInput
+  complaintsFiled?: Prisma.ComplaintOrderByRelationAggregateInput
+  complaintsAgainst?: Prisma.ComplaintOrderByRelationAggregateInput
+  complaintsReviewed?: Prisma.ComplaintOrderByRelationAggregateInput
+  notifications?: Prisma.NotificationOrderByRelationAggregateInput
+  auditLogs?: Prisma.AuditLogOrderByRelationAggregateInput
 }
 
 export type USERWhereUniqueInput = Prisma.AtLeast<{
@@ -277,10 +334,28 @@ export type USERWhereUniqueInput = Prisma.AtLeast<{
   avatarPublicId?: Prisma.StringNullableFilter<"USER"> | string | null
   provider?: Prisma.EnumProviderFilter<"USER"> | $Enums.Provider
   role?: Prisma.EnumRoleFilter<"USER"> | $Enums.Role
+  status?: Prisma.EnumAccountStatusFilter<"USER"> | $Enums.AccountStatus
   isVerified?: Prisma.BoolFilter<"USER"> | boolean
+  bannedAt?: Prisma.DateTimeNullableFilter<"USER"> | Date | string | null
+  bannedReason?: Prisma.StringNullableFilter<"USER"> | string | null
   createdAt?: Prisma.DateTimeFilter<"USER"> | Date | string
   updatedAt?: Prisma.DateTimeNullableFilter<"USER"> | Date | string | null
   deletedAt?: Prisma.DateTimeNullableFilter<"USER"> | Date | string | null
+  ownedOrganization?: Prisma.XOR<Prisma.OrganizationNullableScalarRelationFilter, Prisma.OrganizationWhereInput> | null
+  memberships?: Prisma.OrganizationMemberListRelationFilter
+  invitations?: Prisma.OrganizationInvitationListRelationFilter
+  sentInvitations?: Prisma.OrganizationInvitationListRelationFilter
+  teamMemberships?: Prisma.TeamMemberListRelationFilter
+  ledTeams?: Prisma.TeamListRelationFilter
+  createdTasks?: Prisma.TaskListRelationFilter
+  assignedSubtasks?: Prisma.SubtaskListRelationFilter
+  submissions?: Prisma.SubtaskSubmissionListRelationFilter
+  reviewedSubmissions?: Prisma.SubtaskSubmissionListRelationFilter
+  complaintsFiled?: Prisma.ComplaintListRelationFilter
+  complaintsAgainst?: Prisma.ComplaintListRelationFilter
+  complaintsReviewed?: Prisma.ComplaintListRelationFilter
+  notifications?: Prisma.NotificationListRelationFilter
+  auditLogs?: Prisma.AuditLogListRelationFilter
 }, "id" | "googleId" | "email">
 
 export type USEROrderByWithAggregationInput = {
@@ -293,7 +368,10 @@ export type USEROrderByWithAggregationInput = {
   avatarPublicId?: Prisma.SortOrderInput | Prisma.SortOrder
   provider?: Prisma.SortOrder
   role?: Prisma.SortOrder
+  status?: Prisma.SortOrder
   isVerified?: Prisma.SortOrder
+  bannedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  bannedReason?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -315,7 +393,10 @@ export type USERScalarWhereWithAggregatesInput = {
   avatarPublicId?: Prisma.StringNullableWithAggregatesFilter<"USER"> | string | null
   provider?: Prisma.EnumProviderWithAggregatesFilter<"USER"> | $Enums.Provider
   role?: Prisma.EnumRoleWithAggregatesFilter<"USER"> | $Enums.Role
+  status?: Prisma.EnumAccountStatusWithAggregatesFilter<"USER"> | $Enums.AccountStatus
   isVerified?: Prisma.BoolWithAggregatesFilter<"USER"> | boolean
+  bannedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"USER"> | Date | string | null
+  bannedReason?: Prisma.StringNullableWithAggregatesFilter<"USER"> | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"USER"> | Date | string
   updatedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"USER"> | Date | string | null
   deletedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"USER"> | Date | string | null
@@ -331,10 +412,28 @@ export type USERCreateInput = {
   avatarPublicId?: string | null
   provider?: $Enums.Provider
   role?: $Enums.Role
+  status?: $Enums.AccountStatus
   isVerified?: boolean
+  bannedAt?: Date | string | null
+  bannedReason?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string | null
   deletedAt?: Date | string | null
+  ownedOrganization?: Prisma.OrganizationCreateNestedOneWithoutOwnerInput
+  memberships?: Prisma.OrganizationMemberCreateNestedManyWithoutUserInput
+  invitations?: Prisma.OrganizationInvitationCreateNestedManyWithoutInvitedUserInput
+  sentInvitations?: Prisma.OrganizationInvitationCreateNestedManyWithoutInvitedByInput
+  teamMemberships?: Prisma.TeamMemberCreateNestedManyWithoutUserInput
+  ledTeams?: Prisma.TeamCreateNestedManyWithoutLeaderInput
+  createdTasks?: Prisma.TaskCreateNestedManyWithoutCreatorInput
+  assignedSubtasks?: Prisma.SubtaskCreateNestedManyWithoutAssignedUserInput
+  submissions?: Prisma.SubtaskSubmissionCreateNestedManyWithoutSubmittedByInput
+  reviewedSubmissions?: Prisma.SubtaskSubmissionCreateNestedManyWithoutReviewedByInput
+  complaintsFiled?: Prisma.ComplaintCreateNestedManyWithoutComplainantInput
+  complaintsAgainst?: Prisma.ComplaintCreateNestedManyWithoutReportedUserInput
+  complaintsReviewed?: Prisma.ComplaintCreateNestedManyWithoutReviewerInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
+  auditLogs?: Prisma.AuditLogCreateNestedManyWithoutActorInput
 }
 
 export type USERUncheckedCreateInput = {
@@ -347,10 +446,28 @@ export type USERUncheckedCreateInput = {
   avatarPublicId?: string | null
   provider?: $Enums.Provider
   role?: $Enums.Role
+  status?: $Enums.AccountStatus
   isVerified?: boolean
+  bannedAt?: Date | string | null
+  bannedReason?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string | null
   deletedAt?: Date | string | null
+  ownedOrganization?: Prisma.OrganizationUncheckedCreateNestedOneWithoutOwnerInput
+  memberships?: Prisma.OrganizationMemberUncheckedCreateNestedManyWithoutUserInput
+  invitations?: Prisma.OrganizationInvitationUncheckedCreateNestedManyWithoutInvitedUserInput
+  sentInvitations?: Prisma.OrganizationInvitationUncheckedCreateNestedManyWithoutInvitedByInput
+  teamMemberships?: Prisma.TeamMemberUncheckedCreateNestedManyWithoutUserInput
+  ledTeams?: Prisma.TeamUncheckedCreateNestedManyWithoutLeaderInput
+  createdTasks?: Prisma.TaskUncheckedCreateNestedManyWithoutCreatorInput
+  assignedSubtasks?: Prisma.SubtaskUncheckedCreateNestedManyWithoutAssignedUserInput
+  submissions?: Prisma.SubtaskSubmissionUncheckedCreateNestedManyWithoutSubmittedByInput
+  reviewedSubmissions?: Prisma.SubtaskSubmissionUncheckedCreateNestedManyWithoutReviewedByInput
+  complaintsFiled?: Prisma.ComplaintUncheckedCreateNestedManyWithoutComplainantInput
+  complaintsAgainst?: Prisma.ComplaintUncheckedCreateNestedManyWithoutReportedUserInput
+  complaintsReviewed?: Prisma.ComplaintUncheckedCreateNestedManyWithoutReviewerInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
+  auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutActorInput
 }
 
 export type USERUpdateInput = {
@@ -363,10 +480,28 @@ export type USERUpdateInput = {
   avatarPublicId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   provider?: Prisma.EnumProviderFieldUpdateOperationsInput | $Enums.Provider
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  status?: Prisma.EnumAccountStatusFieldUpdateOperationsInput | $Enums.AccountStatus
   isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  bannedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  bannedReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  ownedOrganization?: Prisma.OrganizationUpdateOneWithoutOwnerNestedInput
+  memberships?: Prisma.OrganizationMemberUpdateManyWithoutUserNestedInput
+  invitations?: Prisma.OrganizationInvitationUpdateManyWithoutInvitedUserNestedInput
+  sentInvitations?: Prisma.OrganizationInvitationUpdateManyWithoutInvitedByNestedInput
+  teamMemberships?: Prisma.TeamMemberUpdateManyWithoutUserNestedInput
+  ledTeams?: Prisma.TeamUpdateManyWithoutLeaderNestedInput
+  createdTasks?: Prisma.TaskUpdateManyWithoutCreatorNestedInput
+  assignedSubtasks?: Prisma.SubtaskUpdateManyWithoutAssignedUserNestedInput
+  submissions?: Prisma.SubtaskSubmissionUpdateManyWithoutSubmittedByNestedInput
+  reviewedSubmissions?: Prisma.SubtaskSubmissionUpdateManyWithoutReviewedByNestedInput
+  complaintsFiled?: Prisma.ComplaintUpdateManyWithoutComplainantNestedInput
+  complaintsAgainst?: Prisma.ComplaintUpdateManyWithoutReportedUserNestedInput
+  complaintsReviewed?: Prisma.ComplaintUpdateManyWithoutReviewerNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
+  auditLogs?: Prisma.AuditLogUpdateManyWithoutActorNestedInput
 }
 
 export type USERUncheckedUpdateInput = {
@@ -379,10 +514,28 @@ export type USERUncheckedUpdateInput = {
   avatarPublicId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   provider?: Prisma.EnumProviderFieldUpdateOperationsInput | $Enums.Provider
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  status?: Prisma.EnumAccountStatusFieldUpdateOperationsInput | $Enums.AccountStatus
   isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  bannedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  bannedReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  ownedOrganization?: Prisma.OrganizationUncheckedUpdateOneWithoutOwnerNestedInput
+  memberships?: Prisma.OrganizationMemberUncheckedUpdateManyWithoutUserNestedInput
+  invitations?: Prisma.OrganizationInvitationUncheckedUpdateManyWithoutInvitedUserNestedInput
+  sentInvitations?: Prisma.OrganizationInvitationUncheckedUpdateManyWithoutInvitedByNestedInput
+  teamMemberships?: Prisma.TeamMemberUncheckedUpdateManyWithoutUserNestedInput
+  ledTeams?: Prisma.TeamUncheckedUpdateManyWithoutLeaderNestedInput
+  createdTasks?: Prisma.TaskUncheckedUpdateManyWithoutCreatorNestedInput
+  assignedSubtasks?: Prisma.SubtaskUncheckedUpdateManyWithoutAssignedUserNestedInput
+  submissions?: Prisma.SubtaskSubmissionUncheckedUpdateManyWithoutSubmittedByNestedInput
+  reviewedSubmissions?: Prisma.SubtaskSubmissionUncheckedUpdateManyWithoutReviewedByNestedInput
+  complaintsFiled?: Prisma.ComplaintUncheckedUpdateManyWithoutComplainantNestedInput
+  complaintsAgainst?: Prisma.ComplaintUncheckedUpdateManyWithoutReportedUserNestedInput
+  complaintsReviewed?: Prisma.ComplaintUncheckedUpdateManyWithoutReviewerNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
+  auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutActorNestedInput
 }
 
 export type USERCreateManyInput = {
@@ -395,7 +548,10 @@ export type USERCreateManyInput = {
   avatarPublicId?: string | null
   provider?: $Enums.Provider
   role?: $Enums.Role
+  status?: $Enums.AccountStatus
   isVerified?: boolean
+  bannedAt?: Date | string | null
+  bannedReason?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string | null
   deletedAt?: Date | string | null
@@ -411,7 +567,10 @@ export type USERUpdateManyMutationInput = {
   avatarPublicId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   provider?: Prisma.EnumProviderFieldUpdateOperationsInput | $Enums.Provider
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  status?: Prisma.EnumAccountStatusFieldUpdateOperationsInput | $Enums.AccountStatus
   isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  bannedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  bannedReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -427,10 +586,23 @@ export type USERUncheckedUpdateManyInput = {
   avatarPublicId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   provider?: Prisma.EnumProviderFieldUpdateOperationsInput | $Enums.Provider
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  status?: Prisma.EnumAccountStatusFieldUpdateOperationsInput | $Enums.AccountStatus
   isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  bannedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  bannedReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+}
+
+export type USERNullableScalarRelationFilter = {
+  is?: Prisma.USERWhereInput | null
+  isNot?: Prisma.USERWhereInput | null
+}
+
+export type USERScalarRelationFilter = {
+  is?: Prisma.USERWhereInput
+  isNot?: Prisma.USERWhereInput
 }
 
 export type USERCountOrderByAggregateInput = {
@@ -443,7 +615,10 @@ export type USERCountOrderByAggregateInput = {
   avatarPublicId?: Prisma.SortOrder
   provider?: Prisma.SortOrder
   role?: Prisma.SortOrder
+  status?: Prisma.SortOrder
   isVerified?: Prisma.SortOrder
+  bannedAt?: Prisma.SortOrder
+  bannedReason?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrder
@@ -459,7 +634,10 @@ export type USERMaxOrderByAggregateInput = {
   avatarPublicId?: Prisma.SortOrder
   provider?: Prisma.SortOrder
   role?: Prisma.SortOrder
+  status?: Prisma.SortOrder
   isVerified?: Prisma.SortOrder
+  bannedAt?: Prisma.SortOrder
+  bannedReason?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrder
@@ -475,16 +653,2609 @@ export type USERMinOrderByAggregateInput = {
   avatarPublicId?: Prisma.SortOrder
   provider?: Prisma.SortOrder
   role?: Prisma.SortOrder
+  status?: Prisma.SortOrder
   isVerified?: Prisma.SortOrder
+  bannedAt?: Prisma.SortOrder
+  bannedReason?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrder
+}
+
+export type USERCreateNestedOneWithoutAuditLogsInput = {
+  create?: Prisma.XOR<Prisma.USERCreateWithoutAuditLogsInput, Prisma.USERUncheckedCreateWithoutAuditLogsInput>
+  connectOrCreate?: Prisma.USERCreateOrConnectWithoutAuditLogsInput
+  connect?: Prisma.USERWhereUniqueInput
+}
+
+export type USERUpdateOneWithoutAuditLogsNestedInput = {
+  create?: Prisma.XOR<Prisma.USERCreateWithoutAuditLogsInput, Prisma.USERUncheckedCreateWithoutAuditLogsInput>
+  connectOrCreate?: Prisma.USERCreateOrConnectWithoutAuditLogsInput
+  upsert?: Prisma.USERUpsertWithoutAuditLogsInput
+  disconnect?: Prisma.USERWhereInput | boolean
+  delete?: Prisma.USERWhereInput | boolean
+  connect?: Prisma.USERWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.USERUpdateToOneWithWhereWithoutAuditLogsInput, Prisma.USERUpdateWithoutAuditLogsInput>, Prisma.USERUncheckedUpdateWithoutAuditLogsInput>
+}
+
+export type USERCreateNestedOneWithoutComplaintsFiledInput = {
+  create?: Prisma.XOR<Prisma.USERCreateWithoutComplaintsFiledInput, Prisma.USERUncheckedCreateWithoutComplaintsFiledInput>
+  connectOrCreate?: Prisma.USERCreateOrConnectWithoutComplaintsFiledInput
+  connect?: Prisma.USERWhereUniqueInput
+}
+
+export type USERCreateNestedOneWithoutComplaintsAgainstInput = {
+  create?: Prisma.XOR<Prisma.USERCreateWithoutComplaintsAgainstInput, Prisma.USERUncheckedCreateWithoutComplaintsAgainstInput>
+  connectOrCreate?: Prisma.USERCreateOrConnectWithoutComplaintsAgainstInput
+  connect?: Prisma.USERWhereUniqueInput
+}
+
+export type USERCreateNestedOneWithoutComplaintsReviewedInput = {
+  create?: Prisma.XOR<Prisma.USERCreateWithoutComplaintsReviewedInput, Prisma.USERUncheckedCreateWithoutComplaintsReviewedInput>
+  connectOrCreate?: Prisma.USERCreateOrConnectWithoutComplaintsReviewedInput
+  connect?: Prisma.USERWhereUniqueInput
+}
+
+export type USERUpdateOneRequiredWithoutComplaintsFiledNestedInput = {
+  create?: Prisma.XOR<Prisma.USERCreateWithoutComplaintsFiledInput, Prisma.USERUncheckedCreateWithoutComplaintsFiledInput>
+  connectOrCreate?: Prisma.USERCreateOrConnectWithoutComplaintsFiledInput
+  upsert?: Prisma.USERUpsertWithoutComplaintsFiledInput
+  connect?: Prisma.USERWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.USERUpdateToOneWithWhereWithoutComplaintsFiledInput, Prisma.USERUpdateWithoutComplaintsFiledInput>, Prisma.USERUncheckedUpdateWithoutComplaintsFiledInput>
+}
+
+export type USERUpdateOneRequiredWithoutComplaintsAgainstNestedInput = {
+  create?: Prisma.XOR<Prisma.USERCreateWithoutComplaintsAgainstInput, Prisma.USERUncheckedCreateWithoutComplaintsAgainstInput>
+  connectOrCreate?: Prisma.USERCreateOrConnectWithoutComplaintsAgainstInput
+  upsert?: Prisma.USERUpsertWithoutComplaintsAgainstInput
+  connect?: Prisma.USERWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.USERUpdateToOneWithWhereWithoutComplaintsAgainstInput, Prisma.USERUpdateWithoutComplaintsAgainstInput>, Prisma.USERUncheckedUpdateWithoutComplaintsAgainstInput>
+}
+
+export type USERUpdateOneWithoutComplaintsReviewedNestedInput = {
+  create?: Prisma.XOR<Prisma.USERCreateWithoutComplaintsReviewedInput, Prisma.USERUncheckedCreateWithoutComplaintsReviewedInput>
+  connectOrCreate?: Prisma.USERCreateOrConnectWithoutComplaintsReviewedInput
+  upsert?: Prisma.USERUpsertWithoutComplaintsReviewedInput
+  disconnect?: Prisma.USERWhereInput | boolean
+  delete?: Prisma.USERWhereInput | boolean
+  connect?: Prisma.USERWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.USERUpdateToOneWithWhereWithoutComplaintsReviewedInput, Prisma.USERUpdateWithoutComplaintsReviewedInput>, Prisma.USERUncheckedUpdateWithoutComplaintsReviewedInput>
+}
+
+export type USERCreateNestedOneWithoutNotificationsInput = {
+  create?: Prisma.XOR<Prisma.USERCreateWithoutNotificationsInput, Prisma.USERUncheckedCreateWithoutNotificationsInput>
+  connectOrCreate?: Prisma.USERCreateOrConnectWithoutNotificationsInput
+  connect?: Prisma.USERWhereUniqueInput
+}
+
+export type USERUpdateOneRequiredWithoutNotificationsNestedInput = {
+  create?: Prisma.XOR<Prisma.USERCreateWithoutNotificationsInput, Prisma.USERUncheckedCreateWithoutNotificationsInput>
+  connectOrCreate?: Prisma.USERCreateOrConnectWithoutNotificationsInput
+  upsert?: Prisma.USERUpsertWithoutNotificationsInput
+  connect?: Prisma.USERWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.USERUpdateToOneWithWhereWithoutNotificationsInput, Prisma.USERUpdateWithoutNotificationsInput>, Prisma.USERUncheckedUpdateWithoutNotificationsInput>
+}
+
+export type USERCreateNestedOneWithoutOwnedOrganizationInput = {
+  create?: Prisma.XOR<Prisma.USERCreateWithoutOwnedOrganizationInput, Prisma.USERUncheckedCreateWithoutOwnedOrganizationInput>
+  connectOrCreate?: Prisma.USERCreateOrConnectWithoutOwnedOrganizationInput
+  connect?: Prisma.USERWhereUniqueInput
+}
+
+export type USERUpdateOneRequiredWithoutOwnedOrganizationNestedInput = {
+  create?: Prisma.XOR<Prisma.USERCreateWithoutOwnedOrganizationInput, Prisma.USERUncheckedCreateWithoutOwnedOrganizationInput>
+  connectOrCreate?: Prisma.USERCreateOrConnectWithoutOwnedOrganizationInput
+  upsert?: Prisma.USERUpsertWithoutOwnedOrganizationInput
+  connect?: Prisma.USERWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.USERUpdateToOneWithWhereWithoutOwnedOrganizationInput, Prisma.USERUpdateWithoutOwnedOrganizationInput>, Prisma.USERUncheckedUpdateWithoutOwnedOrganizationInput>
+}
+
+export type USERCreateNestedOneWithoutInvitationsInput = {
+  create?: Prisma.XOR<Prisma.USERCreateWithoutInvitationsInput, Prisma.USERUncheckedCreateWithoutInvitationsInput>
+  connectOrCreate?: Prisma.USERCreateOrConnectWithoutInvitationsInput
+  connect?: Prisma.USERWhereUniqueInput
+}
+
+export type USERCreateNestedOneWithoutSentInvitationsInput = {
+  create?: Prisma.XOR<Prisma.USERCreateWithoutSentInvitationsInput, Prisma.USERUncheckedCreateWithoutSentInvitationsInput>
+  connectOrCreate?: Prisma.USERCreateOrConnectWithoutSentInvitationsInput
+  connect?: Prisma.USERWhereUniqueInput
+}
+
+export type USERUpdateOneWithoutInvitationsNestedInput = {
+  create?: Prisma.XOR<Prisma.USERCreateWithoutInvitationsInput, Prisma.USERUncheckedCreateWithoutInvitationsInput>
+  connectOrCreate?: Prisma.USERCreateOrConnectWithoutInvitationsInput
+  upsert?: Prisma.USERUpsertWithoutInvitationsInput
+  disconnect?: Prisma.USERWhereInput | boolean
+  delete?: Prisma.USERWhereInput | boolean
+  connect?: Prisma.USERWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.USERUpdateToOneWithWhereWithoutInvitationsInput, Prisma.USERUpdateWithoutInvitationsInput>, Prisma.USERUncheckedUpdateWithoutInvitationsInput>
+}
+
+export type USERUpdateOneRequiredWithoutSentInvitationsNestedInput = {
+  create?: Prisma.XOR<Prisma.USERCreateWithoutSentInvitationsInput, Prisma.USERUncheckedCreateWithoutSentInvitationsInput>
+  connectOrCreate?: Prisma.USERCreateOrConnectWithoutSentInvitationsInput
+  upsert?: Prisma.USERUpsertWithoutSentInvitationsInput
+  connect?: Prisma.USERWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.USERUpdateToOneWithWhereWithoutSentInvitationsInput, Prisma.USERUpdateWithoutSentInvitationsInput>, Prisma.USERUncheckedUpdateWithoutSentInvitationsInput>
+}
+
+export type USERCreateNestedOneWithoutMembershipsInput = {
+  create?: Prisma.XOR<Prisma.USERCreateWithoutMembershipsInput, Prisma.USERUncheckedCreateWithoutMembershipsInput>
+  connectOrCreate?: Prisma.USERCreateOrConnectWithoutMembershipsInput
+  connect?: Prisma.USERWhereUniqueInput
+}
+
+export type USERUpdateOneRequiredWithoutMembershipsNestedInput = {
+  create?: Prisma.XOR<Prisma.USERCreateWithoutMembershipsInput, Prisma.USERUncheckedCreateWithoutMembershipsInput>
+  connectOrCreate?: Prisma.USERCreateOrConnectWithoutMembershipsInput
+  upsert?: Prisma.USERUpsertWithoutMembershipsInput
+  connect?: Prisma.USERWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.USERUpdateToOneWithWhereWithoutMembershipsInput, Prisma.USERUpdateWithoutMembershipsInput>, Prisma.USERUncheckedUpdateWithoutMembershipsInput>
+}
+
+export type USERCreateNestedOneWithoutCreatedTasksInput = {
+  create?: Prisma.XOR<Prisma.USERCreateWithoutCreatedTasksInput, Prisma.USERUncheckedCreateWithoutCreatedTasksInput>
+  connectOrCreate?: Prisma.USERCreateOrConnectWithoutCreatedTasksInput
+  connect?: Prisma.USERWhereUniqueInput
+}
+
+export type USERUpdateOneRequiredWithoutCreatedTasksNestedInput = {
+  create?: Prisma.XOR<Prisma.USERCreateWithoutCreatedTasksInput, Prisma.USERUncheckedCreateWithoutCreatedTasksInput>
+  connectOrCreate?: Prisma.USERCreateOrConnectWithoutCreatedTasksInput
+  upsert?: Prisma.USERUpsertWithoutCreatedTasksInput
+  connect?: Prisma.USERWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.USERUpdateToOneWithWhereWithoutCreatedTasksInput, Prisma.USERUpdateWithoutCreatedTasksInput>, Prisma.USERUncheckedUpdateWithoutCreatedTasksInput>
+}
+
+export type USERCreateNestedOneWithoutAssignedSubtasksInput = {
+  create?: Prisma.XOR<Prisma.USERCreateWithoutAssignedSubtasksInput, Prisma.USERUncheckedCreateWithoutAssignedSubtasksInput>
+  connectOrCreate?: Prisma.USERCreateOrConnectWithoutAssignedSubtasksInput
+  connect?: Prisma.USERWhereUniqueInput
+}
+
+export type USERUpdateOneRequiredWithoutAssignedSubtasksNestedInput = {
+  create?: Prisma.XOR<Prisma.USERCreateWithoutAssignedSubtasksInput, Prisma.USERUncheckedCreateWithoutAssignedSubtasksInput>
+  connectOrCreate?: Prisma.USERCreateOrConnectWithoutAssignedSubtasksInput
+  upsert?: Prisma.USERUpsertWithoutAssignedSubtasksInput
+  connect?: Prisma.USERWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.USERUpdateToOneWithWhereWithoutAssignedSubtasksInput, Prisma.USERUpdateWithoutAssignedSubtasksInput>, Prisma.USERUncheckedUpdateWithoutAssignedSubtasksInput>
+}
+
+export type USERCreateNestedOneWithoutSubmissionsInput = {
+  create?: Prisma.XOR<Prisma.USERCreateWithoutSubmissionsInput, Prisma.USERUncheckedCreateWithoutSubmissionsInput>
+  connectOrCreate?: Prisma.USERCreateOrConnectWithoutSubmissionsInput
+  connect?: Prisma.USERWhereUniqueInput
+}
+
+export type USERCreateNestedOneWithoutReviewedSubmissionsInput = {
+  create?: Prisma.XOR<Prisma.USERCreateWithoutReviewedSubmissionsInput, Prisma.USERUncheckedCreateWithoutReviewedSubmissionsInput>
+  connectOrCreate?: Prisma.USERCreateOrConnectWithoutReviewedSubmissionsInput
+  connect?: Prisma.USERWhereUniqueInput
+}
+
+export type USERUpdateOneRequiredWithoutSubmissionsNestedInput = {
+  create?: Prisma.XOR<Prisma.USERCreateWithoutSubmissionsInput, Prisma.USERUncheckedCreateWithoutSubmissionsInput>
+  connectOrCreate?: Prisma.USERCreateOrConnectWithoutSubmissionsInput
+  upsert?: Prisma.USERUpsertWithoutSubmissionsInput
+  connect?: Prisma.USERWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.USERUpdateToOneWithWhereWithoutSubmissionsInput, Prisma.USERUpdateWithoutSubmissionsInput>, Prisma.USERUncheckedUpdateWithoutSubmissionsInput>
+}
+
+export type USERUpdateOneWithoutReviewedSubmissionsNestedInput = {
+  create?: Prisma.XOR<Prisma.USERCreateWithoutReviewedSubmissionsInput, Prisma.USERUncheckedCreateWithoutReviewedSubmissionsInput>
+  connectOrCreate?: Prisma.USERCreateOrConnectWithoutReviewedSubmissionsInput
+  upsert?: Prisma.USERUpsertWithoutReviewedSubmissionsInput
+  disconnect?: Prisma.USERWhereInput | boolean
+  delete?: Prisma.USERWhereInput | boolean
+  connect?: Prisma.USERWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.USERUpdateToOneWithWhereWithoutReviewedSubmissionsInput, Prisma.USERUpdateWithoutReviewedSubmissionsInput>, Prisma.USERUncheckedUpdateWithoutReviewedSubmissionsInput>
+}
+
+export type USERCreateNestedOneWithoutLedTeamsInput = {
+  create?: Prisma.XOR<Prisma.USERCreateWithoutLedTeamsInput, Prisma.USERUncheckedCreateWithoutLedTeamsInput>
+  connectOrCreate?: Prisma.USERCreateOrConnectWithoutLedTeamsInput
+  connect?: Prisma.USERWhereUniqueInput
+}
+
+export type USERUpdateOneWithoutLedTeamsNestedInput = {
+  create?: Prisma.XOR<Prisma.USERCreateWithoutLedTeamsInput, Prisma.USERUncheckedCreateWithoutLedTeamsInput>
+  connectOrCreate?: Prisma.USERCreateOrConnectWithoutLedTeamsInput
+  upsert?: Prisma.USERUpsertWithoutLedTeamsInput
+  disconnect?: Prisma.USERWhereInput | boolean
+  delete?: Prisma.USERWhereInput | boolean
+  connect?: Prisma.USERWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.USERUpdateToOneWithWhereWithoutLedTeamsInput, Prisma.USERUpdateWithoutLedTeamsInput>, Prisma.USERUncheckedUpdateWithoutLedTeamsInput>
+}
+
+export type USERCreateNestedOneWithoutTeamMembershipsInput = {
+  create?: Prisma.XOR<Prisma.USERCreateWithoutTeamMembershipsInput, Prisma.USERUncheckedCreateWithoutTeamMembershipsInput>
+  connectOrCreate?: Prisma.USERCreateOrConnectWithoutTeamMembershipsInput
+  connect?: Prisma.USERWhereUniqueInput
+}
+
+export type USERUpdateOneRequiredWithoutTeamMembershipsNestedInput = {
+  create?: Prisma.XOR<Prisma.USERCreateWithoutTeamMembershipsInput, Prisma.USERUncheckedCreateWithoutTeamMembershipsInput>
+  connectOrCreate?: Prisma.USERCreateOrConnectWithoutTeamMembershipsInput
+  upsert?: Prisma.USERUpsertWithoutTeamMembershipsInput
+  connect?: Prisma.USERWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.USERUpdateToOneWithWhereWithoutTeamMembershipsInput, Prisma.USERUpdateWithoutTeamMembershipsInput>, Prisma.USERUncheckedUpdateWithoutTeamMembershipsInput>
 }
 
 export type EnumProviderFieldUpdateOperationsInput = {
   set?: $Enums.Provider
 }
 
+export type EnumAccountStatusFieldUpdateOperationsInput = {
+  set?: $Enums.AccountStatus
+}
+
+export type USERCreateWithoutAuditLogsInput = {
+  id?: string
+  email: string
+  name: string
+  password?: string | null
+  googleId?: string | null
+  avatar?: string | null
+  avatarPublicId?: string | null
+  provider?: $Enums.Provider
+  role?: $Enums.Role
+  status?: $Enums.AccountStatus
+  isVerified?: boolean
+  bannedAt?: Date | string | null
+  bannedReason?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string | null
+  deletedAt?: Date | string | null
+  ownedOrganization?: Prisma.OrganizationCreateNestedOneWithoutOwnerInput
+  memberships?: Prisma.OrganizationMemberCreateNestedManyWithoutUserInput
+  invitations?: Prisma.OrganizationInvitationCreateNestedManyWithoutInvitedUserInput
+  sentInvitations?: Prisma.OrganizationInvitationCreateNestedManyWithoutInvitedByInput
+  teamMemberships?: Prisma.TeamMemberCreateNestedManyWithoutUserInput
+  ledTeams?: Prisma.TeamCreateNestedManyWithoutLeaderInput
+  createdTasks?: Prisma.TaskCreateNestedManyWithoutCreatorInput
+  assignedSubtasks?: Prisma.SubtaskCreateNestedManyWithoutAssignedUserInput
+  submissions?: Prisma.SubtaskSubmissionCreateNestedManyWithoutSubmittedByInput
+  reviewedSubmissions?: Prisma.SubtaskSubmissionCreateNestedManyWithoutReviewedByInput
+  complaintsFiled?: Prisma.ComplaintCreateNestedManyWithoutComplainantInput
+  complaintsAgainst?: Prisma.ComplaintCreateNestedManyWithoutReportedUserInput
+  complaintsReviewed?: Prisma.ComplaintCreateNestedManyWithoutReviewerInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
+}
+
+export type USERUncheckedCreateWithoutAuditLogsInput = {
+  id?: string
+  email: string
+  name: string
+  password?: string | null
+  googleId?: string | null
+  avatar?: string | null
+  avatarPublicId?: string | null
+  provider?: $Enums.Provider
+  role?: $Enums.Role
+  status?: $Enums.AccountStatus
+  isVerified?: boolean
+  bannedAt?: Date | string | null
+  bannedReason?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string | null
+  deletedAt?: Date | string | null
+  ownedOrganization?: Prisma.OrganizationUncheckedCreateNestedOneWithoutOwnerInput
+  memberships?: Prisma.OrganizationMemberUncheckedCreateNestedManyWithoutUserInput
+  invitations?: Prisma.OrganizationInvitationUncheckedCreateNestedManyWithoutInvitedUserInput
+  sentInvitations?: Prisma.OrganizationInvitationUncheckedCreateNestedManyWithoutInvitedByInput
+  teamMemberships?: Prisma.TeamMemberUncheckedCreateNestedManyWithoutUserInput
+  ledTeams?: Prisma.TeamUncheckedCreateNestedManyWithoutLeaderInput
+  createdTasks?: Prisma.TaskUncheckedCreateNestedManyWithoutCreatorInput
+  assignedSubtasks?: Prisma.SubtaskUncheckedCreateNestedManyWithoutAssignedUserInput
+  submissions?: Prisma.SubtaskSubmissionUncheckedCreateNestedManyWithoutSubmittedByInput
+  reviewedSubmissions?: Prisma.SubtaskSubmissionUncheckedCreateNestedManyWithoutReviewedByInput
+  complaintsFiled?: Prisma.ComplaintUncheckedCreateNestedManyWithoutComplainantInput
+  complaintsAgainst?: Prisma.ComplaintUncheckedCreateNestedManyWithoutReportedUserInput
+  complaintsReviewed?: Prisma.ComplaintUncheckedCreateNestedManyWithoutReviewerInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
+}
+
+export type USERCreateOrConnectWithoutAuditLogsInput = {
+  where: Prisma.USERWhereUniqueInput
+  create: Prisma.XOR<Prisma.USERCreateWithoutAuditLogsInput, Prisma.USERUncheckedCreateWithoutAuditLogsInput>
+}
+
+export type USERUpsertWithoutAuditLogsInput = {
+  update: Prisma.XOR<Prisma.USERUpdateWithoutAuditLogsInput, Prisma.USERUncheckedUpdateWithoutAuditLogsInput>
+  create: Prisma.XOR<Prisma.USERCreateWithoutAuditLogsInput, Prisma.USERUncheckedCreateWithoutAuditLogsInput>
+  where?: Prisma.USERWhereInput
+}
+
+export type USERUpdateToOneWithWhereWithoutAuditLogsInput = {
+  where?: Prisma.USERWhereInput
+  data: Prisma.XOR<Prisma.USERUpdateWithoutAuditLogsInput, Prisma.USERUncheckedUpdateWithoutAuditLogsInput>
+}
+
+export type USERUpdateWithoutAuditLogsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  googleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  avatar?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  avatarPublicId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  provider?: Prisma.EnumProviderFieldUpdateOperationsInput | $Enums.Provider
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  status?: Prisma.EnumAccountStatusFieldUpdateOperationsInput | $Enums.AccountStatus
+  isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  bannedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  bannedReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  ownedOrganization?: Prisma.OrganizationUpdateOneWithoutOwnerNestedInput
+  memberships?: Prisma.OrganizationMemberUpdateManyWithoutUserNestedInput
+  invitations?: Prisma.OrganizationInvitationUpdateManyWithoutInvitedUserNestedInput
+  sentInvitations?: Prisma.OrganizationInvitationUpdateManyWithoutInvitedByNestedInput
+  teamMemberships?: Prisma.TeamMemberUpdateManyWithoutUserNestedInput
+  ledTeams?: Prisma.TeamUpdateManyWithoutLeaderNestedInput
+  createdTasks?: Prisma.TaskUpdateManyWithoutCreatorNestedInput
+  assignedSubtasks?: Prisma.SubtaskUpdateManyWithoutAssignedUserNestedInput
+  submissions?: Prisma.SubtaskSubmissionUpdateManyWithoutSubmittedByNestedInput
+  reviewedSubmissions?: Prisma.SubtaskSubmissionUpdateManyWithoutReviewedByNestedInput
+  complaintsFiled?: Prisma.ComplaintUpdateManyWithoutComplainantNestedInput
+  complaintsAgainst?: Prisma.ComplaintUpdateManyWithoutReportedUserNestedInput
+  complaintsReviewed?: Prisma.ComplaintUpdateManyWithoutReviewerNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
+}
+
+export type USERUncheckedUpdateWithoutAuditLogsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  googleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  avatar?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  avatarPublicId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  provider?: Prisma.EnumProviderFieldUpdateOperationsInput | $Enums.Provider
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  status?: Prisma.EnumAccountStatusFieldUpdateOperationsInput | $Enums.AccountStatus
+  isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  bannedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  bannedReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  ownedOrganization?: Prisma.OrganizationUncheckedUpdateOneWithoutOwnerNestedInput
+  memberships?: Prisma.OrganizationMemberUncheckedUpdateManyWithoutUserNestedInput
+  invitations?: Prisma.OrganizationInvitationUncheckedUpdateManyWithoutInvitedUserNestedInput
+  sentInvitations?: Prisma.OrganizationInvitationUncheckedUpdateManyWithoutInvitedByNestedInput
+  teamMemberships?: Prisma.TeamMemberUncheckedUpdateManyWithoutUserNestedInput
+  ledTeams?: Prisma.TeamUncheckedUpdateManyWithoutLeaderNestedInput
+  createdTasks?: Prisma.TaskUncheckedUpdateManyWithoutCreatorNestedInput
+  assignedSubtasks?: Prisma.SubtaskUncheckedUpdateManyWithoutAssignedUserNestedInput
+  submissions?: Prisma.SubtaskSubmissionUncheckedUpdateManyWithoutSubmittedByNestedInput
+  reviewedSubmissions?: Prisma.SubtaskSubmissionUncheckedUpdateManyWithoutReviewedByNestedInput
+  complaintsFiled?: Prisma.ComplaintUncheckedUpdateManyWithoutComplainantNestedInput
+  complaintsAgainst?: Prisma.ComplaintUncheckedUpdateManyWithoutReportedUserNestedInput
+  complaintsReviewed?: Prisma.ComplaintUncheckedUpdateManyWithoutReviewerNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
+}
+
+export type USERCreateWithoutComplaintsFiledInput = {
+  id?: string
+  email: string
+  name: string
+  password?: string | null
+  googleId?: string | null
+  avatar?: string | null
+  avatarPublicId?: string | null
+  provider?: $Enums.Provider
+  role?: $Enums.Role
+  status?: $Enums.AccountStatus
+  isVerified?: boolean
+  bannedAt?: Date | string | null
+  bannedReason?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string | null
+  deletedAt?: Date | string | null
+  ownedOrganization?: Prisma.OrganizationCreateNestedOneWithoutOwnerInput
+  memberships?: Prisma.OrganizationMemberCreateNestedManyWithoutUserInput
+  invitations?: Prisma.OrganizationInvitationCreateNestedManyWithoutInvitedUserInput
+  sentInvitations?: Prisma.OrganizationInvitationCreateNestedManyWithoutInvitedByInput
+  teamMemberships?: Prisma.TeamMemberCreateNestedManyWithoutUserInput
+  ledTeams?: Prisma.TeamCreateNestedManyWithoutLeaderInput
+  createdTasks?: Prisma.TaskCreateNestedManyWithoutCreatorInput
+  assignedSubtasks?: Prisma.SubtaskCreateNestedManyWithoutAssignedUserInput
+  submissions?: Prisma.SubtaskSubmissionCreateNestedManyWithoutSubmittedByInput
+  reviewedSubmissions?: Prisma.SubtaskSubmissionCreateNestedManyWithoutReviewedByInput
+  complaintsAgainst?: Prisma.ComplaintCreateNestedManyWithoutReportedUserInput
+  complaintsReviewed?: Prisma.ComplaintCreateNestedManyWithoutReviewerInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
+  auditLogs?: Prisma.AuditLogCreateNestedManyWithoutActorInput
+}
+
+export type USERUncheckedCreateWithoutComplaintsFiledInput = {
+  id?: string
+  email: string
+  name: string
+  password?: string | null
+  googleId?: string | null
+  avatar?: string | null
+  avatarPublicId?: string | null
+  provider?: $Enums.Provider
+  role?: $Enums.Role
+  status?: $Enums.AccountStatus
+  isVerified?: boolean
+  bannedAt?: Date | string | null
+  bannedReason?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string | null
+  deletedAt?: Date | string | null
+  ownedOrganization?: Prisma.OrganizationUncheckedCreateNestedOneWithoutOwnerInput
+  memberships?: Prisma.OrganizationMemberUncheckedCreateNestedManyWithoutUserInput
+  invitations?: Prisma.OrganizationInvitationUncheckedCreateNestedManyWithoutInvitedUserInput
+  sentInvitations?: Prisma.OrganizationInvitationUncheckedCreateNestedManyWithoutInvitedByInput
+  teamMemberships?: Prisma.TeamMemberUncheckedCreateNestedManyWithoutUserInput
+  ledTeams?: Prisma.TeamUncheckedCreateNestedManyWithoutLeaderInput
+  createdTasks?: Prisma.TaskUncheckedCreateNestedManyWithoutCreatorInput
+  assignedSubtasks?: Prisma.SubtaskUncheckedCreateNestedManyWithoutAssignedUserInput
+  submissions?: Prisma.SubtaskSubmissionUncheckedCreateNestedManyWithoutSubmittedByInput
+  reviewedSubmissions?: Prisma.SubtaskSubmissionUncheckedCreateNestedManyWithoutReviewedByInput
+  complaintsAgainst?: Prisma.ComplaintUncheckedCreateNestedManyWithoutReportedUserInput
+  complaintsReviewed?: Prisma.ComplaintUncheckedCreateNestedManyWithoutReviewerInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
+  auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutActorInput
+}
+
+export type USERCreateOrConnectWithoutComplaintsFiledInput = {
+  where: Prisma.USERWhereUniqueInput
+  create: Prisma.XOR<Prisma.USERCreateWithoutComplaintsFiledInput, Prisma.USERUncheckedCreateWithoutComplaintsFiledInput>
+}
+
+export type USERCreateWithoutComplaintsAgainstInput = {
+  id?: string
+  email: string
+  name: string
+  password?: string | null
+  googleId?: string | null
+  avatar?: string | null
+  avatarPublicId?: string | null
+  provider?: $Enums.Provider
+  role?: $Enums.Role
+  status?: $Enums.AccountStatus
+  isVerified?: boolean
+  bannedAt?: Date | string | null
+  bannedReason?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string | null
+  deletedAt?: Date | string | null
+  ownedOrganization?: Prisma.OrganizationCreateNestedOneWithoutOwnerInput
+  memberships?: Prisma.OrganizationMemberCreateNestedManyWithoutUserInput
+  invitations?: Prisma.OrganizationInvitationCreateNestedManyWithoutInvitedUserInput
+  sentInvitations?: Prisma.OrganizationInvitationCreateNestedManyWithoutInvitedByInput
+  teamMemberships?: Prisma.TeamMemberCreateNestedManyWithoutUserInput
+  ledTeams?: Prisma.TeamCreateNestedManyWithoutLeaderInput
+  createdTasks?: Prisma.TaskCreateNestedManyWithoutCreatorInput
+  assignedSubtasks?: Prisma.SubtaskCreateNestedManyWithoutAssignedUserInput
+  submissions?: Prisma.SubtaskSubmissionCreateNestedManyWithoutSubmittedByInput
+  reviewedSubmissions?: Prisma.SubtaskSubmissionCreateNestedManyWithoutReviewedByInput
+  complaintsFiled?: Prisma.ComplaintCreateNestedManyWithoutComplainantInput
+  complaintsReviewed?: Prisma.ComplaintCreateNestedManyWithoutReviewerInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
+  auditLogs?: Prisma.AuditLogCreateNestedManyWithoutActorInput
+}
+
+export type USERUncheckedCreateWithoutComplaintsAgainstInput = {
+  id?: string
+  email: string
+  name: string
+  password?: string | null
+  googleId?: string | null
+  avatar?: string | null
+  avatarPublicId?: string | null
+  provider?: $Enums.Provider
+  role?: $Enums.Role
+  status?: $Enums.AccountStatus
+  isVerified?: boolean
+  bannedAt?: Date | string | null
+  bannedReason?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string | null
+  deletedAt?: Date | string | null
+  ownedOrganization?: Prisma.OrganizationUncheckedCreateNestedOneWithoutOwnerInput
+  memberships?: Prisma.OrganizationMemberUncheckedCreateNestedManyWithoutUserInput
+  invitations?: Prisma.OrganizationInvitationUncheckedCreateNestedManyWithoutInvitedUserInput
+  sentInvitations?: Prisma.OrganizationInvitationUncheckedCreateNestedManyWithoutInvitedByInput
+  teamMemberships?: Prisma.TeamMemberUncheckedCreateNestedManyWithoutUserInput
+  ledTeams?: Prisma.TeamUncheckedCreateNestedManyWithoutLeaderInput
+  createdTasks?: Prisma.TaskUncheckedCreateNestedManyWithoutCreatorInput
+  assignedSubtasks?: Prisma.SubtaskUncheckedCreateNestedManyWithoutAssignedUserInput
+  submissions?: Prisma.SubtaskSubmissionUncheckedCreateNestedManyWithoutSubmittedByInput
+  reviewedSubmissions?: Prisma.SubtaskSubmissionUncheckedCreateNestedManyWithoutReviewedByInput
+  complaintsFiled?: Prisma.ComplaintUncheckedCreateNestedManyWithoutComplainantInput
+  complaintsReviewed?: Prisma.ComplaintUncheckedCreateNestedManyWithoutReviewerInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
+  auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutActorInput
+}
+
+export type USERCreateOrConnectWithoutComplaintsAgainstInput = {
+  where: Prisma.USERWhereUniqueInput
+  create: Prisma.XOR<Prisma.USERCreateWithoutComplaintsAgainstInput, Prisma.USERUncheckedCreateWithoutComplaintsAgainstInput>
+}
+
+export type USERCreateWithoutComplaintsReviewedInput = {
+  id?: string
+  email: string
+  name: string
+  password?: string | null
+  googleId?: string | null
+  avatar?: string | null
+  avatarPublicId?: string | null
+  provider?: $Enums.Provider
+  role?: $Enums.Role
+  status?: $Enums.AccountStatus
+  isVerified?: boolean
+  bannedAt?: Date | string | null
+  bannedReason?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string | null
+  deletedAt?: Date | string | null
+  ownedOrganization?: Prisma.OrganizationCreateNestedOneWithoutOwnerInput
+  memberships?: Prisma.OrganizationMemberCreateNestedManyWithoutUserInput
+  invitations?: Prisma.OrganizationInvitationCreateNestedManyWithoutInvitedUserInput
+  sentInvitations?: Prisma.OrganizationInvitationCreateNestedManyWithoutInvitedByInput
+  teamMemberships?: Prisma.TeamMemberCreateNestedManyWithoutUserInput
+  ledTeams?: Prisma.TeamCreateNestedManyWithoutLeaderInput
+  createdTasks?: Prisma.TaskCreateNestedManyWithoutCreatorInput
+  assignedSubtasks?: Prisma.SubtaskCreateNestedManyWithoutAssignedUserInput
+  submissions?: Prisma.SubtaskSubmissionCreateNestedManyWithoutSubmittedByInput
+  reviewedSubmissions?: Prisma.SubtaskSubmissionCreateNestedManyWithoutReviewedByInput
+  complaintsFiled?: Prisma.ComplaintCreateNestedManyWithoutComplainantInput
+  complaintsAgainst?: Prisma.ComplaintCreateNestedManyWithoutReportedUserInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
+  auditLogs?: Prisma.AuditLogCreateNestedManyWithoutActorInput
+}
+
+export type USERUncheckedCreateWithoutComplaintsReviewedInput = {
+  id?: string
+  email: string
+  name: string
+  password?: string | null
+  googleId?: string | null
+  avatar?: string | null
+  avatarPublicId?: string | null
+  provider?: $Enums.Provider
+  role?: $Enums.Role
+  status?: $Enums.AccountStatus
+  isVerified?: boolean
+  bannedAt?: Date | string | null
+  bannedReason?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string | null
+  deletedAt?: Date | string | null
+  ownedOrganization?: Prisma.OrganizationUncheckedCreateNestedOneWithoutOwnerInput
+  memberships?: Prisma.OrganizationMemberUncheckedCreateNestedManyWithoutUserInput
+  invitations?: Prisma.OrganizationInvitationUncheckedCreateNestedManyWithoutInvitedUserInput
+  sentInvitations?: Prisma.OrganizationInvitationUncheckedCreateNestedManyWithoutInvitedByInput
+  teamMemberships?: Prisma.TeamMemberUncheckedCreateNestedManyWithoutUserInput
+  ledTeams?: Prisma.TeamUncheckedCreateNestedManyWithoutLeaderInput
+  createdTasks?: Prisma.TaskUncheckedCreateNestedManyWithoutCreatorInput
+  assignedSubtasks?: Prisma.SubtaskUncheckedCreateNestedManyWithoutAssignedUserInput
+  submissions?: Prisma.SubtaskSubmissionUncheckedCreateNestedManyWithoutSubmittedByInput
+  reviewedSubmissions?: Prisma.SubtaskSubmissionUncheckedCreateNestedManyWithoutReviewedByInput
+  complaintsFiled?: Prisma.ComplaintUncheckedCreateNestedManyWithoutComplainantInput
+  complaintsAgainst?: Prisma.ComplaintUncheckedCreateNestedManyWithoutReportedUserInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
+  auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutActorInput
+}
+
+export type USERCreateOrConnectWithoutComplaintsReviewedInput = {
+  where: Prisma.USERWhereUniqueInput
+  create: Prisma.XOR<Prisma.USERCreateWithoutComplaintsReviewedInput, Prisma.USERUncheckedCreateWithoutComplaintsReviewedInput>
+}
+
+export type USERUpsertWithoutComplaintsFiledInput = {
+  update: Prisma.XOR<Prisma.USERUpdateWithoutComplaintsFiledInput, Prisma.USERUncheckedUpdateWithoutComplaintsFiledInput>
+  create: Prisma.XOR<Prisma.USERCreateWithoutComplaintsFiledInput, Prisma.USERUncheckedCreateWithoutComplaintsFiledInput>
+  where?: Prisma.USERWhereInput
+}
+
+export type USERUpdateToOneWithWhereWithoutComplaintsFiledInput = {
+  where?: Prisma.USERWhereInput
+  data: Prisma.XOR<Prisma.USERUpdateWithoutComplaintsFiledInput, Prisma.USERUncheckedUpdateWithoutComplaintsFiledInput>
+}
+
+export type USERUpdateWithoutComplaintsFiledInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  googleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  avatar?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  avatarPublicId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  provider?: Prisma.EnumProviderFieldUpdateOperationsInput | $Enums.Provider
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  status?: Prisma.EnumAccountStatusFieldUpdateOperationsInput | $Enums.AccountStatus
+  isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  bannedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  bannedReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  ownedOrganization?: Prisma.OrganizationUpdateOneWithoutOwnerNestedInput
+  memberships?: Prisma.OrganizationMemberUpdateManyWithoutUserNestedInput
+  invitations?: Prisma.OrganizationInvitationUpdateManyWithoutInvitedUserNestedInput
+  sentInvitations?: Prisma.OrganizationInvitationUpdateManyWithoutInvitedByNestedInput
+  teamMemberships?: Prisma.TeamMemberUpdateManyWithoutUserNestedInput
+  ledTeams?: Prisma.TeamUpdateManyWithoutLeaderNestedInput
+  createdTasks?: Prisma.TaskUpdateManyWithoutCreatorNestedInput
+  assignedSubtasks?: Prisma.SubtaskUpdateManyWithoutAssignedUserNestedInput
+  submissions?: Prisma.SubtaskSubmissionUpdateManyWithoutSubmittedByNestedInput
+  reviewedSubmissions?: Prisma.SubtaskSubmissionUpdateManyWithoutReviewedByNestedInput
+  complaintsAgainst?: Prisma.ComplaintUpdateManyWithoutReportedUserNestedInput
+  complaintsReviewed?: Prisma.ComplaintUpdateManyWithoutReviewerNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
+  auditLogs?: Prisma.AuditLogUpdateManyWithoutActorNestedInput
+}
+
+export type USERUncheckedUpdateWithoutComplaintsFiledInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  googleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  avatar?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  avatarPublicId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  provider?: Prisma.EnumProviderFieldUpdateOperationsInput | $Enums.Provider
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  status?: Prisma.EnumAccountStatusFieldUpdateOperationsInput | $Enums.AccountStatus
+  isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  bannedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  bannedReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  ownedOrganization?: Prisma.OrganizationUncheckedUpdateOneWithoutOwnerNestedInput
+  memberships?: Prisma.OrganizationMemberUncheckedUpdateManyWithoutUserNestedInput
+  invitations?: Prisma.OrganizationInvitationUncheckedUpdateManyWithoutInvitedUserNestedInput
+  sentInvitations?: Prisma.OrganizationInvitationUncheckedUpdateManyWithoutInvitedByNestedInput
+  teamMemberships?: Prisma.TeamMemberUncheckedUpdateManyWithoutUserNestedInput
+  ledTeams?: Prisma.TeamUncheckedUpdateManyWithoutLeaderNestedInput
+  createdTasks?: Prisma.TaskUncheckedUpdateManyWithoutCreatorNestedInput
+  assignedSubtasks?: Prisma.SubtaskUncheckedUpdateManyWithoutAssignedUserNestedInput
+  submissions?: Prisma.SubtaskSubmissionUncheckedUpdateManyWithoutSubmittedByNestedInput
+  reviewedSubmissions?: Prisma.SubtaskSubmissionUncheckedUpdateManyWithoutReviewedByNestedInput
+  complaintsAgainst?: Prisma.ComplaintUncheckedUpdateManyWithoutReportedUserNestedInput
+  complaintsReviewed?: Prisma.ComplaintUncheckedUpdateManyWithoutReviewerNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
+  auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutActorNestedInput
+}
+
+export type USERUpsertWithoutComplaintsAgainstInput = {
+  update: Prisma.XOR<Prisma.USERUpdateWithoutComplaintsAgainstInput, Prisma.USERUncheckedUpdateWithoutComplaintsAgainstInput>
+  create: Prisma.XOR<Prisma.USERCreateWithoutComplaintsAgainstInput, Prisma.USERUncheckedCreateWithoutComplaintsAgainstInput>
+  where?: Prisma.USERWhereInput
+}
+
+export type USERUpdateToOneWithWhereWithoutComplaintsAgainstInput = {
+  where?: Prisma.USERWhereInput
+  data: Prisma.XOR<Prisma.USERUpdateWithoutComplaintsAgainstInput, Prisma.USERUncheckedUpdateWithoutComplaintsAgainstInput>
+}
+
+export type USERUpdateWithoutComplaintsAgainstInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  googleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  avatar?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  avatarPublicId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  provider?: Prisma.EnumProviderFieldUpdateOperationsInput | $Enums.Provider
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  status?: Prisma.EnumAccountStatusFieldUpdateOperationsInput | $Enums.AccountStatus
+  isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  bannedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  bannedReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  ownedOrganization?: Prisma.OrganizationUpdateOneWithoutOwnerNestedInput
+  memberships?: Prisma.OrganizationMemberUpdateManyWithoutUserNestedInput
+  invitations?: Prisma.OrganizationInvitationUpdateManyWithoutInvitedUserNestedInput
+  sentInvitations?: Prisma.OrganizationInvitationUpdateManyWithoutInvitedByNestedInput
+  teamMemberships?: Prisma.TeamMemberUpdateManyWithoutUserNestedInput
+  ledTeams?: Prisma.TeamUpdateManyWithoutLeaderNestedInput
+  createdTasks?: Prisma.TaskUpdateManyWithoutCreatorNestedInput
+  assignedSubtasks?: Prisma.SubtaskUpdateManyWithoutAssignedUserNestedInput
+  submissions?: Prisma.SubtaskSubmissionUpdateManyWithoutSubmittedByNestedInput
+  reviewedSubmissions?: Prisma.SubtaskSubmissionUpdateManyWithoutReviewedByNestedInput
+  complaintsFiled?: Prisma.ComplaintUpdateManyWithoutComplainantNestedInput
+  complaintsReviewed?: Prisma.ComplaintUpdateManyWithoutReviewerNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
+  auditLogs?: Prisma.AuditLogUpdateManyWithoutActorNestedInput
+}
+
+export type USERUncheckedUpdateWithoutComplaintsAgainstInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  googleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  avatar?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  avatarPublicId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  provider?: Prisma.EnumProviderFieldUpdateOperationsInput | $Enums.Provider
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  status?: Prisma.EnumAccountStatusFieldUpdateOperationsInput | $Enums.AccountStatus
+  isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  bannedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  bannedReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  ownedOrganization?: Prisma.OrganizationUncheckedUpdateOneWithoutOwnerNestedInput
+  memberships?: Prisma.OrganizationMemberUncheckedUpdateManyWithoutUserNestedInput
+  invitations?: Prisma.OrganizationInvitationUncheckedUpdateManyWithoutInvitedUserNestedInput
+  sentInvitations?: Prisma.OrganizationInvitationUncheckedUpdateManyWithoutInvitedByNestedInput
+  teamMemberships?: Prisma.TeamMemberUncheckedUpdateManyWithoutUserNestedInput
+  ledTeams?: Prisma.TeamUncheckedUpdateManyWithoutLeaderNestedInput
+  createdTasks?: Prisma.TaskUncheckedUpdateManyWithoutCreatorNestedInput
+  assignedSubtasks?: Prisma.SubtaskUncheckedUpdateManyWithoutAssignedUserNestedInput
+  submissions?: Prisma.SubtaskSubmissionUncheckedUpdateManyWithoutSubmittedByNestedInput
+  reviewedSubmissions?: Prisma.SubtaskSubmissionUncheckedUpdateManyWithoutReviewedByNestedInput
+  complaintsFiled?: Prisma.ComplaintUncheckedUpdateManyWithoutComplainantNestedInput
+  complaintsReviewed?: Prisma.ComplaintUncheckedUpdateManyWithoutReviewerNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
+  auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutActorNestedInput
+}
+
+export type USERUpsertWithoutComplaintsReviewedInput = {
+  update: Prisma.XOR<Prisma.USERUpdateWithoutComplaintsReviewedInput, Prisma.USERUncheckedUpdateWithoutComplaintsReviewedInput>
+  create: Prisma.XOR<Prisma.USERCreateWithoutComplaintsReviewedInput, Prisma.USERUncheckedCreateWithoutComplaintsReviewedInput>
+  where?: Prisma.USERWhereInput
+}
+
+export type USERUpdateToOneWithWhereWithoutComplaintsReviewedInput = {
+  where?: Prisma.USERWhereInput
+  data: Prisma.XOR<Prisma.USERUpdateWithoutComplaintsReviewedInput, Prisma.USERUncheckedUpdateWithoutComplaintsReviewedInput>
+}
+
+export type USERUpdateWithoutComplaintsReviewedInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  googleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  avatar?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  avatarPublicId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  provider?: Prisma.EnumProviderFieldUpdateOperationsInput | $Enums.Provider
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  status?: Prisma.EnumAccountStatusFieldUpdateOperationsInput | $Enums.AccountStatus
+  isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  bannedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  bannedReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  ownedOrganization?: Prisma.OrganizationUpdateOneWithoutOwnerNestedInput
+  memberships?: Prisma.OrganizationMemberUpdateManyWithoutUserNestedInput
+  invitations?: Prisma.OrganizationInvitationUpdateManyWithoutInvitedUserNestedInput
+  sentInvitations?: Prisma.OrganizationInvitationUpdateManyWithoutInvitedByNestedInput
+  teamMemberships?: Prisma.TeamMemberUpdateManyWithoutUserNestedInput
+  ledTeams?: Prisma.TeamUpdateManyWithoutLeaderNestedInput
+  createdTasks?: Prisma.TaskUpdateManyWithoutCreatorNestedInput
+  assignedSubtasks?: Prisma.SubtaskUpdateManyWithoutAssignedUserNestedInput
+  submissions?: Prisma.SubtaskSubmissionUpdateManyWithoutSubmittedByNestedInput
+  reviewedSubmissions?: Prisma.SubtaskSubmissionUpdateManyWithoutReviewedByNestedInput
+  complaintsFiled?: Prisma.ComplaintUpdateManyWithoutComplainantNestedInput
+  complaintsAgainst?: Prisma.ComplaintUpdateManyWithoutReportedUserNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
+  auditLogs?: Prisma.AuditLogUpdateManyWithoutActorNestedInput
+}
+
+export type USERUncheckedUpdateWithoutComplaintsReviewedInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  googleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  avatar?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  avatarPublicId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  provider?: Prisma.EnumProviderFieldUpdateOperationsInput | $Enums.Provider
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  status?: Prisma.EnumAccountStatusFieldUpdateOperationsInput | $Enums.AccountStatus
+  isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  bannedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  bannedReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  ownedOrganization?: Prisma.OrganizationUncheckedUpdateOneWithoutOwnerNestedInput
+  memberships?: Prisma.OrganizationMemberUncheckedUpdateManyWithoutUserNestedInput
+  invitations?: Prisma.OrganizationInvitationUncheckedUpdateManyWithoutInvitedUserNestedInput
+  sentInvitations?: Prisma.OrganizationInvitationUncheckedUpdateManyWithoutInvitedByNestedInput
+  teamMemberships?: Prisma.TeamMemberUncheckedUpdateManyWithoutUserNestedInput
+  ledTeams?: Prisma.TeamUncheckedUpdateManyWithoutLeaderNestedInput
+  createdTasks?: Prisma.TaskUncheckedUpdateManyWithoutCreatorNestedInput
+  assignedSubtasks?: Prisma.SubtaskUncheckedUpdateManyWithoutAssignedUserNestedInput
+  submissions?: Prisma.SubtaskSubmissionUncheckedUpdateManyWithoutSubmittedByNestedInput
+  reviewedSubmissions?: Prisma.SubtaskSubmissionUncheckedUpdateManyWithoutReviewedByNestedInput
+  complaintsFiled?: Prisma.ComplaintUncheckedUpdateManyWithoutComplainantNestedInput
+  complaintsAgainst?: Prisma.ComplaintUncheckedUpdateManyWithoutReportedUserNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
+  auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutActorNestedInput
+}
+
+export type USERCreateWithoutNotificationsInput = {
+  id?: string
+  email: string
+  name: string
+  password?: string | null
+  googleId?: string | null
+  avatar?: string | null
+  avatarPublicId?: string | null
+  provider?: $Enums.Provider
+  role?: $Enums.Role
+  status?: $Enums.AccountStatus
+  isVerified?: boolean
+  bannedAt?: Date | string | null
+  bannedReason?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string | null
+  deletedAt?: Date | string | null
+  ownedOrganization?: Prisma.OrganizationCreateNestedOneWithoutOwnerInput
+  memberships?: Prisma.OrganizationMemberCreateNestedManyWithoutUserInput
+  invitations?: Prisma.OrganizationInvitationCreateNestedManyWithoutInvitedUserInput
+  sentInvitations?: Prisma.OrganizationInvitationCreateNestedManyWithoutInvitedByInput
+  teamMemberships?: Prisma.TeamMemberCreateNestedManyWithoutUserInput
+  ledTeams?: Prisma.TeamCreateNestedManyWithoutLeaderInput
+  createdTasks?: Prisma.TaskCreateNestedManyWithoutCreatorInput
+  assignedSubtasks?: Prisma.SubtaskCreateNestedManyWithoutAssignedUserInput
+  submissions?: Prisma.SubtaskSubmissionCreateNestedManyWithoutSubmittedByInput
+  reviewedSubmissions?: Prisma.SubtaskSubmissionCreateNestedManyWithoutReviewedByInput
+  complaintsFiled?: Prisma.ComplaintCreateNestedManyWithoutComplainantInput
+  complaintsAgainst?: Prisma.ComplaintCreateNestedManyWithoutReportedUserInput
+  complaintsReviewed?: Prisma.ComplaintCreateNestedManyWithoutReviewerInput
+  auditLogs?: Prisma.AuditLogCreateNestedManyWithoutActorInput
+}
+
+export type USERUncheckedCreateWithoutNotificationsInput = {
+  id?: string
+  email: string
+  name: string
+  password?: string | null
+  googleId?: string | null
+  avatar?: string | null
+  avatarPublicId?: string | null
+  provider?: $Enums.Provider
+  role?: $Enums.Role
+  status?: $Enums.AccountStatus
+  isVerified?: boolean
+  bannedAt?: Date | string | null
+  bannedReason?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string | null
+  deletedAt?: Date | string | null
+  ownedOrganization?: Prisma.OrganizationUncheckedCreateNestedOneWithoutOwnerInput
+  memberships?: Prisma.OrganizationMemberUncheckedCreateNestedManyWithoutUserInput
+  invitations?: Prisma.OrganizationInvitationUncheckedCreateNestedManyWithoutInvitedUserInput
+  sentInvitations?: Prisma.OrganizationInvitationUncheckedCreateNestedManyWithoutInvitedByInput
+  teamMemberships?: Prisma.TeamMemberUncheckedCreateNestedManyWithoutUserInput
+  ledTeams?: Prisma.TeamUncheckedCreateNestedManyWithoutLeaderInput
+  createdTasks?: Prisma.TaskUncheckedCreateNestedManyWithoutCreatorInput
+  assignedSubtasks?: Prisma.SubtaskUncheckedCreateNestedManyWithoutAssignedUserInput
+  submissions?: Prisma.SubtaskSubmissionUncheckedCreateNestedManyWithoutSubmittedByInput
+  reviewedSubmissions?: Prisma.SubtaskSubmissionUncheckedCreateNestedManyWithoutReviewedByInput
+  complaintsFiled?: Prisma.ComplaintUncheckedCreateNestedManyWithoutComplainantInput
+  complaintsAgainst?: Prisma.ComplaintUncheckedCreateNestedManyWithoutReportedUserInput
+  complaintsReviewed?: Prisma.ComplaintUncheckedCreateNestedManyWithoutReviewerInput
+  auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutActorInput
+}
+
+export type USERCreateOrConnectWithoutNotificationsInput = {
+  where: Prisma.USERWhereUniqueInput
+  create: Prisma.XOR<Prisma.USERCreateWithoutNotificationsInput, Prisma.USERUncheckedCreateWithoutNotificationsInput>
+}
+
+export type USERUpsertWithoutNotificationsInput = {
+  update: Prisma.XOR<Prisma.USERUpdateWithoutNotificationsInput, Prisma.USERUncheckedUpdateWithoutNotificationsInput>
+  create: Prisma.XOR<Prisma.USERCreateWithoutNotificationsInput, Prisma.USERUncheckedCreateWithoutNotificationsInput>
+  where?: Prisma.USERWhereInput
+}
+
+export type USERUpdateToOneWithWhereWithoutNotificationsInput = {
+  where?: Prisma.USERWhereInput
+  data: Prisma.XOR<Prisma.USERUpdateWithoutNotificationsInput, Prisma.USERUncheckedUpdateWithoutNotificationsInput>
+}
+
+export type USERUpdateWithoutNotificationsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  googleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  avatar?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  avatarPublicId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  provider?: Prisma.EnumProviderFieldUpdateOperationsInput | $Enums.Provider
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  status?: Prisma.EnumAccountStatusFieldUpdateOperationsInput | $Enums.AccountStatus
+  isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  bannedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  bannedReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  ownedOrganization?: Prisma.OrganizationUpdateOneWithoutOwnerNestedInput
+  memberships?: Prisma.OrganizationMemberUpdateManyWithoutUserNestedInput
+  invitations?: Prisma.OrganizationInvitationUpdateManyWithoutInvitedUserNestedInput
+  sentInvitations?: Prisma.OrganizationInvitationUpdateManyWithoutInvitedByNestedInput
+  teamMemberships?: Prisma.TeamMemberUpdateManyWithoutUserNestedInput
+  ledTeams?: Prisma.TeamUpdateManyWithoutLeaderNestedInput
+  createdTasks?: Prisma.TaskUpdateManyWithoutCreatorNestedInput
+  assignedSubtasks?: Prisma.SubtaskUpdateManyWithoutAssignedUserNestedInput
+  submissions?: Prisma.SubtaskSubmissionUpdateManyWithoutSubmittedByNestedInput
+  reviewedSubmissions?: Prisma.SubtaskSubmissionUpdateManyWithoutReviewedByNestedInput
+  complaintsFiled?: Prisma.ComplaintUpdateManyWithoutComplainantNestedInput
+  complaintsAgainst?: Prisma.ComplaintUpdateManyWithoutReportedUserNestedInput
+  complaintsReviewed?: Prisma.ComplaintUpdateManyWithoutReviewerNestedInput
+  auditLogs?: Prisma.AuditLogUpdateManyWithoutActorNestedInput
+}
+
+export type USERUncheckedUpdateWithoutNotificationsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  googleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  avatar?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  avatarPublicId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  provider?: Prisma.EnumProviderFieldUpdateOperationsInput | $Enums.Provider
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  status?: Prisma.EnumAccountStatusFieldUpdateOperationsInput | $Enums.AccountStatus
+  isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  bannedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  bannedReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  ownedOrganization?: Prisma.OrganizationUncheckedUpdateOneWithoutOwnerNestedInput
+  memberships?: Prisma.OrganizationMemberUncheckedUpdateManyWithoutUserNestedInput
+  invitations?: Prisma.OrganizationInvitationUncheckedUpdateManyWithoutInvitedUserNestedInput
+  sentInvitations?: Prisma.OrganizationInvitationUncheckedUpdateManyWithoutInvitedByNestedInput
+  teamMemberships?: Prisma.TeamMemberUncheckedUpdateManyWithoutUserNestedInput
+  ledTeams?: Prisma.TeamUncheckedUpdateManyWithoutLeaderNestedInput
+  createdTasks?: Prisma.TaskUncheckedUpdateManyWithoutCreatorNestedInput
+  assignedSubtasks?: Prisma.SubtaskUncheckedUpdateManyWithoutAssignedUserNestedInput
+  submissions?: Prisma.SubtaskSubmissionUncheckedUpdateManyWithoutSubmittedByNestedInput
+  reviewedSubmissions?: Prisma.SubtaskSubmissionUncheckedUpdateManyWithoutReviewedByNestedInput
+  complaintsFiled?: Prisma.ComplaintUncheckedUpdateManyWithoutComplainantNestedInput
+  complaintsAgainst?: Prisma.ComplaintUncheckedUpdateManyWithoutReportedUserNestedInput
+  complaintsReviewed?: Prisma.ComplaintUncheckedUpdateManyWithoutReviewerNestedInput
+  auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutActorNestedInput
+}
+
+export type USERCreateWithoutOwnedOrganizationInput = {
+  id?: string
+  email: string
+  name: string
+  password?: string | null
+  googleId?: string | null
+  avatar?: string | null
+  avatarPublicId?: string | null
+  provider?: $Enums.Provider
+  role?: $Enums.Role
+  status?: $Enums.AccountStatus
+  isVerified?: boolean
+  bannedAt?: Date | string | null
+  bannedReason?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string | null
+  deletedAt?: Date | string | null
+  memberships?: Prisma.OrganizationMemberCreateNestedManyWithoutUserInput
+  invitations?: Prisma.OrganizationInvitationCreateNestedManyWithoutInvitedUserInput
+  sentInvitations?: Prisma.OrganizationInvitationCreateNestedManyWithoutInvitedByInput
+  teamMemberships?: Prisma.TeamMemberCreateNestedManyWithoutUserInput
+  ledTeams?: Prisma.TeamCreateNestedManyWithoutLeaderInput
+  createdTasks?: Prisma.TaskCreateNestedManyWithoutCreatorInput
+  assignedSubtasks?: Prisma.SubtaskCreateNestedManyWithoutAssignedUserInput
+  submissions?: Prisma.SubtaskSubmissionCreateNestedManyWithoutSubmittedByInput
+  reviewedSubmissions?: Prisma.SubtaskSubmissionCreateNestedManyWithoutReviewedByInput
+  complaintsFiled?: Prisma.ComplaintCreateNestedManyWithoutComplainantInput
+  complaintsAgainst?: Prisma.ComplaintCreateNestedManyWithoutReportedUserInput
+  complaintsReviewed?: Prisma.ComplaintCreateNestedManyWithoutReviewerInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
+  auditLogs?: Prisma.AuditLogCreateNestedManyWithoutActorInput
+}
+
+export type USERUncheckedCreateWithoutOwnedOrganizationInput = {
+  id?: string
+  email: string
+  name: string
+  password?: string | null
+  googleId?: string | null
+  avatar?: string | null
+  avatarPublicId?: string | null
+  provider?: $Enums.Provider
+  role?: $Enums.Role
+  status?: $Enums.AccountStatus
+  isVerified?: boolean
+  bannedAt?: Date | string | null
+  bannedReason?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string | null
+  deletedAt?: Date | string | null
+  memberships?: Prisma.OrganizationMemberUncheckedCreateNestedManyWithoutUserInput
+  invitations?: Prisma.OrganizationInvitationUncheckedCreateNestedManyWithoutInvitedUserInput
+  sentInvitations?: Prisma.OrganizationInvitationUncheckedCreateNestedManyWithoutInvitedByInput
+  teamMemberships?: Prisma.TeamMemberUncheckedCreateNestedManyWithoutUserInput
+  ledTeams?: Prisma.TeamUncheckedCreateNestedManyWithoutLeaderInput
+  createdTasks?: Prisma.TaskUncheckedCreateNestedManyWithoutCreatorInput
+  assignedSubtasks?: Prisma.SubtaskUncheckedCreateNestedManyWithoutAssignedUserInput
+  submissions?: Prisma.SubtaskSubmissionUncheckedCreateNestedManyWithoutSubmittedByInput
+  reviewedSubmissions?: Prisma.SubtaskSubmissionUncheckedCreateNestedManyWithoutReviewedByInput
+  complaintsFiled?: Prisma.ComplaintUncheckedCreateNestedManyWithoutComplainantInput
+  complaintsAgainst?: Prisma.ComplaintUncheckedCreateNestedManyWithoutReportedUserInput
+  complaintsReviewed?: Prisma.ComplaintUncheckedCreateNestedManyWithoutReviewerInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
+  auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutActorInput
+}
+
+export type USERCreateOrConnectWithoutOwnedOrganizationInput = {
+  where: Prisma.USERWhereUniqueInput
+  create: Prisma.XOR<Prisma.USERCreateWithoutOwnedOrganizationInput, Prisma.USERUncheckedCreateWithoutOwnedOrganizationInput>
+}
+
+export type USERUpsertWithoutOwnedOrganizationInput = {
+  update: Prisma.XOR<Prisma.USERUpdateWithoutOwnedOrganizationInput, Prisma.USERUncheckedUpdateWithoutOwnedOrganizationInput>
+  create: Prisma.XOR<Prisma.USERCreateWithoutOwnedOrganizationInput, Prisma.USERUncheckedCreateWithoutOwnedOrganizationInput>
+  where?: Prisma.USERWhereInput
+}
+
+export type USERUpdateToOneWithWhereWithoutOwnedOrganizationInput = {
+  where?: Prisma.USERWhereInput
+  data: Prisma.XOR<Prisma.USERUpdateWithoutOwnedOrganizationInput, Prisma.USERUncheckedUpdateWithoutOwnedOrganizationInput>
+}
+
+export type USERUpdateWithoutOwnedOrganizationInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  googleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  avatar?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  avatarPublicId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  provider?: Prisma.EnumProviderFieldUpdateOperationsInput | $Enums.Provider
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  status?: Prisma.EnumAccountStatusFieldUpdateOperationsInput | $Enums.AccountStatus
+  isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  bannedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  bannedReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  memberships?: Prisma.OrganizationMemberUpdateManyWithoutUserNestedInput
+  invitations?: Prisma.OrganizationInvitationUpdateManyWithoutInvitedUserNestedInput
+  sentInvitations?: Prisma.OrganizationInvitationUpdateManyWithoutInvitedByNestedInput
+  teamMemberships?: Prisma.TeamMemberUpdateManyWithoutUserNestedInput
+  ledTeams?: Prisma.TeamUpdateManyWithoutLeaderNestedInput
+  createdTasks?: Prisma.TaskUpdateManyWithoutCreatorNestedInput
+  assignedSubtasks?: Prisma.SubtaskUpdateManyWithoutAssignedUserNestedInput
+  submissions?: Prisma.SubtaskSubmissionUpdateManyWithoutSubmittedByNestedInput
+  reviewedSubmissions?: Prisma.SubtaskSubmissionUpdateManyWithoutReviewedByNestedInput
+  complaintsFiled?: Prisma.ComplaintUpdateManyWithoutComplainantNestedInput
+  complaintsAgainst?: Prisma.ComplaintUpdateManyWithoutReportedUserNestedInput
+  complaintsReviewed?: Prisma.ComplaintUpdateManyWithoutReviewerNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
+  auditLogs?: Prisma.AuditLogUpdateManyWithoutActorNestedInput
+}
+
+export type USERUncheckedUpdateWithoutOwnedOrganizationInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  googleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  avatar?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  avatarPublicId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  provider?: Prisma.EnumProviderFieldUpdateOperationsInput | $Enums.Provider
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  status?: Prisma.EnumAccountStatusFieldUpdateOperationsInput | $Enums.AccountStatus
+  isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  bannedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  bannedReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  memberships?: Prisma.OrganizationMemberUncheckedUpdateManyWithoutUserNestedInput
+  invitations?: Prisma.OrganizationInvitationUncheckedUpdateManyWithoutInvitedUserNestedInput
+  sentInvitations?: Prisma.OrganizationInvitationUncheckedUpdateManyWithoutInvitedByNestedInput
+  teamMemberships?: Prisma.TeamMemberUncheckedUpdateManyWithoutUserNestedInput
+  ledTeams?: Prisma.TeamUncheckedUpdateManyWithoutLeaderNestedInput
+  createdTasks?: Prisma.TaskUncheckedUpdateManyWithoutCreatorNestedInput
+  assignedSubtasks?: Prisma.SubtaskUncheckedUpdateManyWithoutAssignedUserNestedInput
+  submissions?: Prisma.SubtaskSubmissionUncheckedUpdateManyWithoutSubmittedByNestedInput
+  reviewedSubmissions?: Prisma.SubtaskSubmissionUncheckedUpdateManyWithoutReviewedByNestedInput
+  complaintsFiled?: Prisma.ComplaintUncheckedUpdateManyWithoutComplainantNestedInput
+  complaintsAgainst?: Prisma.ComplaintUncheckedUpdateManyWithoutReportedUserNestedInput
+  complaintsReviewed?: Prisma.ComplaintUncheckedUpdateManyWithoutReviewerNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
+  auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutActorNestedInput
+}
+
+export type USERCreateWithoutInvitationsInput = {
+  id?: string
+  email: string
+  name: string
+  password?: string | null
+  googleId?: string | null
+  avatar?: string | null
+  avatarPublicId?: string | null
+  provider?: $Enums.Provider
+  role?: $Enums.Role
+  status?: $Enums.AccountStatus
+  isVerified?: boolean
+  bannedAt?: Date | string | null
+  bannedReason?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string | null
+  deletedAt?: Date | string | null
+  ownedOrganization?: Prisma.OrganizationCreateNestedOneWithoutOwnerInput
+  memberships?: Prisma.OrganizationMemberCreateNestedManyWithoutUserInput
+  sentInvitations?: Prisma.OrganizationInvitationCreateNestedManyWithoutInvitedByInput
+  teamMemberships?: Prisma.TeamMemberCreateNestedManyWithoutUserInput
+  ledTeams?: Prisma.TeamCreateNestedManyWithoutLeaderInput
+  createdTasks?: Prisma.TaskCreateNestedManyWithoutCreatorInput
+  assignedSubtasks?: Prisma.SubtaskCreateNestedManyWithoutAssignedUserInput
+  submissions?: Prisma.SubtaskSubmissionCreateNestedManyWithoutSubmittedByInput
+  reviewedSubmissions?: Prisma.SubtaskSubmissionCreateNestedManyWithoutReviewedByInput
+  complaintsFiled?: Prisma.ComplaintCreateNestedManyWithoutComplainantInput
+  complaintsAgainst?: Prisma.ComplaintCreateNestedManyWithoutReportedUserInput
+  complaintsReviewed?: Prisma.ComplaintCreateNestedManyWithoutReviewerInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
+  auditLogs?: Prisma.AuditLogCreateNestedManyWithoutActorInput
+}
+
+export type USERUncheckedCreateWithoutInvitationsInput = {
+  id?: string
+  email: string
+  name: string
+  password?: string | null
+  googleId?: string | null
+  avatar?: string | null
+  avatarPublicId?: string | null
+  provider?: $Enums.Provider
+  role?: $Enums.Role
+  status?: $Enums.AccountStatus
+  isVerified?: boolean
+  bannedAt?: Date | string | null
+  bannedReason?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string | null
+  deletedAt?: Date | string | null
+  ownedOrganization?: Prisma.OrganizationUncheckedCreateNestedOneWithoutOwnerInput
+  memberships?: Prisma.OrganizationMemberUncheckedCreateNestedManyWithoutUserInput
+  sentInvitations?: Prisma.OrganizationInvitationUncheckedCreateNestedManyWithoutInvitedByInput
+  teamMemberships?: Prisma.TeamMemberUncheckedCreateNestedManyWithoutUserInput
+  ledTeams?: Prisma.TeamUncheckedCreateNestedManyWithoutLeaderInput
+  createdTasks?: Prisma.TaskUncheckedCreateNestedManyWithoutCreatorInput
+  assignedSubtasks?: Prisma.SubtaskUncheckedCreateNestedManyWithoutAssignedUserInput
+  submissions?: Prisma.SubtaskSubmissionUncheckedCreateNestedManyWithoutSubmittedByInput
+  reviewedSubmissions?: Prisma.SubtaskSubmissionUncheckedCreateNestedManyWithoutReviewedByInput
+  complaintsFiled?: Prisma.ComplaintUncheckedCreateNestedManyWithoutComplainantInput
+  complaintsAgainst?: Prisma.ComplaintUncheckedCreateNestedManyWithoutReportedUserInput
+  complaintsReviewed?: Prisma.ComplaintUncheckedCreateNestedManyWithoutReviewerInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
+  auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutActorInput
+}
+
+export type USERCreateOrConnectWithoutInvitationsInput = {
+  where: Prisma.USERWhereUniqueInput
+  create: Prisma.XOR<Prisma.USERCreateWithoutInvitationsInput, Prisma.USERUncheckedCreateWithoutInvitationsInput>
+}
+
+export type USERCreateWithoutSentInvitationsInput = {
+  id?: string
+  email: string
+  name: string
+  password?: string | null
+  googleId?: string | null
+  avatar?: string | null
+  avatarPublicId?: string | null
+  provider?: $Enums.Provider
+  role?: $Enums.Role
+  status?: $Enums.AccountStatus
+  isVerified?: boolean
+  bannedAt?: Date | string | null
+  bannedReason?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string | null
+  deletedAt?: Date | string | null
+  ownedOrganization?: Prisma.OrganizationCreateNestedOneWithoutOwnerInput
+  memberships?: Prisma.OrganizationMemberCreateNestedManyWithoutUserInput
+  invitations?: Prisma.OrganizationInvitationCreateNestedManyWithoutInvitedUserInput
+  teamMemberships?: Prisma.TeamMemberCreateNestedManyWithoutUserInput
+  ledTeams?: Prisma.TeamCreateNestedManyWithoutLeaderInput
+  createdTasks?: Prisma.TaskCreateNestedManyWithoutCreatorInput
+  assignedSubtasks?: Prisma.SubtaskCreateNestedManyWithoutAssignedUserInput
+  submissions?: Prisma.SubtaskSubmissionCreateNestedManyWithoutSubmittedByInput
+  reviewedSubmissions?: Prisma.SubtaskSubmissionCreateNestedManyWithoutReviewedByInput
+  complaintsFiled?: Prisma.ComplaintCreateNestedManyWithoutComplainantInput
+  complaintsAgainst?: Prisma.ComplaintCreateNestedManyWithoutReportedUserInput
+  complaintsReviewed?: Prisma.ComplaintCreateNestedManyWithoutReviewerInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
+  auditLogs?: Prisma.AuditLogCreateNestedManyWithoutActorInput
+}
+
+export type USERUncheckedCreateWithoutSentInvitationsInput = {
+  id?: string
+  email: string
+  name: string
+  password?: string | null
+  googleId?: string | null
+  avatar?: string | null
+  avatarPublicId?: string | null
+  provider?: $Enums.Provider
+  role?: $Enums.Role
+  status?: $Enums.AccountStatus
+  isVerified?: boolean
+  bannedAt?: Date | string | null
+  bannedReason?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string | null
+  deletedAt?: Date | string | null
+  ownedOrganization?: Prisma.OrganizationUncheckedCreateNestedOneWithoutOwnerInput
+  memberships?: Prisma.OrganizationMemberUncheckedCreateNestedManyWithoutUserInput
+  invitations?: Prisma.OrganizationInvitationUncheckedCreateNestedManyWithoutInvitedUserInput
+  teamMemberships?: Prisma.TeamMemberUncheckedCreateNestedManyWithoutUserInput
+  ledTeams?: Prisma.TeamUncheckedCreateNestedManyWithoutLeaderInput
+  createdTasks?: Prisma.TaskUncheckedCreateNestedManyWithoutCreatorInput
+  assignedSubtasks?: Prisma.SubtaskUncheckedCreateNestedManyWithoutAssignedUserInput
+  submissions?: Prisma.SubtaskSubmissionUncheckedCreateNestedManyWithoutSubmittedByInput
+  reviewedSubmissions?: Prisma.SubtaskSubmissionUncheckedCreateNestedManyWithoutReviewedByInput
+  complaintsFiled?: Prisma.ComplaintUncheckedCreateNestedManyWithoutComplainantInput
+  complaintsAgainst?: Prisma.ComplaintUncheckedCreateNestedManyWithoutReportedUserInput
+  complaintsReviewed?: Prisma.ComplaintUncheckedCreateNestedManyWithoutReviewerInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
+  auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutActorInput
+}
+
+export type USERCreateOrConnectWithoutSentInvitationsInput = {
+  where: Prisma.USERWhereUniqueInput
+  create: Prisma.XOR<Prisma.USERCreateWithoutSentInvitationsInput, Prisma.USERUncheckedCreateWithoutSentInvitationsInput>
+}
+
+export type USERUpsertWithoutInvitationsInput = {
+  update: Prisma.XOR<Prisma.USERUpdateWithoutInvitationsInput, Prisma.USERUncheckedUpdateWithoutInvitationsInput>
+  create: Prisma.XOR<Prisma.USERCreateWithoutInvitationsInput, Prisma.USERUncheckedCreateWithoutInvitationsInput>
+  where?: Prisma.USERWhereInput
+}
+
+export type USERUpdateToOneWithWhereWithoutInvitationsInput = {
+  where?: Prisma.USERWhereInput
+  data: Prisma.XOR<Prisma.USERUpdateWithoutInvitationsInput, Prisma.USERUncheckedUpdateWithoutInvitationsInput>
+}
+
+export type USERUpdateWithoutInvitationsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  googleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  avatar?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  avatarPublicId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  provider?: Prisma.EnumProviderFieldUpdateOperationsInput | $Enums.Provider
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  status?: Prisma.EnumAccountStatusFieldUpdateOperationsInput | $Enums.AccountStatus
+  isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  bannedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  bannedReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  ownedOrganization?: Prisma.OrganizationUpdateOneWithoutOwnerNestedInput
+  memberships?: Prisma.OrganizationMemberUpdateManyWithoutUserNestedInput
+  sentInvitations?: Prisma.OrganizationInvitationUpdateManyWithoutInvitedByNestedInput
+  teamMemberships?: Prisma.TeamMemberUpdateManyWithoutUserNestedInput
+  ledTeams?: Prisma.TeamUpdateManyWithoutLeaderNestedInput
+  createdTasks?: Prisma.TaskUpdateManyWithoutCreatorNestedInput
+  assignedSubtasks?: Prisma.SubtaskUpdateManyWithoutAssignedUserNestedInput
+  submissions?: Prisma.SubtaskSubmissionUpdateManyWithoutSubmittedByNestedInput
+  reviewedSubmissions?: Prisma.SubtaskSubmissionUpdateManyWithoutReviewedByNestedInput
+  complaintsFiled?: Prisma.ComplaintUpdateManyWithoutComplainantNestedInput
+  complaintsAgainst?: Prisma.ComplaintUpdateManyWithoutReportedUserNestedInput
+  complaintsReviewed?: Prisma.ComplaintUpdateManyWithoutReviewerNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
+  auditLogs?: Prisma.AuditLogUpdateManyWithoutActorNestedInput
+}
+
+export type USERUncheckedUpdateWithoutInvitationsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  googleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  avatar?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  avatarPublicId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  provider?: Prisma.EnumProviderFieldUpdateOperationsInput | $Enums.Provider
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  status?: Prisma.EnumAccountStatusFieldUpdateOperationsInput | $Enums.AccountStatus
+  isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  bannedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  bannedReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  ownedOrganization?: Prisma.OrganizationUncheckedUpdateOneWithoutOwnerNestedInput
+  memberships?: Prisma.OrganizationMemberUncheckedUpdateManyWithoutUserNestedInput
+  sentInvitations?: Prisma.OrganizationInvitationUncheckedUpdateManyWithoutInvitedByNestedInput
+  teamMemberships?: Prisma.TeamMemberUncheckedUpdateManyWithoutUserNestedInput
+  ledTeams?: Prisma.TeamUncheckedUpdateManyWithoutLeaderNestedInput
+  createdTasks?: Prisma.TaskUncheckedUpdateManyWithoutCreatorNestedInput
+  assignedSubtasks?: Prisma.SubtaskUncheckedUpdateManyWithoutAssignedUserNestedInput
+  submissions?: Prisma.SubtaskSubmissionUncheckedUpdateManyWithoutSubmittedByNestedInput
+  reviewedSubmissions?: Prisma.SubtaskSubmissionUncheckedUpdateManyWithoutReviewedByNestedInput
+  complaintsFiled?: Prisma.ComplaintUncheckedUpdateManyWithoutComplainantNestedInput
+  complaintsAgainst?: Prisma.ComplaintUncheckedUpdateManyWithoutReportedUserNestedInput
+  complaintsReviewed?: Prisma.ComplaintUncheckedUpdateManyWithoutReviewerNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
+  auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutActorNestedInput
+}
+
+export type USERUpsertWithoutSentInvitationsInput = {
+  update: Prisma.XOR<Prisma.USERUpdateWithoutSentInvitationsInput, Prisma.USERUncheckedUpdateWithoutSentInvitationsInput>
+  create: Prisma.XOR<Prisma.USERCreateWithoutSentInvitationsInput, Prisma.USERUncheckedCreateWithoutSentInvitationsInput>
+  where?: Prisma.USERWhereInput
+}
+
+export type USERUpdateToOneWithWhereWithoutSentInvitationsInput = {
+  where?: Prisma.USERWhereInput
+  data: Prisma.XOR<Prisma.USERUpdateWithoutSentInvitationsInput, Prisma.USERUncheckedUpdateWithoutSentInvitationsInput>
+}
+
+export type USERUpdateWithoutSentInvitationsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  googleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  avatar?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  avatarPublicId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  provider?: Prisma.EnumProviderFieldUpdateOperationsInput | $Enums.Provider
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  status?: Prisma.EnumAccountStatusFieldUpdateOperationsInput | $Enums.AccountStatus
+  isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  bannedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  bannedReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  ownedOrganization?: Prisma.OrganizationUpdateOneWithoutOwnerNestedInput
+  memberships?: Prisma.OrganizationMemberUpdateManyWithoutUserNestedInput
+  invitations?: Prisma.OrganizationInvitationUpdateManyWithoutInvitedUserNestedInput
+  teamMemberships?: Prisma.TeamMemberUpdateManyWithoutUserNestedInput
+  ledTeams?: Prisma.TeamUpdateManyWithoutLeaderNestedInput
+  createdTasks?: Prisma.TaskUpdateManyWithoutCreatorNestedInput
+  assignedSubtasks?: Prisma.SubtaskUpdateManyWithoutAssignedUserNestedInput
+  submissions?: Prisma.SubtaskSubmissionUpdateManyWithoutSubmittedByNestedInput
+  reviewedSubmissions?: Prisma.SubtaskSubmissionUpdateManyWithoutReviewedByNestedInput
+  complaintsFiled?: Prisma.ComplaintUpdateManyWithoutComplainantNestedInput
+  complaintsAgainst?: Prisma.ComplaintUpdateManyWithoutReportedUserNestedInput
+  complaintsReviewed?: Prisma.ComplaintUpdateManyWithoutReviewerNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
+  auditLogs?: Prisma.AuditLogUpdateManyWithoutActorNestedInput
+}
+
+export type USERUncheckedUpdateWithoutSentInvitationsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  googleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  avatar?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  avatarPublicId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  provider?: Prisma.EnumProviderFieldUpdateOperationsInput | $Enums.Provider
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  status?: Prisma.EnumAccountStatusFieldUpdateOperationsInput | $Enums.AccountStatus
+  isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  bannedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  bannedReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  ownedOrganization?: Prisma.OrganizationUncheckedUpdateOneWithoutOwnerNestedInput
+  memberships?: Prisma.OrganizationMemberUncheckedUpdateManyWithoutUserNestedInput
+  invitations?: Prisma.OrganizationInvitationUncheckedUpdateManyWithoutInvitedUserNestedInput
+  teamMemberships?: Prisma.TeamMemberUncheckedUpdateManyWithoutUserNestedInput
+  ledTeams?: Prisma.TeamUncheckedUpdateManyWithoutLeaderNestedInput
+  createdTasks?: Prisma.TaskUncheckedUpdateManyWithoutCreatorNestedInput
+  assignedSubtasks?: Prisma.SubtaskUncheckedUpdateManyWithoutAssignedUserNestedInput
+  submissions?: Prisma.SubtaskSubmissionUncheckedUpdateManyWithoutSubmittedByNestedInput
+  reviewedSubmissions?: Prisma.SubtaskSubmissionUncheckedUpdateManyWithoutReviewedByNestedInput
+  complaintsFiled?: Prisma.ComplaintUncheckedUpdateManyWithoutComplainantNestedInput
+  complaintsAgainst?: Prisma.ComplaintUncheckedUpdateManyWithoutReportedUserNestedInput
+  complaintsReviewed?: Prisma.ComplaintUncheckedUpdateManyWithoutReviewerNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
+  auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutActorNestedInput
+}
+
+export type USERCreateWithoutMembershipsInput = {
+  id?: string
+  email: string
+  name: string
+  password?: string | null
+  googleId?: string | null
+  avatar?: string | null
+  avatarPublicId?: string | null
+  provider?: $Enums.Provider
+  role?: $Enums.Role
+  status?: $Enums.AccountStatus
+  isVerified?: boolean
+  bannedAt?: Date | string | null
+  bannedReason?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string | null
+  deletedAt?: Date | string | null
+  ownedOrganization?: Prisma.OrganizationCreateNestedOneWithoutOwnerInput
+  invitations?: Prisma.OrganizationInvitationCreateNestedManyWithoutInvitedUserInput
+  sentInvitations?: Prisma.OrganizationInvitationCreateNestedManyWithoutInvitedByInput
+  teamMemberships?: Prisma.TeamMemberCreateNestedManyWithoutUserInput
+  ledTeams?: Prisma.TeamCreateNestedManyWithoutLeaderInput
+  createdTasks?: Prisma.TaskCreateNestedManyWithoutCreatorInput
+  assignedSubtasks?: Prisma.SubtaskCreateNestedManyWithoutAssignedUserInput
+  submissions?: Prisma.SubtaskSubmissionCreateNestedManyWithoutSubmittedByInput
+  reviewedSubmissions?: Prisma.SubtaskSubmissionCreateNestedManyWithoutReviewedByInput
+  complaintsFiled?: Prisma.ComplaintCreateNestedManyWithoutComplainantInput
+  complaintsAgainst?: Prisma.ComplaintCreateNestedManyWithoutReportedUserInput
+  complaintsReviewed?: Prisma.ComplaintCreateNestedManyWithoutReviewerInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
+  auditLogs?: Prisma.AuditLogCreateNestedManyWithoutActorInput
+}
+
+export type USERUncheckedCreateWithoutMembershipsInput = {
+  id?: string
+  email: string
+  name: string
+  password?: string | null
+  googleId?: string | null
+  avatar?: string | null
+  avatarPublicId?: string | null
+  provider?: $Enums.Provider
+  role?: $Enums.Role
+  status?: $Enums.AccountStatus
+  isVerified?: boolean
+  bannedAt?: Date | string | null
+  bannedReason?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string | null
+  deletedAt?: Date | string | null
+  ownedOrganization?: Prisma.OrganizationUncheckedCreateNestedOneWithoutOwnerInput
+  invitations?: Prisma.OrganizationInvitationUncheckedCreateNestedManyWithoutInvitedUserInput
+  sentInvitations?: Prisma.OrganizationInvitationUncheckedCreateNestedManyWithoutInvitedByInput
+  teamMemberships?: Prisma.TeamMemberUncheckedCreateNestedManyWithoutUserInput
+  ledTeams?: Prisma.TeamUncheckedCreateNestedManyWithoutLeaderInput
+  createdTasks?: Prisma.TaskUncheckedCreateNestedManyWithoutCreatorInput
+  assignedSubtasks?: Prisma.SubtaskUncheckedCreateNestedManyWithoutAssignedUserInput
+  submissions?: Prisma.SubtaskSubmissionUncheckedCreateNestedManyWithoutSubmittedByInput
+  reviewedSubmissions?: Prisma.SubtaskSubmissionUncheckedCreateNestedManyWithoutReviewedByInput
+  complaintsFiled?: Prisma.ComplaintUncheckedCreateNestedManyWithoutComplainantInput
+  complaintsAgainst?: Prisma.ComplaintUncheckedCreateNestedManyWithoutReportedUserInput
+  complaintsReviewed?: Prisma.ComplaintUncheckedCreateNestedManyWithoutReviewerInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
+  auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutActorInput
+}
+
+export type USERCreateOrConnectWithoutMembershipsInput = {
+  where: Prisma.USERWhereUniqueInput
+  create: Prisma.XOR<Prisma.USERCreateWithoutMembershipsInput, Prisma.USERUncheckedCreateWithoutMembershipsInput>
+}
+
+export type USERUpsertWithoutMembershipsInput = {
+  update: Prisma.XOR<Prisma.USERUpdateWithoutMembershipsInput, Prisma.USERUncheckedUpdateWithoutMembershipsInput>
+  create: Prisma.XOR<Prisma.USERCreateWithoutMembershipsInput, Prisma.USERUncheckedCreateWithoutMembershipsInput>
+  where?: Prisma.USERWhereInput
+}
+
+export type USERUpdateToOneWithWhereWithoutMembershipsInput = {
+  where?: Prisma.USERWhereInput
+  data: Prisma.XOR<Prisma.USERUpdateWithoutMembershipsInput, Prisma.USERUncheckedUpdateWithoutMembershipsInput>
+}
+
+export type USERUpdateWithoutMembershipsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  googleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  avatar?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  avatarPublicId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  provider?: Prisma.EnumProviderFieldUpdateOperationsInput | $Enums.Provider
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  status?: Prisma.EnumAccountStatusFieldUpdateOperationsInput | $Enums.AccountStatus
+  isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  bannedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  bannedReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  ownedOrganization?: Prisma.OrganizationUpdateOneWithoutOwnerNestedInput
+  invitations?: Prisma.OrganizationInvitationUpdateManyWithoutInvitedUserNestedInput
+  sentInvitations?: Prisma.OrganizationInvitationUpdateManyWithoutInvitedByNestedInput
+  teamMemberships?: Prisma.TeamMemberUpdateManyWithoutUserNestedInput
+  ledTeams?: Prisma.TeamUpdateManyWithoutLeaderNestedInput
+  createdTasks?: Prisma.TaskUpdateManyWithoutCreatorNestedInput
+  assignedSubtasks?: Prisma.SubtaskUpdateManyWithoutAssignedUserNestedInput
+  submissions?: Prisma.SubtaskSubmissionUpdateManyWithoutSubmittedByNestedInput
+  reviewedSubmissions?: Prisma.SubtaskSubmissionUpdateManyWithoutReviewedByNestedInput
+  complaintsFiled?: Prisma.ComplaintUpdateManyWithoutComplainantNestedInput
+  complaintsAgainst?: Prisma.ComplaintUpdateManyWithoutReportedUserNestedInput
+  complaintsReviewed?: Prisma.ComplaintUpdateManyWithoutReviewerNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
+  auditLogs?: Prisma.AuditLogUpdateManyWithoutActorNestedInput
+}
+
+export type USERUncheckedUpdateWithoutMembershipsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  googleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  avatar?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  avatarPublicId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  provider?: Prisma.EnumProviderFieldUpdateOperationsInput | $Enums.Provider
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  status?: Prisma.EnumAccountStatusFieldUpdateOperationsInput | $Enums.AccountStatus
+  isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  bannedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  bannedReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  ownedOrganization?: Prisma.OrganizationUncheckedUpdateOneWithoutOwnerNestedInput
+  invitations?: Prisma.OrganizationInvitationUncheckedUpdateManyWithoutInvitedUserNestedInput
+  sentInvitations?: Prisma.OrganizationInvitationUncheckedUpdateManyWithoutInvitedByNestedInput
+  teamMemberships?: Prisma.TeamMemberUncheckedUpdateManyWithoutUserNestedInput
+  ledTeams?: Prisma.TeamUncheckedUpdateManyWithoutLeaderNestedInput
+  createdTasks?: Prisma.TaskUncheckedUpdateManyWithoutCreatorNestedInput
+  assignedSubtasks?: Prisma.SubtaskUncheckedUpdateManyWithoutAssignedUserNestedInput
+  submissions?: Prisma.SubtaskSubmissionUncheckedUpdateManyWithoutSubmittedByNestedInput
+  reviewedSubmissions?: Prisma.SubtaskSubmissionUncheckedUpdateManyWithoutReviewedByNestedInput
+  complaintsFiled?: Prisma.ComplaintUncheckedUpdateManyWithoutComplainantNestedInput
+  complaintsAgainst?: Prisma.ComplaintUncheckedUpdateManyWithoutReportedUserNestedInput
+  complaintsReviewed?: Prisma.ComplaintUncheckedUpdateManyWithoutReviewerNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
+  auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutActorNestedInput
+}
+
+export type USERCreateWithoutCreatedTasksInput = {
+  id?: string
+  email: string
+  name: string
+  password?: string | null
+  googleId?: string | null
+  avatar?: string | null
+  avatarPublicId?: string | null
+  provider?: $Enums.Provider
+  role?: $Enums.Role
+  status?: $Enums.AccountStatus
+  isVerified?: boolean
+  bannedAt?: Date | string | null
+  bannedReason?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string | null
+  deletedAt?: Date | string | null
+  ownedOrganization?: Prisma.OrganizationCreateNestedOneWithoutOwnerInput
+  memberships?: Prisma.OrganizationMemberCreateNestedManyWithoutUserInput
+  invitations?: Prisma.OrganizationInvitationCreateNestedManyWithoutInvitedUserInput
+  sentInvitations?: Prisma.OrganizationInvitationCreateNestedManyWithoutInvitedByInput
+  teamMemberships?: Prisma.TeamMemberCreateNestedManyWithoutUserInput
+  ledTeams?: Prisma.TeamCreateNestedManyWithoutLeaderInput
+  assignedSubtasks?: Prisma.SubtaskCreateNestedManyWithoutAssignedUserInput
+  submissions?: Prisma.SubtaskSubmissionCreateNestedManyWithoutSubmittedByInput
+  reviewedSubmissions?: Prisma.SubtaskSubmissionCreateNestedManyWithoutReviewedByInput
+  complaintsFiled?: Prisma.ComplaintCreateNestedManyWithoutComplainantInput
+  complaintsAgainst?: Prisma.ComplaintCreateNestedManyWithoutReportedUserInput
+  complaintsReviewed?: Prisma.ComplaintCreateNestedManyWithoutReviewerInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
+  auditLogs?: Prisma.AuditLogCreateNestedManyWithoutActorInput
+}
+
+export type USERUncheckedCreateWithoutCreatedTasksInput = {
+  id?: string
+  email: string
+  name: string
+  password?: string | null
+  googleId?: string | null
+  avatar?: string | null
+  avatarPublicId?: string | null
+  provider?: $Enums.Provider
+  role?: $Enums.Role
+  status?: $Enums.AccountStatus
+  isVerified?: boolean
+  bannedAt?: Date | string | null
+  bannedReason?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string | null
+  deletedAt?: Date | string | null
+  ownedOrganization?: Prisma.OrganizationUncheckedCreateNestedOneWithoutOwnerInput
+  memberships?: Prisma.OrganizationMemberUncheckedCreateNestedManyWithoutUserInput
+  invitations?: Prisma.OrganizationInvitationUncheckedCreateNestedManyWithoutInvitedUserInput
+  sentInvitations?: Prisma.OrganizationInvitationUncheckedCreateNestedManyWithoutInvitedByInput
+  teamMemberships?: Prisma.TeamMemberUncheckedCreateNestedManyWithoutUserInput
+  ledTeams?: Prisma.TeamUncheckedCreateNestedManyWithoutLeaderInput
+  assignedSubtasks?: Prisma.SubtaskUncheckedCreateNestedManyWithoutAssignedUserInput
+  submissions?: Prisma.SubtaskSubmissionUncheckedCreateNestedManyWithoutSubmittedByInput
+  reviewedSubmissions?: Prisma.SubtaskSubmissionUncheckedCreateNestedManyWithoutReviewedByInput
+  complaintsFiled?: Prisma.ComplaintUncheckedCreateNestedManyWithoutComplainantInput
+  complaintsAgainst?: Prisma.ComplaintUncheckedCreateNestedManyWithoutReportedUserInput
+  complaintsReviewed?: Prisma.ComplaintUncheckedCreateNestedManyWithoutReviewerInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
+  auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutActorInput
+}
+
+export type USERCreateOrConnectWithoutCreatedTasksInput = {
+  where: Prisma.USERWhereUniqueInput
+  create: Prisma.XOR<Prisma.USERCreateWithoutCreatedTasksInput, Prisma.USERUncheckedCreateWithoutCreatedTasksInput>
+}
+
+export type USERUpsertWithoutCreatedTasksInput = {
+  update: Prisma.XOR<Prisma.USERUpdateWithoutCreatedTasksInput, Prisma.USERUncheckedUpdateWithoutCreatedTasksInput>
+  create: Prisma.XOR<Prisma.USERCreateWithoutCreatedTasksInput, Prisma.USERUncheckedCreateWithoutCreatedTasksInput>
+  where?: Prisma.USERWhereInput
+}
+
+export type USERUpdateToOneWithWhereWithoutCreatedTasksInput = {
+  where?: Prisma.USERWhereInput
+  data: Prisma.XOR<Prisma.USERUpdateWithoutCreatedTasksInput, Prisma.USERUncheckedUpdateWithoutCreatedTasksInput>
+}
+
+export type USERUpdateWithoutCreatedTasksInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  googleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  avatar?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  avatarPublicId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  provider?: Prisma.EnumProviderFieldUpdateOperationsInput | $Enums.Provider
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  status?: Prisma.EnumAccountStatusFieldUpdateOperationsInput | $Enums.AccountStatus
+  isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  bannedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  bannedReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  ownedOrganization?: Prisma.OrganizationUpdateOneWithoutOwnerNestedInput
+  memberships?: Prisma.OrganizationMemberUpdateManyWithoutUserNestedInput
+  invitations?: Prisma.OrganizationInvitationUpdateManyWithoutInvitedUserNestedInput
+  sentInvitations?: Prisma.OrganizationInvitationUpdateManyWithoutInvitedByNestedInput
+  teamMemberships?: Prisma.TeamMemberUpdateManyWithoutUserNestedInput
+  ledTeams?: Prisma.TeamUpdateManyWithoutLeaderNestedInput
+  assignedSubtasks?: Prisma.SubtaskUpdateManyWithoutAssignedUserNestedInput
+  submissions?: Prisma.SubtaskSubmissionUpdateManyWithoutSubmittedByNestedInput
+  reviewedSubmissions?: Prisma.SubtaskSubmissionUpdateManyWithoutReviewedByNestedInput
+  complaintsFiled?: Prisma.ComplaintUpdateManyWithoutComplainantNestedInput
+  complaintsAgainst?: Prisma.ComplaintUpdateManyWithoutReportedUserNestedInput
+  complaintsReviewed?: Prisma.ComplaintUpdateManyWithoutReviewerNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
+  auditLogs?: Prisma.AuditLogUpdateManyWithoutActorNestedInput
+}
+
+export type USERUncheckedUpdateWithoutCreatedTasksInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  googleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  avatar?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  avatarPublicId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  provider?: Prisma.EnumProviderFieldUpdateOperationsInput | $Enums.Provider
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  status?: Prisma.EnumAccountStatusFieldUpdateOperationsInput | $Enums.AccountStatus
+  isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  bannedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  bannedReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  ownedOrganization?: Prisma.OrganizationUncheckedUpdateOneWithoutOwnerNestedInput
+  memberships?: Prisma.OrganizationMemberUncheckedUpdateManyWithoutUserNestedInput
+  invitations?: Prisma.OrganizationInvitationUncheckedUpdateManyWithoutInvitedUserNestedInput
+  sentInvitations?: Prisma.OrganizationInvitationUncheckedUpdateManyWithoutInvitedByNestedInput
+  teamMemberships?: Prisma.TeamMemberUncheckedUpdateManyWithoutUserNestedInput
+  ledTeams?: Prisma.TeamUncheckedUpdateManyWithoutLeaderNestedInput
+  assignedSubtasks?: Prisma.SubtaskUncheckedUpdateManyWithoutAssignedUserNestedInput
+  submissions?: Prisma.SubtaskSubmissionUncheckedUpdateManyWithoutSubmittedByNestedInput
+  reviewedSubmissions?: Prisma.SubtaskSubmissionUncheckedUpdateManyWithoutReviewedByNestedInput
+  complaintsFiled?: Prisma.ComplaintUncheckedUpdateManyWithoutComplainantNestedInput
+  complaintsAgainst?: Prisma.ComplaintUncheckedUpdateManyWithoutReportedUserNestedInput
+  complaintsReviewed?: Prisma.ComplaintUncheckedUpdateManyWithoutReviewerNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
+  auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutActorNestedInput
+}
+
+export type USERCreateWithoutAssignedSubtasksInput = {
+  id?: string
+  email: string
+  name: string
+  password?: string | null
+  googleId?: string | null
+  avatar?: string | null
+  avatarPublicId?: string | null
+  provider?: $Enums.Provider
+  role?: $Enums.Role
+  status?: $Enums.AccountStatus
+  isVerified?: boolean
+  bannedAt?: Date | string | null
+  bannedReason?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string | null
+  deletedAt?: Date | string | null
+  ownedOrganization?: Prisma.OrganizationCreateNestedOneWithoutOwnerInput
+  memberships?: Prisma.OrganizationMemberCreateNestedManyWithoutUserInput
+  invitations?: Prisma.OrganizationInvitationCreateNestedManyWithoutInvitedUserInput
+  sentInvitations?: Prisma.OrganizationInvitationCreateNestedManyWithoutInvitedByInput
+  teamMemberships?: Prisma.TeamMemberCreateNestedManyWithoutUserInput
+  ledTeams?: Prisma.TeamCreateNestedManyWithoutLeaderInput
+  createdTasks?: Prisma.TaskCreateNestedManyWithoutCreatorInput
+  submissions?: Prisma.SubtaskSubmissionCreateNestedManyWithoutSubmittedByInput
+  reviewedSubmissions?: Prisma.SubtaskSubmissionCreateNestedManyWithoutReviewedByInput
+  complaintsFiled?: Prisma.ComplaintCreateNestedManyWithoutComplainantInput
+  complaintsAgainst?: Prisma.ComplaintCreateNestedManyWithoutReportedUserInput
+  complaintsReviewed?: Prisma.ComplaintCreateNestedManyWithoutReviewerInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
+  auditLogs?: Prisma.AuditLogCreateNestedManyWithoutActorInput
+}
+
+export type USERUncheckedCreateWithoutAssignedSubtasksInput = {
+  id?: string
+  email: string
+  name: string
+  password?: string | null
+  googleId?: string | null
+  avatar?: string | null
+  avatarPublicId?: string | null
+  provider?: $Enums.Provider
+  role?: $Enums.Role
+  status?: $Enums.AccountStatus
+  isVerified?: boolean
+  bannedAt?: Date | string | null
+  bannedReason?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string | null
+  deletedAt?: Date | string | null
+  ownedOrganization?: Prisma.OrganizationUncheckedCreateNestedOneWithoutOwnerInput
+  memberships?: Prisma.OrganizationMemberUncheckedCreateNestedManyWithoutUserInput
+  invitations?: Prisma.OrganizationInvitationUncheckedCreateNestedManyWithoutInvitedUserInput
+  sentInvitations?: Prisma.OrganizationInvitationUncheckedCreateNestedManyWithoutInvitedByInput
+  teamMemberships?: Prisma.TeamMemberUncheckedCreateNestedManyWithoutUserInput
+  ledTeams?: Prisma.TeamUncheckedCreateNestedManyWithoutLeaderInput
+  createdTasks?: Prisma.TaskUncheckedCreateNestedManyWithoutCreatorInput
+  submissions?: Prisma.SubtaskSubmissionUncheckedCreateNestedManyWithoutSubmittedByInput
+  reviewedSubmissions?: Prisma.SubtaskSubmissionUncheckedCreateNestedManyWithoutReviewedByInput
+  complaintsFiled?: Prisma.ComplaintUncheckedCreateNestedManyWithoutComplainantInput
+  complaintsAgainst?: Prisma.ComplaintUncheckedCreateNestedManyWithoutReportedUserInput
+  complaintsReviewed?: Prisma.ComplaintUncheckedCreateNestedManyWithoutReviewerInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
+  auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutActorInput
+}
+
+export type USERCreateOrConnectWithoutAssignedSubtasksInput = {
+  where: Prisma.USERWhereUniqueInput
+  create: Prisma.XOR<Prisma.USERCreateWithoutAssignedSubtasksInput, Prisma.USERUncheckedCreateWithoutAssignedSubtasksInput>
+}
+
+export type USERUpsertWithoutAssignedSubtasksInput = {
+  update: Prisma.XOR<Prisma.USERUpdateWithoutAssignedSubtasksInput, Prisma.USERUncheckedUpdateWithoutAssignedSubtasksInput>
+  create: Prisma.XOR<Prisma.USERCreateWithoutAssignedSubtasksInput, Prisma.USERUncheckedCreateWithoutAssignedSubtasksInput>
+  where?: Prisma.USERWhereInput
+}
+
+export type USERUpdateToOneWithWhereWithoutAssignedSubtasksInput = {
+  where?: Prisma.USERWhereInput
+  data: Prisma.XOR<Prisma.USERUpdateWithoutAssignedSubtasksInput, Prisma.USERUncheckedUpdateWithoutAssignedSubtasksInput>
+}
+
+export type USERUpdateWithoutAssignedSubtasksInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  googleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  avatar?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  avatarPublicId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  provider?: Prisma.EnumProviderFieldUpdateOperationsInput | $Enums.Provider
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  status?: Prisma.EnumAccountStatusFieldUpdateOperationsInput | $Enums.AccountStatus
+  isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  bannedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  bannedReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  ownedOrganization?: Prisma.OrganizationUpdateOneWithoutOwnerNestedInput
+  memberships?: Prisma.OrganizationMemberUpdateManyWithoutUserNestedInput
+  invitations?: Prisma.OrganizationInvitationUpdateManyWithoutInvitedUserNestedInput
+  sentInvitations?: Prisma.OrganizationInvitationUpdateManyWithoutInvitedByNestedInput
+  teamMemberships?: Prisma.TeamMemberUpdateManyWithoutUserNestedInput
+  ledTeams?: Prisma.TeamUpdateManyWithoutLeaderNestedInput
+  createdTasks?: Prisma.TaskUpdateManyWithoutCreatorNestedInput
+  submissions?: Prisma.SubtaskSubmissionUpdateManyWithoutSubmittedByNestedInput
+  reviewedSubmissions?: Prisma.SubtaskSubmissionUpdateManyWithoutReviewedByNestedInput
+  complaintsFiled?: Prisma.ComplaintUpdateManyWithoutComplainantNestedInput
+  complaintsAgainst?: Prisma.ComplaintUpdateManyWithoutReportedUserNestedInput
+  complaintsReviewed?: Prisma.ComplaintUpdateManyWithoutReviewerNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
+  auditLogs?: Prisma.AuditLogUpdateManyWithoutActorNestedInput
+}
+
+export type USERUncheckedUpdateWithoutAssignedSubtasksInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  googleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  avatar?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  avatarPublicId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  provider?: Prisma.EnumProviderFieldUpdateOperationsInput | $Enums.Provider
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  status?: Prisma.EnumAccountStatusFieldUpdateOperationsInput | $Enums.AccountStatus
+  isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  bannedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  bannedReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  ownedOrganization?: Prisma.OrganizationUncheckedUpdateOneWithoutOwnerNestedInput
+  memberships?: Prisma.OrganizationMemberUncheckedUpdateManyWithoutUserNestedInput
+  invitations?: Prisma.OrganizationInvitationUncheckedUpdateManyWithoutInvitedUserNestedInput
+  sentInvitations?: Prisma.OrganizationInvitationUncheckedUpdateManyWithoutInvitedByNestedInput
+  teamMemberships?: Prisma.TeamMemberUncheckedUpdateManyWithoutUserNestedInput
+  ledTeams?: Prisma.TeamUncheckedUpdateManyWithoutLeaderNestedInput
+  createdTasks?: Prisma.TaskUncheckedUpdateManyWithoutCreatorNestedInput
+  submissions?: Prisma.SubtaskSubmissionUncheckedUpdateManyWithoutSubmittedByNestedInput
+  reviewedSubmissions?: Prisma.SubtaskSubmissionUncheckedUpdateManyWithoutReviewedByNestedInput
+  complaintsFiled?: Prisma.ComplaintUncheckedUpdateManyWithoutComplainantNestedInput
+  complaintsAgainst?: Prisma.ComplaintUncheckedUpdateManyWithoutReportedUserNestedInput
+  complaintsReviewed?: Prisma.ComplaintUncheckedUpdateManyWithoutReviewerNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
+  auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutActorNestedInput
+}
+
+export type USERCreateWithoutSubmissionsInput = {
+  id?: string
+  email: string
+  name: string
+  password?: string | null
+  googleId?: string | null
+  avatar?: string | null
+  avatarPublicId?: string | null
+  provider?: $Enums.Provider
+  role?: $Enums.Role
+  status?: $Enums.AccountStatus
+  isVerified?: boolean
+  bannedAt?: Date | string | null
+  bannedReason?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string | null
+  deletedAt?: Date | string | null
+  ownedOrganization?: Prisma.OrganizationCreateNestedOneWithoutOwnerInput
+  memberships?: Prisma.OrganizationMemberCreateNestedManyWithoutUserInput
+  invitations?: Prisma.OrganizationInvitationCreateNestedManyWithoutInvitedUserInput
+  sentInvitations?: Prisma.OrganizationInvitationCreateNestedManyWithoutInvitedByInput
+  teamMemberships?: Prisma.TeamMemberCreateNestedManyWithoutUserInput
+  ledTeams?: Prisma.TeamCreateNestedManyWithoutLeaderInput
+  createdTasks?: Prisma.TaskCreateNestedManyWithoutCreatorInput
+  assignedSubtasks?: Prisma.SubtaskCreateNestedManyWithoutAssignedUserInput
+  reviewedSubmissions?: Prisma.SubtaskSubmissionCreateNestedManyWithoutReviewedByInput
+  complaintsFiled?: Prisma.ComplaintCreateNestedManyWithoutComplainantInput
+  complaintsAgainst?: Prisma.ComplaintCreateNestedManyWithoutReportedUserInput
+  complaintsReviewed?: Prisma.ComplaintCreateNestedManyWithoutReviewerInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
+  auditLogs?: Prisma.AuditLogCreateNestedManyWithoutActorInput
+}
+
+export type USERUncheckedCreateWithoutSubmissionsInput = {
+  id?: string
+  email: string
+  name: string
+  password?: string | null
+  googleId?: string | null
+  avatar?: string | null
+  avatarPublicId?: string | null
+  provider?: $Enums.Provider
+  role?: $Enums.Role
+  status?: $Enums.AccountStatus
+  isVerified?: boolean
+  bannedAt?: Date | string | null
+  bannedReason?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string | null
+  deletedAt?: Date | string | null
+  ownedOrganization?: Prisma.OrganizationUncheckedCreateNestedOneWithoutOwnerInput
+  memberships?: Prisma.OrganizationMemberUncheckedCreateNestedManyWithoutUserInput
+  invitations?: Prisma.OrganizationInvitationUncheckedCreateNestedManyWithoutInvitedUserInput
+  sentInvitations?: Prisma.OrganizationInvitationUncheckedCreateNestedManyWithoutInvitedByInput
+  teamMemberships?: Prisma.TeamMemberUncheckedCreateNestedManyWithoutUserInput
+  ledTeams?: Prisma.TeamUncheckedCreateNestedManyWithoutLeaderInput
+  createdTasks?: Prisma.TaskUncheckedCreateNestedManyWithoutCreatorInput
+  assignedSubtasks?: Prisma.SubtaskUncheckedCreateNestedManyWithoutAssignedUserInput
+  reviewedSubmissions?: Prisma.SubtaskSubmissionUncheckedCreateNestedManyWithoutReviewedByInput
+  complaintsFiled?: Prisma.ComplaintUncheckedCreateNestedManyWithoutComplainantInput
+  complaintsAgainst?: Prisma.ComplaintUncheckedCreateNestedManyWithoutReportedUserInput
+  complaintsReviewed?: Prisma.ComplaintUncheckedCreateNestedManyWithoutReviewerInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
+  auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutActorInput
+}
+
+export type USERCreateOrConnectWithoutSubmissionsInput = {
+  where: Prisma.USERWhereUniqueInput
+  create: Prisma.XOR<Prisma.USERCreateWithoutSubmissionsInput, Prisma.USERUncheckedCreateWithoutSubmissionsInput>
+}
+
+export type USERCreateWithoutReviewedSubmissionsInput = {
+  id?: string
+  email: string
+  name: string
+  password?: string | null
+  googleId?: string | null
+  avatar?: string | null
+  avatarPublicId?: string | null
+  provider?: $Enums.Provider
+  role?: $Enums.Role
+  status?: $Enums.AccountStatus
+  isVerified?: boolean
+  bannedAt?: Date | string | null
+  bannedReason?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string | null
+  deletedAt?: Date | string | null
+  ownedOrganization?: Prisma.OrganizationCreateNestedOneWithoutOwnerInput
+  memberships?: Prisma.OrganizationMemberCreateNestedManyWithoutUserInput
+  invitations?: Prisma.OrganizationInvitationCreateNestedManyWithoutInvitedUserInput
+  sentInvitations?: Prisma.OrganizationInvitationCreateNestedManyWithoutInvitedByInput
+  teamMemberships?: Prisma.TeamMemberCreateNestedManyWithoutUserInput
+  ledTeams?: Prisma.TeamCreateNestedManyWithoutLeaderInput
+  createdTasks?: Prisma.TaskCreateNestedManyWithoutCreatorInput
+  assignedSubtasks?: Prisma.SubtaskCreateNestedManyWithoutAssignedUserInput
+  submissions?: Prisma.SubtaskSubmissionCreateNestedManyWithoutSubmittedByInput
+  complaintsFiled?: Prisma.ComplaintCreateNestedManyWithoutComplainantInput
+  complaintsAgainst?: Prisma.ComplaintCreateNestedManyWithoutReportedUserInput
+  complaintsReviewed?: Prisma.ComplaintCreateNestedManyWithoutReviewerInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
+  auditLogs?: Prisma.AuditLogCreateNestedManyWithoutActorInput
+}
+
+export type USERUncheckedCreateWithoutReviewedSubmissionsInput = {
+  id?: string
+  email: string
+  name: string
+  password?: string | null
+  googleId?: string | null
+  avatar?: string | null
+  avatarPublicId?: string | null
+  provider?: $Enums.Provider
+  role?: $Enums.Role
+  status?: $Enums.AccountStatus
+  isVerified?: boolean
+  bannedAt?: Date | string | null
+  bannedReason?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string | null
+  deletedAt?: Date | string | null
+  ownedOrganization?: Prisma.OrganizationUncheckedCreateNestedOneWithoutOwnerInput
+  memberships?: Prisma.OrganizationMemberUncheckedCreateNestedManyWithoutUserInput
+  invitations?: Prisma.OrganizationInvitationUncheckedCreateNestedManyWithoutInvitedUserInput
+  sentInvitations?: Prisma.OrganizationInvitationUncheckedCreateNestedManyWithoutInvitedByInput
+  teamMemberships?: Prisma.TeamMemberUncheckedCreateNestedManyWithoutUserInput
+  ledTeams?: Prisma.TeamUncheckedCreateNestedManyWithoutLeaderInput
+  createdTasks?: Prisma.TaskUncheckedCreateNestedManyWithoutCreatorInput
+  assignedSubtasks?: Prisma.SubtaskUncheckedCreateNestedManyWithoutAssignedUserInput
+  submissions?: Prisma.SubtaskSubmissionUncheckedCreateNestedManyWithoutSubmittedByInput
+  complaintsFiled?: Prisma.ComplaintUncheckedCreateNestedManyWithoutComplainantInput
+  complaintsAgainst?: Prisma.ComplaintUncheckedCreateNestedManyWithoutReportedUserInput
+  complaintsReviewed?: Prisma.ComplaintUncheckedCreateNestedManyWithoutReviewerInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
+  auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutActorInput
+}
+
+export type USERCreateOrConnectWithoutReviewedSubmissionsInput = {
+  where: Prisma.USERWhereUniqueInput
+  create: Prisma.XOR<Prisma.USERCreateWithoutReviewedSubmissionsInput, Prisma.USERUncheckedCreateWithoutReviewedSubmissionsInput>
+}
+
+export type USERUpsertWithoutSubmissionsInput = {
+  update: Prisma.XOR<Prisma.USERUpdateWithoutSubmissionsInput, Prisma.USERUncheckedUpdateWithoutSubmissionsInput>
+  create: Prisma.XOR<Prisma.USERCreateWithoutSubmissionsInput, Prisma.USERUncheckedCreateWithoutSubmissionsInput>
+  where?: Prisma.USERWhereInput
+}
+
+export type USERUpdateToOneWithWhereWithoutSubmissionsInput = {
+  where?: Prisma.USERWhereInput
+  data: Prisma.XOR<Prisma.USERUpdateWithoutSubmissionsInput, Prisma.USERUncheckedUpdateWithoutSubmissionsInput>
+}
+
+export type USERUpdateWithoutSubmissionsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  googleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  avatar?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  avatarPublicId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  provider?: Prisma.EnumProviderFieldUpdateOperationsInput | $Enums.Provider
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  status?: Prisma.EnumAccountStatusFieldUpdateOperationsInput | $Enums.AccountStatus
+  isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  bannedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  bannedReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  ownedOrganization?: Prisma.OrganizationUpdateOneWithoutOwnerNestedInput
+  memberships?: Prisma.OrganizationMemberUpdateManyWithoutUserNestedInput
+  invitations?: Prisma.OrganizationInvitationUpdateManyWithoutInvitedUserNestedInput
+  sentInvitations?: Prisma.OrganizationInvitationUpdateManyWithoutInvitedByNestedInput
+  teamMemberships?: Prisma.TeamMemberUpdateManyWithoutUserNestedInput
+  ledTeams?: Prisma.TeamUpdateManyWithoutLeaderNestedInput
+  createdTasks?: Prisma.TaskUpdateManyWithoutCreatorNestedInput
+  assignedSubtasks?: Prisma.SubtaskUpdateManyWithoutAssignedUserNestedInput
+  reviewedSubmissions?: Prisma.SubtaskSubmissionUpdateManyWithoutReviewedByNestedInput
+  complaintsFiled?: Prisma.ComplaintUpdateManyWithoutComplainantNestedInput
+  complaintsAgainst?: Prisma.ComplaintUpdateManyWithoutReportedUserNestedInput
+  complaintsReviewed?: Prisma.ComplaintUpdateManyWithoutReviewerNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
+  auditLogs?: Prisma.AuditLogUpdateManyWithoutActorNestedInput
+}
+
+export type USERUncheckedUpdateWithoutSubmissionsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  googleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  avatar?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  avatarPublicId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  provider?: Prisma.EnumProviderFieldUpdateOperationsInput | $Enums.Provider
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  status?: Prisma.EnumAccountStatusFieldUpdateOperationsInput | $Enums.AccountStatus
+  isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  bannedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  bannedReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  ownedOrganization?: Prisma.OrganizationUncheckedUpdateOneWithoutOwnerNestedInput
+  memberships?: Prisma.OrganizationMemberUncheckedUpdateManyWithoutUserNestedInput
+  invitations?: Prisma.OrganizationInvitationUncheckedUpdateManyWithoutInvitedUserNestedInput
+  sentInvitations?: Prisma.OrganizationInvitationUncheckedUpdateManyWithoutInvitedByNestedInput
+  teamMemberships?: Prisma.TeamMemberUncheckedUpdateManyWithoutUserNestedInput
+  ledTeams?: Prisma.TeamUncheckedUpdateManyWithoutLeaderNestedInput
+  createdTasks?: Prisma.TaskUncheckedUpdateManyWithoutCreatorNestedInput
+  assignedSubtasks?: Prisma.SubtaskUncheckedUpdateManyWithoutAssignedUserNestedInput
+  reviewedSubmissions?: Prisma.SubtaskSubmissionUncheckedUpdateManyWithoutReviewedByNestedInput
+  complaintsFiled?: Prisma.ComplaintUncheckedUpdateManyWithoutComplainantNestedInput
+  complaintsAgainst?: Prisma.ComplaintUncheckedUpdateManyWithoutReportedUserNestedInput
+  complaintsReviewed?: Prisma.ComplaintUncheckedUpdateManyWithoutReviewerNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
+  auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutActorNestedInput
+}
+
+export type USERUpsertWithoutReviewedSubmissionsInput = {
+  update: Prisma.XOR<Prisma.USERUpdateWithoutReviewedSubmissionsInput, Prisma.USERUncheckedUpdateWithoutReviewedSubmissionsInput>
+  create: Prisma.XOR<Prisma.USERCreateWithoutReviewedSubmissionsInput, Prisma.USERUncheckedCreateWithoutReviewedSubmissionsInput>
+  where?: Prisma.USERWhereInput
+}
+
+export type USERUpdateToOneWithWhereWithoutReviewedSubmissionsInput = {
+  where?: Prisma.USERWhereInput
+  data: Prisma.XOR<Prisma.USERUpdateWithoutReviewedSubmissionsInput, Prisma.USERUncheckedUpdateWithoutReviewedSubmissionsInput>
+}
+
+export type USERUpdateWithoutReviewedSubmissionsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  googleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  avatar?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  avatarPublicId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  provider?: Prisma.EnumProviderFieldUpdateOperationsInput | $Enums.Provider
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  status?: Prisma.EnumAccountStatusFieldUpdateOperationsInput | $Enums.AccountStatus
+  isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  bannedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  bannedReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  ownedOrganization?: Prisma.OrganizationUpdateOneWithoutOwnerNestedInput
+  memberships?: Prisma.OrganizationMemberUpdateManyWithoutUserNestedInput
+  invitations?: Prisma.OrganizationInvitationUpdateManyWithoutInvitedUserNestedInput
+  sentInvitations?: Prisma.OrganizationInvitationUpdateManyWithoutInvitedByNestedInput
+  teamMemberships?: Prisma.TeamMemberUpdateManyWithoutUserNestedInput
+  ledTeams?: Prisma.TeamUpdateManyWithoutLeaderNestedInput
+  createdTasks?: Prisma.TaskUpdateManyWithoutCreatorNestedInput
+  assignedSubtasks?: Prisma.SubtaskUpdateManyWithoutAssignedUserNestedInput
+  submissions?: Prisma.SubtaskSubmissionUpdateManyWithoutSubmittedByNestedInput
+  complaintsFiled?: Prisma.ComplaintUpdateManyWithoutComplainantNestedInput
+  complaintsAgainst?: Prisma.ComplaintUpdateManyWithoutReportedUserNestedInput
+  complaintsReviewed?: Prisma.ComplaintUpdateManyWithoutReviewerNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
+  auditLogs?: Prisma.AuditLogUpdateManyWithoutActorNestedInput
+}
+
+export type USERUncheckedUpdateWithoutReviewedSubmissionsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  googleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  avatar?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  avatarPublicId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  provider?: Prisma.EnumProviderFieldUpdateOperationsInput | $Enums.Provider
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  status?: Prisma.EnumAccountStatusFieldUpdateOperationsInput | $Enums.AccountStatus
+  isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  bannedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  bannedReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  ownedOrganization?: Prisma.OrganizationUncheckedUpdateOneWithoutOwnerNestedInput
+  memberships?: Prisma.OrganizationMemberUncheckedUpdateManyWithoutUserNestedInput
+  invitations?: Prisma.OrganizationInvitationUncheckedUpdateManyWithoutInvitedUserNestedInput
+  sentInvitations?: Prisma.OrganizationInvitationUncheckedUpdateManyWithoutInvitedByNestedInput
+  teamMemberships?: Prisma.TeamMemberUncheckedUpdateManyWithoutUserNestedInput
+  ledTeams?: Prisma.TeamUncheckedUpdateManyWithoutLeaderNestedInput
+  createdTasks?: Prisma.TaskUncheckedUpdateManyWithoutCreatorNestedInput
+  assignedSubtasks?: Prisma.SubtaskUncheckedUpdateManyWithoutAssignedUserNestedInput
+  submissions?: Prisma.SubtaskSubmissionUncheckedUpdateManyWithoutSubmittedByNestedInput
+  complaintsFiled?: Prisma.ComplaintUncheckedUpdateManyWithoutComplainantNestedInput
+  complaintsAgainst?: Prisma.ComplaintUncheckedUpdateManyWithoutReportedUserNestedInput
+  complaintsReviewed?: Prisma.ComplaintUncheckedUpdateManyWithoutReviewerNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
+  auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutActorNestedInput
+}
+
+export type USERCreateWithoutLedTeamsInput = {
+  id?: string
+  email: string
+  name: string
+  password?: string | null
+  googleId?: string | null
+  avatar?: string | null
+  avatarPublicId?: string | null
+  provider?: $Enums.Provider
+  role?: $Enums.Role
+  status?: $Enums.AccountStatus
+  isVerified?: boolean
+  bannedAt?: Date | string | null
+  bannedReason?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string | null
+  deletedAt?: Date | string | null
+  ownedOrganization?: Prisma.OrganizationCreateNestedOneWithoutOwnerInput
+  memberships?: Prisma.OrganizationMemberCreateNestedManyWithoutUserInput
+  invitations?: Prisma.OrganizationInvitationCreateNestedManyWithoutInvitedUserInput
+  sentInvitations?: Prisma.OrganizationInvitationCreateNestedManyWithoutInvitedByInput
+  teamMemberships?: Prisma.TeamMemberCreateNestedManyWithoutUserInput
+  createdTasks?: Prisma.TaskCreateNestedManyWithoutCreatorInput
+  assignedSubtasks?: Prisma.SubtaskCreateNestedManyWithoutAssignedUserInput
+  submissions?: Prisma.SubtaskSubmissionCreateNestedManyWithoutSubmittedByInput
+  reviewedSubmissions?: Prisma.SubtaskSubmissionCreateNestedManyWithoutReviewedByInput
+  complaintsFiled?: Prisma.ComplaintCreateNestedManyWithoutComplainantInput
+  complaintsAgainst?: Prisma.ComplaintCreateNestedManyWithoutReportedUserInput
+  complaintsReviewed?: Prisma.ComplaintCreateNestedManyWithoutReviewerInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
+  auditLogs?: Prisma.AuditLogCreateNestedManyWithoutActorInput
+}
+
+export type USERUncheckedCreateWithoutLedTeamsInput = {
+  id?: string
+  email: string
+  name: string
+  password?: string | null
+  googleId?: string | null
+  avatar?: string | null
+  avatarPublicId?: string | null
+  provider?: $Enums.Provider
+  role?: $Enums.Role
+  status?: $Enums.AccountStatus
+  isVerified?: boolean
+  bannedAt?: Date | string | null
+  bannedReason?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string | null
+  deletedAt?: Date | string | null
+  ownedOrganization?: Prisma.OrganizationUncheckedCreateNestedOneWithoutOwnerInput
+  memberships?: Prisma.OrganizationMemberUncheckedCreateNestedManyWithoutUserInput
+  invitations?: Prisma.OrganizationInvitationUncheckedCreateNestedManyWithoutInvitedUserInput
+  sentInvitations?: Prisma.OrganizationInvitationUncheckedCreateNestedManyWithoutInvitedByInput
+  teamMemberships?: Prisma.TeamMemberUncheckedCreateNestedManyWithoutUserInput
+  createdTasks?: Prisma.TaskUncheckedCreateNestedManyWithoutCreatorInput
+  assignedSubtasks?: Prisma.SubtaskUncheckedCreateNestedManyWithoutAssignedUserInput
+  submissions?: Prisma.SubtaskSubmissionUncheckedCreateNestedManyWithoutSubmittedByInput
+  reviewedSubmissions?: Prisma.SubtaskSubmissionUncheckedCreateNestedManyWithoutReviewedByInput
+  complaintsFiled?: Prisma.ComplaintUncheckedCreateNestedManyWithoutComplainantInput
+  complaintsAgainst?: Prisma.ComplaintUncheckedCreateNestedManyWithoutReportedUserInput
+  complaintsReviewed?: Prisma.ComplaintUncheckedCreateNestedManyWithoutReviewerInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
+  auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutActorInput
+}
+
+export type USERCreateOrConnectWithoutLedTeamsInput = {
+  where: Prisma.USERWhereUniqueInput
+  create: Prisma.XOR<Prisma.USERCreateWithoutLedTeamsInput, Prisma.USERUncheckedCreateWithoutLedTeamsInput>
+}
+
+export type USERUpsertWithoutLedTeamsInput = {
+  update: Prisma.XOR<Prisma.USERUpdateWithoutLedTeamsInput, Prisma.USERUncheckedUpdateWithoutLedTeamsInput>
+  create: Prisma.XOR<Prisma.USERCreateWithoutLedTeamsInput, Prisma.USERUncheckedCreateWithoutLedTeamsInput>
+  where?: Prisma.USERWhereInput
+}
+
+export type USERUpdateToOneWithWhereWithoutLedTeamsInput = {
+  where?: Prisma.USERWhereInput
+  data: Prisma.XOR<Prisma.USERUpdateWithoutLedTeamsInput, Prisma.USERUncheckedUpdateWithoutLedTeamsInput>
+}
+
+export type USERUpdateWithoutLedTeamsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  googleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  avatar?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  avatarPublicId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  provider?: Prisma.EnumProviderFieldUpdateOperationsInput | $Enums.Provider
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  status?: Prisma.EnumAccountStatusFieldUpdateOperationsInput | $Enums.AccountStatus
+  isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  bannedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  bannedReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  ownedOrganization?: Prisma.OrganizationUpdateOneWithoutOwnerNestedInput
+  memberships?: Prisma.OrganizationMemberUpdateManyWithoutUserNestedInput
+  invitations?: Prisma.OrganizationInvitationUpdateManyWithoutInvitedUserNestedInput
+  sentInvitations?: Prisma.OrganizationInvitationUpdateManyWithoutInvitedByNestedInput
+  teamMemberships?: Prisma.TeamMemberUpdateManyWithoutUserNestedInput
+  createdTasks?: Prisma.TaskUpdateManyWithoutCreatorNestedInput
+  assignedSubtasks?: Prisma.SubtaskUpdateManyWithoutAssignedUserNestedInput
+  submissions?: Prisma.SubtaskSubmissionUpdateManyWithoutSubmittedByNestedInput
+  reviewedSubmissions?: Prisma.SubtaskSubmissionUpdateManyWithoutReviewedByNestedInput
+  complaintsFiled?: Prisma.ComplaintUpdateManyWithoutComplainantNestedInput
+  complaintsAgainst?: Prisma.ComplaintUpdateManyWithoutReportedUserNestedInput
+  complaintsReviewed?: Prisma.ComplaintUpdateManyWithoutReviewerNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
+  auditLogs?: Prisma.AuditLogUpdateManyWithoutActorNestedInput
+}
+
+export type USERUncheckedUpdateWithoutLedTeamsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  googleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  avatar?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  avatarPublicId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  provider?: Prisma.EnumProviderFieldUpdateOperationsInput | $Enums.Provider
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  status?: Prisma.EnumAccountStatusFieldUpdateOperationsInput | $Enums.AccountStatus
+  isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  bannedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  bannedReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  ownedOrganization?: Prisma.OrganizationUncheckedUpdateOneWithoutOwnerNestedInput
+  memberships?: Prisma.OrganizationMemberUncheckedUpdateManyWithoutUserNestedInput
+  invitations?: Prisma.OrganizationInvitationUncheckedUpdateManyWithoutInvitedUserNestedInput
+  sentInvitations?: Prisma.OrganizationInvitationUncheckedUpdateManyWithoutInvitedByNestedInput
+  teamMemberships?: Prisma.TeamMemberUncheckedUpdateManyWithoutUserNestedInput
+  createdTasks?: Prisma.TaskUncheckedUpdateManyWithoutCreatorNestedInput
+  assignedSubtasks?: Prisma.SubtaskUncheckedUpdateManyWithoutAssignedUserNestedInput
+  submissions?: Prisma.SubtaskSubmissionUncheckedUpdateManyWithoutSubmittedByNestedInput
+  reviewedSubmissions?: Prisma.SubtaskSubmissionUncheckedUpdateManyWithoutReviewedByNestedInput
+  complaintsFiled?: Prisma.ComplaintUncheckedUpdateManyWithoutComplainantNestedInput
+  complaintsAgainst?: Prisma.ComplaintUncheckedUpdateManyWithoutReportedUserNestedInput
+  complaintsReviewed?: Prisma.ComplaintUncheckedUpdateManyWithoutReviewerNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
+  auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutActorNestedInput
+}
+
+export type USERCreateWithoutTeamMembershipsInput = {
+  id?: string
+  email: string
+  name: string
+  password?: string | null
+  googleId?: string | null
+  avatar?: string | null
+  avatarPublicId?: string | null
+  provider?: $Enums.Provider
+  role?: $Enums.Role
+  status?: $Enums.AccountStatus
+  isVerified?: boolean
+  bannedAt?: Date | string | null
+  bannedReason?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string | null
+  deletedAt?: Date | string | null
+  ownedOrganization?: Prisma.OrganizationCreateNestedOneWithoutOwnerInput
+  memberships?: Prisma.OrganizationMemberCreateNestedManyWithoutUserInput
+  invitations?: Prisma.OrganizationInvitationCreateNestedManyWithoutInvitedUserInput
+  sentInvitations?: Prisma.OrganizationInvitationCreateNestedManyWithoutInvitedByInput
+  ledTeams?: Prisma.TeamCreateNestedManyWithoutLeaderInput
+  createdTasks?: Prisma.TaskCreateNestedManyWithoutCreatorInput
+  assignedSubtasks?: Prisma.SubtaskCreateNestedManyWithoutAssignedUserInput
+  submissions?: Prisma.SubtaskSubmissionCreateNestedManyWithoutSubmittedByInput
+  reviewedSubmissions?: Prisma.SubtaskSubmissionCreateNestedManyWithoutReviewedByInput
+  complaintsFiled?: Prisma.ComplaintCreateNestedManyWithoutComplainantInput
+  complaintsAgainst?: Prisma.ComplaintCreateNestedManyWithoutReportedUserInput
+  complaintsReviewed?: Prisma.ComplaintCreateNestedManyWithoutReviewerInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
+  auditLogs?: Prisma.AuditLogCreateNestedManyWithoutActorInput
+}
+
+export type USERUncheckedCreateWithoutTeamMembershipsInput = {
+  id?: string
+  email: string
+  name: string
+  password?: string | null
+  googleId?: string | null
+  avatar?: string | null
+  avatarPublicId?: string | null
+  provider?: $Enums.Provider
+  role?: $Enums.Role
+  status?: $Enums.AccountStatus
+  isVerified?: boolean
+  bannedAt?: Date | string | null
+  bannedReason?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string | null
+  deletedAt?: Date | string | null
+  ownedOrganization?: Prisma.OrganizationUncheckedCreateNestedOneWithoutOwnerInput
+  memberships?: Prisma.OrganizationMemberUncheckedCreateNestedManyWithoutUserInput
+  invitations?: Prisma.OrganizationInvitationUncheckedCreateNestedManyWithoutInvitedUserInput
+  sentInvitations?: Prisma.OrganizationInvitationUncheckedCreateNestedManyWithoutInvitedByInput
+  ledTeams?: Prisma.TeamUncheckedCreateNestedManyWithoutLeaderInput
+  createdTasks?: Prisma.TaskUncheckedCreateNestedManyWithoutCreatorInput
+  assignedSubtasks?: Prisma.SubtaskUncheckedCreateNestedManyWithoutAssignedUserInput
+  submissions?: Prisma.SubtaskSubmissionUncheckedCreateNestedManyWithoutSubmittedByInput
+  reviewedSubmissions?: Prisma.SubtaskSubmissionUncheckedCreateNestedManyWithoutReviewedByInput
+  complaintsFiled?: Prisma.ComplaintUncheckedCreateNestedManyWithoutComplainantInput
+  complaintsAgainst?: Prisma.ComplaintUncheckedCreateNestedManyWithoutReportedUserInput
+  complaintsReviewed?: Prisma.ComplaintUncheckedCreateNestedManyWithoutReviewerInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
+  auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutActorInput
+}
+
+export type USERCreateOrConnectWithoutTeamMembershipsInput = {
+  where: Prisma.USERWhereUniqueInput
+  create: Prisma.XOR<Prisma.USERCreateWithoutTeamMembershipsInput, Prisma.USERUncheckedCreateWithoutTeamMembershipsInput>
+}
+
+export type USERUpsertWithoutTeamMembershipsInput = {
+  update: Prisma.XOR<Prisma.USERUpdateWithoutTeamMembershipsInput, Prisma.USERUncheckedUpdateWithoutTeamMembershipsInput>
+  create: Prisma.XOR<Prisma.USERCreateWithoutTeamMembershipsInput, Prisma.USERUncheckedCreateWithoutTeamMembershipsInput>
+  where?: Prisma.USERWhereInput
+}
+
+export type USERUpdateToOneWithWhereWithoutTeamMembershipsInput = {
+  where?: Prisma.USERWhereInput
+  data: Prisma.XOR<Prisma.USERUpdateWithoutTeamMembershipsInput, Prisma.USERUncheckedUpdateWithoutTeamMembershipsInput>
+}
+
+export type USERUpdateWithoutTeamMembershipsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  googleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  avatar?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  avatarPublicId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  provider?: Prisma.EnumProviderFieldUpdateOperationsInput | $Enums.Provider
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  status?: Prisma.EnumAccountStatusFieldUpdateOperationsInput | $Enums.AccountStatus
+  isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  bannedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  bannedReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  ownedOrganization?: Prisma.OrganizationUpdateOneWithoutOwnerNestedInput
+  memberships?: Prisma.OrganizationMemberUpdateManyWithoutUserNestedInput
+  invitations?: Prisma.OrganizationInvitationUpdateManyWithoutInvitedUserNestedInput
+  sentInvitations?: Prisma.OrganizationInvitationUpdateManyWithoutInvitedByNestedInput
+  ledTeams?: Prisma.TeamUpdateManyWithoutLeaderNestedInput
+  createdTasks?: Prisma.TaskUpdateManyWithoutCreatorNestedInput
+  assignedSubtasks?: Prisma.SubtaskUpdateManyWithoutAssignedUserNestedInput
+  submissions?: Prisma.SubtaskSubmissionUpdateManyWithoutSubmittedByNestedInput
+  reviewedSubmissions?: Prisma.SubtaskSubmissionUpdateManyWithoutReviewedByNestedInput
+  complaintsFiled?: Prisma.ComplaintUpdateManyWithoutComplainantNestedInput
+  complaintsAgainst?: Prisma.ComplaintUpdateManyWithoutReportedUserNestedInput
+  complaintsReviewed?: Prisma.ComplaintUpdateManyWithoutReviewerNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
+  auditLogs?: Prisma.AuditLogUpdateManyWithoutActorNestedInput
+}
+
+export type USERUncheckedUpdateWithoutTeamMembershipsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  googleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  avatar?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  avatarPublicId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  provider?: Prisma.EnumProviderFieldUpdateOperationsInput | $Enums.Provider
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  status?: Prisma.EnumAccountStatusFieldUpdateOperationsInput | $Enums.AccountStatus
+  isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  bannedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  bannedReason?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  ownedOrganization?: Prisma.OrganizationUncheckedUpdateOneWithoutOwnerNestedInput
+  memberships?: Prisma.OrganizationMemberUncheckedUpdateManyWithoutUserNestedInput
+  invitations?: Prisma.OrganizationInvitationUncheckedUpdateManyWithoutInvitedUserNestedInput
+  sentInvitations?: Prisma.OrganizationInvitationUncheckedUpdateManyWithoutInvitedByNestedInput
+  ledTeams?: Prisma.TeamUncheckedUpdateManyWithoutLeaderNestedInput
+  createdTasks?: Prisma.TaskUncheckedUpdateManyWithoutCreatorNestedInput
+  assignedSubtasks?: Prisma.SubtaskUncheckedUpdateManyWithoutAssignedUserNestedInput
+  submissions?: Prisma.SubtaskSubmissionUncheckedUpdateManyWithoutSubmittedByNestedInput
+  reviewedSubmissions?: Prisma.SubtaskSubmissionUncheckedUpdateManyWithoutReviewedByNestedInput
+  complaintsFiled?: Prisma.ComplaintUncheckedUpdateManyWithoutComplainantNestedInput
+  complaintsAgainst?: Prisma.ComplaintUncheckedUpdateManyWithoutReportedUserNestedInput
+  complaintsReviewed?: Prisma.ComplaintUncheckedUpdateManyWithoutReviewerNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
+  auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutActorNestedInput
+}
+
+
+/**
+ * Count Type USERCountOutputType
+ */
+
+export type USERCountOutputType = {
+  memberships: number
+  invitations: number
+  sentInvitations: number
+  teamMemberships: number
+  ledTeams: number
+  createdTasks: number
+  assignedSubtasks: number
+  submissions: number
+  reviewedSubmissions: number
+  complaintsFiled: number
+  complaintsAgainst: number
+  complaintsReviewed: number
+  notifications: number
+  auditLogs: number
+}
+
+export type USERCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  memberships?: boolean | USERCountOutputTypeCountMembershipsArgs
+  invitations?: boolean | USERCountOutputTypeCountInvitationsArgs
+  sentInvitations?: boolean | USERCountOutputTypeCountSentInvitationsArgs
+  teamMemberships?: boolean | USERCountOutputTypeCountTeamMembershipsArgs
+  ledTeams?: boolean | USERCountOutputTypeCountLedTeamsArgs
+  createdTasks?: boolean | USERCountOutputTypeCountCreatedTasksArgs
+  assignedSubtasks?: boolean | USERCountOutputTypeCountAssignedSubtasksArgs
+  submissions?: boolean | USERCountOutputTypeCountSubmissionsArgs
+  reviewedSubmissions?: boolean | USERCountOutputTypeCountReviewedSubmissionsArgs
+  complaintsFiled?: boolean | USERCountOutputTypeCountComplaintsFiledArgs
+  complaintsAgainst?: boolean | USERCountOutputTypeCountComplaintsAgainstArgs
+  complaintsReviewed?: boolean | USERCountOutputTypeCountComplaintsReviewedArgs
+  notifications?: boolean | USERCountOutputTypeCountNotificationsArgs
+  auditLogs?: boolean | USERCountOutputTypeCountAuditLogsArgs
+}
+
+/**
+ * USERCountOutputType without action
+ */
+export type USERCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the USERCountOutputType
+   */
+  select?: Prisma.USERCountOutputTypeSelect<ExtArgs> | null
+}
+
+/**
+ * USERCountOutputType without action
+ */
+export type USERCountOutputTypeCountMembershipsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.OrganizationMemberWhereInput
+}
+
+/**
+ * USERCountOutputType without action
+ */
+export type USERCountOutputTypeCountInvitationsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.OrganizationInvitationWhereInput
+}
+
+/**
+ * USERCountOutputType without action
+ */
+export type USERCountOutputTypeCountSentInvitationsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.OrganizationInvitationWhereInput
+}
+
+/**
+ * USERCountOutputType without action
+ */
+export type USERCountOutputTypeCountTeamMembershipsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.TeamMemberWhereInput
+}
+
+/**
+ * USERCountOutputType without action
+ */
+export type USERCountOutputTypeCountLedTeamsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.TeamWhereInput
+}
+
+/**
+ * USERCountOutputType without action
+ */
+export type USERCountOutputTypeCountCreatedTasksArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.TaskWhereInput
+}
+
+/**
+ * USERCountOutputType without action
+ */
+export type USERCountOutputTypeCountAssignedSubtasksArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.SubtaskWhereInput
+}
+
+/**
+ * USERCountOutputType without action
+ */
+export type USERCountOutputTypeCountSubmissionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.SubtaskSubmissionWhereInput
+}
+
+/**
+ * USERCountOutputType without action
+ */
+export type USERCountOutputTypeCountReviewedSubmissionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.SubtaskSubmissionWhereInput
+}
+
+/**
+ * USERCountOutputType without action
+ */
+export type USERCountOutputTypeCountComplaintsFiledArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.ComplaintWhereInput
+}
+
+/**
+ * USERCountOutputType without action
+ */
+export type USERCountOutputTypeCountComplaintsAgainstArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.ComplaintWhereInput
+}
+
+/**
+ * USERCountOutputType without action
+ */
+export type USERCountOutputTypeCountComplaintsReviewedArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.ComplaintWhereInput
+}
+
+/**
+ * USERCountOutputType without action
+ */
+export type USERCountOutputTypeCountNotificationsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.NotificationWhereInput
+}
+
+/**
+ * USERCountOutputType without action
+ */
+export type USERCountOutputTypeCountAuditLogsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.AuditLogWhereInput
+}
 
 
 export type USERSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -497,10 +3268,29 @@ export type USERSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   avatarPublicId?: boolean
   provider?: boolean
   role?: boolean
+  status?: boolean
   isVerified?: boolean
+  bannedAt?: boolean
+  bannedReason?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   deletedAt?: boolean
+  ownedOrganization?: boolean | Prisma.USER$ownedOrganizationArgs<ExtArgs>
+  memberships?: boolean | Prisma.USER$membershipsArgs<ExtArgs>
+  invitations?: boolean | Prisma.USER$invitationsArgs<ExtArgs>
+  sentInvitations?: boolean | Prisma.USER$sentInvitationsArgs<ExtArgs>
+  teamMemberships?: boolean | Prisma.USER$teamMembershipsArgs<ExtArgs>
+  ledTeams?: boolean | Prisma.USER$ledTeamsArgs<ExtArgs>
+  createdTasks?: boolean | Prisma.USER$createdTasksArgs<ExtArgs>
+  assignedSubtasks?: boolean | Prisma.USER$assignedSubtasksArgs<ExtArgs>
+  submissions?: boolean | Prisma.USER$submissionsArgs<ExtArgs>
+  reviewedSubmissions?: boolean | Prisma.USER$reviewedSubmissionsArgs<ExtArgs>
+  complaintsFiled?: boolean | Prisma.USER$complaintsFiledArgs<ExtArgs>
+  complaintsAgainst?: boolean | Prisma.USER$complaintsAgainstArgs<ExtArgs>
+  complaintsReviewed?: boolean | Prisma.USER$complaintsReviewedArgs<ExtArgs>
+  notifications?: boolean | Prisma.USER$notificationsArgs<ExtArgs>
+  auditLogs?: boolean | Prisma.USER$auditLogsArgs<ExtArgs>
+  _count?: boolean | Prisma.USERCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["uSER"]>
 
 export type USERSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -513,7 +3303,10 @@ export type USERSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   avatarPublicId?: boolean
   provider?: boolean
   role?: boolean
+  status?: boolean
   isVerified?: boolean
+  bannedAt?: boolean
+  bannedReason?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   deletedAt?: boolean
@@ -529,7 +3322,10 @@ export type USERSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   avatarPublicId?: boolean
   provider?: boolean
   role?: boolean
+  status?: boolean
   isVerified?: boolean
+  bannedAt?: boolean
+  bannedReason?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   deletedAt?: boolean
@@ -545,17 +3341,56 @@ export type USERSelectScalar = {
   avatarPublicId?: boolean
   provider?: boolean
   role?: boolean
+  status?: boolean
   isVerified?: boolean
+  bannedAt?: boolean
+  bannedReason?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   deletedAt?: boolean
 }
 
-export type USEROmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "email" | "name" | "password" | "googleId" | "avatar" | "avatarPublicId" | "provider" | "role" | "isVerified" | "createdAt" | "updatedAt" | "deletedAt", ExtArgs["result"]["uSER"]>
+export type USEROmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "email" | "name" | "password" | "googleId" | "avatar" | "avatarPublicId" | "provider" | "role" | "status" | "isVerified" | "bannedAt" | "bannedReason" | "createdAt" | "updatedAt" | "deletedAt", ExtArgs["result"]["uSER"]>
+export type USERInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  ownedOrganization?: boolean | Prisma.USER$ownedOrganizationArgs<ExtArgs>
+  memberships?: boolean | Prisma.USER$membershipsArgs<ExtArgs>
+  invitations?: boolean | Prisma.USER$invitationsArgs<ExtArgs>
+  sentInvitations?: boolean | Prisma.USER$sentInvitationsArgs<ExtArgs>
+  teamMemberships?: boolean | Prisma.USER$teamMembershipsArgs<ExtArgs>
+  ledTeams?: boolean | Prisma.USER$ledTeamsArgs<ExtArgs>
+  createdTasks?: boolean | Prisma.USER$createdTasksArgs<ExtArgs>
+  assignedSubtasks?: boolean | Prisma.USER$assignedSubtasksArgs<ExtArgs>
+  submissions?: boolean | Prisma.USER$submissionsArgs<ExtArgs>
+  reviewedSubmissions?: boolean | Prisma.USER$reviewedSubmissionsArgs<ExtArgs>
+  complaintsFiled?: boolean | Prisma.USER$complaintsFiledArgs<ExtArgs>
+  complaintsAgainst?: boolean | Prisma.USER$complaintsAgainstArgs<ExtArgs>
+  complaintsReviewed?: boolean | Prisma.USER$complaintsReviewedArgs<ExtArgs>
+  notifications?: boolean | Prisma.USER$notificationsArgs<ExtArgs>
+  auditLogs?: boolean | Prisma.USER$auditLogsArgs<ExtArgs>
+  _count?: boolean | Prisma.USERCountOutputTypeDefaultArgs<ExtArgs>
+}
+export type USERIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
+export type USERIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
 
 export type $USERPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "USER"
-  objects: {}
+  objects: {
+    ownedOrganization: Prisma.$OrganizationPayload<ExtArgs> | null
+    memberships: Prisma.$OrganizationMemberPayload<ExtArgs>[]
+    invitations: Prisma.$OrganizationInvitationPayload<ExtArgs>[]
+    sentInvitations: Prisma.$OrganizationInvitationPayload<ExtArgs>[]
+    teamMemberships: Prisma.$TeamMemberPayload<ExtArgs>[]
+    ledTeams: Prisma.$TeamPayload<ExtArgs>[]
+    createdTasks: Prisma.$TaskPayload<ExtArgs>[]
+    assignedSubtasks: Prisma.$SubtaskPayload<ExtArgs>[]
+    submissions: Prisma.$SubtaskSubmissionPayload<ExtArgs>[]
+    reviewedSubmissions: Prisma.$SubtaskSubmissionPayload<ExtArgs>[]
+    complaintsFiled: Prisma.$ComplaintPayload<ExtArgs>[]
+    complaintsAgainst: Prisma.$ComplaintPayload<ExtArgs>[]
+    complaintsReviewed: Prisma.$ComplaintPayload<ExtArgs>[]
+    notifications: Prisma.$NotificationPayload<ExtArgs>[]
+    auditLogs: Prisma.$AuditLogPayload<ExtArgs>[]
+  }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
     email: string
@@ -566,7 +3401,10 @@ export type $USERPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     avatarPublicId: string | null
     provider: $Enums.Provider
     role: $Enums.Role
+    status: $Enums.AccountStatus
     isVerified: boolean
+    bannedAt: Date | null
+    bannedReason: string | null
     createdAt: Date
     updatedAt: Date | null
     deletedAt: Date | null
@@ -964,6 +3802,21 @@ readonly fields: USERFieldRefs;
  */
 export interface Prisma__USERClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
+  ownedOrganization<T extends Prisma.USER$ownedOrganizationArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.USER$ownedOrganizationArgs<ExtArgs>>): Prisma.Prisma__OrganizationClient<runtime.Types.Result.GetResult<Prisma.$OrganizationPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  memberships<T extends Prisma.USER$membershipsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.USER$membershipsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$OrganizationMemberPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  invitations<T extends Prisma.USER$invitationsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.USER$invitationsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$OrganizationInvitationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  sentInvitations<T extends Prisma.USER$sentInvitationsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.USER$sentInvitationsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$OrganizationInvitationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  teamMemberships<T extends Prisma.USER$teamMembershipsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.USER$teamMembershipsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TeamMemberPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  ledTeams<T extends Prisma.USER$ledTeamsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.USER$ledTeamsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TeamPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  createdTasks<T extends Prisma.USER$createdTasksArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.USER$createdTasksArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TaskPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  assignedSubtasks<T extends Prisma.USER$assignedSubtasksArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.USER$assignedSubtasksArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SubtaskPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  submissions<T extends Prisma.USER$submissionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.USER$submissionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SubtaskSubmissionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  reviewedSubmissions<T extends Prisma.USER$reviewedSubmissionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.USER$reviewedSubmissionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SubtaskSubmissionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  complaintsFiled<T extends Prisma.USER$complaintsFiledArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.USER$complaintsFiledArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ComplaintPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  complaintsAgainst<T extends Prisma.USER$complaintsAgainstArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.USER$complaintsAgainstArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ComplaintPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  complaintsReviewed<T extends Prisma.USER$complaintsReviewedArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.USER$complaintsReviewedArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ComplaintPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  notifications<T extends Prisma.USER$notificationsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.USER$notificationsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$NotificationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  auditLogs<T extends Prisma.USER$auditLogsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.USER$auditLogsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AuditLogPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1002,7 +3855,10 @@ export interface USERFieldRefs {
   readonly avatarPublicId: Prisma.FieldRef<"USER", 'String'>
   readonly provider: Prisma.FieldRef<"USER", 'Provider'>
   readonly role: Prisma.FieldRef<"USER", 'Role'>
+  readonly status: Prisma.FieldRef<"USER", 'AccountStatus'>
   readonly isVerified: Prisma.FieldRef<"USER", 'Boolean'>
+  readonly bannedAt: Prisma.FieldRef<"USER", 'DateTime'>
+  readonly bannedReason: Prisma.FieldRef<"USER", 'String'>
   readonly createdAt: Prisma.FieldRef<"USER", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"USER", 'DateTime'>
   readonly deletedAt: Prisma.FieldRef<"USER", 'DateTime'>
@@ -1023,6 +3879,10 @@ export type USERFindUniqueArgs<ExtArgs extends runtime.Types.Extensions.Internal
    */
   omit?: Prisma.USEROmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.USERInclude<ExtArgs> | null
+  /**
    * Filter, which USER to fetch.
    */
   where: Prisma.USERWhereUniqueInput
@@ -1041,6 +3901,10 @@ export type USERFindUniqueOrThrowArgs<ExtArgs extends runtime.Types.Extensions.I
    */
   omit?: Prisma.USEROmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.USERInclude<ExtArgs> | null
+  /**
    * Filter, which USER to fetch.
    */
   where: Prisma.USERWhereUniqueInput
@@ -1058,6 +3922,10 @@ export type USERFindFirstArgs<ExtArgs extends runtime.Types.Extensions.InternalA
    * Omit specific fields from the USER
    */
   omit?: Prisma.USEROmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.USERInclude<ExtArgs> | null
   /**
    * Filter, which USER to fetch.
    */
@@ -1107,6 +3975,10 @@ export type USERFindFirstOrThrowArgs<ExtArgs extends runtime.Types.Extensions.In
    */
   omit?: Prisma.USEROmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.USERInclude<ExtArgs> | null
+  /**
    * Filter, which USER to fetch.
    */
   where?: Prisma.USERWhereInput
@@ -1154,6 +4026,10 @@ export type USERFindManyArgs<ExtArgs extends runtime.Types.Extensions.InternalAr
    * Omit specific fields from the USER
    */
   omit?: Prisma.USEROmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.USERInclude<ExtArgs> | null
   /**
    * Filter, which USERS to fetch.
    */
@@ -1203,6 +4079,10 @@ export type USERCreateArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs
    */
   omit?: Prisma.USEROmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.USERInclude<ExtArgs> | null
+  /**
    * The data needed to create a USER.
    */
   data: Prisma.XOR<Prisma.USERCreateInput, Prisma.USERUncheckedCreateInput>
@@ -1250,6 +4130,10 @@ export type USERUpdateArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs
    * Omit specific fields from the USER
    */
   omit?: Prisma.USEROmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.USERInclude<ExtArgs> | null
   /**
    * The data needed to update a USER.
    */
@@ -1317,6 +4201,10 @@ export type USERUpsertArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs
    */
   omit?: Prisma.USEROmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.USERInclude<ExtArgs> | null
+  /**
    * The filter to search for the USER to update in case it exists.
    */
   where: Prisma.USERWhereUniqueInput
@@ -1343,6 +4231,10 @@ export type USERDeleteArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs
    */
   omit?: Prisma.USEROmit<ExtArgs> | null
   /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.USERInclude<ExtArgs> | null
+  /**
    * Filter which USER to delete.
    */
   where: Prisma.USERWhereUniqueInput
@@ -1363,6 +4255,361 @@ export type USERDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Internal
 }
 
 /**
+ * USER.ownedOrganization
+ */
+export type USER$ownedOrganizationArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Organization
+   */
+  select?: Prisma.OrganizationSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Organization
+   */
+  omit?: Prisma.OrganizationOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.OrganizationInclude<ExtArgs> | null
+  where?: Prisma.OrganizationWhereInput
+}
+
+/**
+ * USER.memberships
+ */
+export type USER$membershipsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the OrganizationMember
+   */
+  select?: Prisma.OrganizationMemberSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the OrganizationMember
+   */
+  omit?: Prisma.OrganizationMemberOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.OrganizationMemberInclude<ExtArgs> | null
+  where?: Prisma.OrganizationMemberWhereInput
+  orderBy?: Prisma.OrganizationMemberOrderByWithRelationInput | Prisma.OrganizationMemberOrderByWithRelationInput[]
+  cursor?: Prisma.OrganizationMemberWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.OrganizationMemberScalarFieldEnum | Prisma.OrganizationMemberScalarFieldEnum[]
+}
+
+/**
+ * USER.invitations
+ */
+export type USER$invitationsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the OrganizationInvitation
+   */
+  select?: Prisma.OrganizationInvitationSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the OrganizationInvitation
+   */
+  omit?: Prisma.OrganizationInvitationOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.OrganizationInvitationInclude<ExtArgs> | null
+  where?: Prisma.OrganizationInvitationWhereInput
+  orderBy?: Prisma.OrganizationInvitationOrderByWithRelationInput | Prisma.OrganizationInvitationOrderByWithRelationInput[]
+  cursor?: Prisma.OrganizationInvitationWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.OrganizationInvitationScalarFieldEnum | Prisma.OrganizationInvitationScalarFieldEnum[]
+}
+
+/**
+ * USER.sentInvitations
+ */
+export type USER$sentInvitationsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the OrganizationInvitation
+   */
+  select?: Prisma.OrganizationInvitationSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the OrganizationInvitation
+   */
+  omit?: Prisma.OrganizationInvitationOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.OrganizationInvitationInclude<ExtArgs> | null
+  where?: Prisma.OrganizationInvitationWhereInput
+  orderBy?: Prisma.OrganizationInvitationOrderByWithRelationInput | Prisma.OrganizationInvitationOrderByWithRelationInput[]
+  cursor?: Prisma.OrganizationInvitationWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.OrganizationInvitationScalarFieldEnum | Prisma.OrganizationInvitationScalarFieldEnum[]
+}
+
+/**
+ * USER.teamMemberships
+ */
+export type USER$teamMembershipsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the TeamMember
+   */
+  select?: Prisma.TeamMemberSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the TeamMember
+   */
+  omit?: Prisma.TeamMemberOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.TeamMemberInclude<ExtArgs> | null
+  where?: Prisma.TeamMemberWhereInput
+  orderBy?: Prisma.TeamMemberOrderByWithRelationInput | Prisma.TeamMemberOrderByWithRelationInput[]
+  cursor?: Prisma.TeamMemberWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.TeamMemberScalarFieldEnum | Prisma.TeamMemberScalarFieldEnum[]
+}
+
+/**
+ * USER.ledTeams
+ */
+export type USER$ledTeamsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Team
+   */
+  select?: Prisma.TeamSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Team
+   */
+  omit?: Prisma.TeamOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.TeamInclude<ExtArgs> | null
+  where?: Prisma.TeamWhereInput
+  orderBy?: Prisma.TeamOrderByWithRelationInput | Prisma.TeamOrderByWithRelationInput[]
+  cursor?: Prisma.TeamWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.TeamScalarFieldEnum | Prisma.TeamScalarFieldEnum[]
+}
+
+/**
+ * USER.createdTasks
+ */
+export type USER$createdTasksArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Task
+   */
+  select?: Prisma.TaskSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Task
+   */
+  omit?: Prisma.TaskOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.TaskInclude<ExtArgs> | null
+  where?: Prisma.TaskWhereInput
+  orderBy?: Prisma.TaskOrderByWithRelationInput | Prisma.TaskOrderByWithRelationInput[]
+  cursor?: Prisma.TaskWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.TaskScalarFieldEnum | Prisma.TaskScalarFieldEnum[]
+}
+
+/**
+ * USER.assignedSubtasks
+ */
+export type USER$assignedSubtasksArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Subtask
+   */
+  select?: Prisma.SubtaskSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Subtask
+   */
+  omit?: Prisma.SubtaskOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.SubtaskInclude<ExtArgs> | null
+  where?: Prisma.SubtaskWhereInput
+  orderBy?: Prisma.SubtaskOrderByWithRelationInput | Prisma.SubtaskOrderByWithRelationInput[]
+  cursor?: Prisma.SubtaskWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.SubtaskScalarFieldEnum | Prisma.SubtaskScalarFieldEnum[]
+}
+
+/**
+ * USER.submissions
+ */
+export type USER$submissionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the SubtaskSubmission
+   */
+  select?: Prisma.SubtaskSubmissionSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the SubtaskSubmission
+   */
+  omit?: Prisma.SubtaskSubmissionOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.SubtaskSubmissionInclude<ExtArgs> | null
+  where?: Prisma.SubtaskSubmissionWhereInput
+  orderBy?: Prisma.SubtaskSubmissionOrderByWithRelationInput | Prisma.SubtaskSubmissionOrderByWithRelationInput[]
+  cursor?: Prisma.SubtaskSubmissionWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.SubtaskSubmissionScalarFieldEnum | Prisma.SubtaskSubmissionScalarFieldEnum[]
+}
+
+/**
+ * USER.reviewedSubmissions
+ */
+export type USER$reviewedSubmissionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the SubtaskSubmission
+   */
+  select?: Prisma.SubtaskSubmissionSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the SubtaskSubmission
+   */
+  omit?: Prisma.SubtaskSubmissionOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.SubtaskSubmissionInclude<ExtArgs> | null
+  where?: Prisma.SubtaskSubmissionWhereInput
+  orderBy?: Prisma.SubtaskSubmissionOrderByWithRelationInput | Prisma.SubtaskSubmissionOrderByWithRelationInput[]
+  cursor?: Prisma.SubtaskSubmissionWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.SubtaskSubmissionScalarFieldEnum | Prisma.SubtaskSubmissionScalarFieldEnum[]
+}
+
+/**
+ * USER.complaintsFiled
+ */
+export type USER$complaintsFiledArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Complaint
+   */
+  select?: Prisma.ComplaintSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Complaint
+   */
+  omit?: Prisma.ComplaintOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ComplaintInclude<ExtArgs> | null
+  where?: Prisma.ComplaintWhereInput
+  orderBy?: Prisma.ComplaintOrderByWithRelationInput | Prisma.ComplaintOrderByWithRelationInput[]
+  cursor?: Prisma.ComplaintWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.ComplaintScalarFieldEnum | Prisma.ComplaintScalarFieldEnum[]
+}
+
+/**
+ * USER.complaintsAgainst
+ */
+export type USER$complaintsAgainstArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Complaint
+   */
+  select?: Prisma.ComplaintSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Complaint
+   */
+  omit?: Prisma.ComplaintOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ComplaintInclude<ExtArgs> | null
+  where?: Prisma.ComplaintWhereInput
+  orderBy?: Prisma.ComplaintOrderByWithRelationInput | Prisma.ComplaintOrderByWithRelationInput[]
+  cursor?: Prisma.ComplaintWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.ComplaintScalarFieldEnum | Prisma.ComplaintScalarFieldEnum[]
+}
+
+/**
+ * USER.complaintsReviewed
+ */
+export type USER$complaintsReviewedArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Complaint
+   */
+  select?: Prisma.ComplaintSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Complaint
+   */
+  omit?: Prisma.ComplaintOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ComplaintInclude<ExtArgs> | null
+  where?: Prisma.ComplaintWhereInput
+  orderBy?: Prisma.ComplaintOrderByWithRelationInput | Prisma.ComplaintOrderByWithRelationInput[]
+  cursor?: Prisma.ComplaintWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.ComplaintScalarFieldEnum | Prisma.ComplaintScalarFieldEnum[]
+}
+
+/**
+ * USER.notifications
+ */
+export type USER$notificationsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Notification
+   */
+  select?: Prisma.NotificationSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Notification
+   */
+  omit?: Prisma.NotificationOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.NotificationInclude<ExtArgs> | null
+  where?: Prisma.NotificationWhereInput
+  orderBy?: Prisma.NotificationOrderByWithRelationInput | Prisma.NotificationOrderByWithRelationInput[]
+  cursor?: Prisma.NotificationWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.NotificationScalarFieldEnum | Prisma.NotificationScalarFieldEnum[]
+}
+
+/**
+ * USER.auditLogs
+ */
+export type USER$auditLogsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the AuditLog
+   */
+  select?: Prisma.AuditLogSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the AuditLog
+   */
+  omit?: Prisma.AuditLogOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.AuditLogInclude<ExtArgs> | null
+  where?: Prisma.AuditLogWhereInput
+  orderBy?: Prisma.AuditLogOrderByWithRelationInput | Prisma.AuditLogOrderByWithRelationInput[]
+  cursor?: Prisma.AuditLogWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.AuditLogScalarFieldEnum | Prisma.AuditLogScalarFieldEnum[]
+}
+
+/**
  * USER without action
  */
 export type USERDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1374,4 +4621,8 @@ export type USERDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArg
    * Omit specific fields from the USER
    */
   omit?: Prisma.USEROmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.USERInclude<ExtArgs> | null
 }

@@ -1,0 +1,30 @@
+model Payment {
+    id                    String        @id @default(uuid())
+    organizationId        String
+    stripePaymentIntentId String?       @unique
+    stripeCheckoutSessionId String?     @unique
+    amount                Int
+    currency              String        @default("usd")
+    purchasedTeamCapacity Int
+    status                PaymentStatus @default(PENDING)
+    metadata              Json?
+    paidAt                DateTime?
+    createdAt             DateTime      @default(now())
+    updatedAt             DateTime      @updatedAt
+
+    organization Organization @relation(fields: [organizationId], references: [id])
+
+    @@index([organizationId, status])
+}
+
+model OrganizationEntitlement {
+    id                    String   @id @default(uuid())
+    organizationId        String   @unique
+    freeTeamCapacity      Int      @default(3)
+    purchasedTeamCapacity Int      @default(0)
+    usedTeamCapacity      Int      @default(0)
+    createdAt             DateTime @default(now())
+    updatedAt             DateTime @updatedAt
+
+    organization Organization @relation(fields: [organizationId], references: [id])
+}

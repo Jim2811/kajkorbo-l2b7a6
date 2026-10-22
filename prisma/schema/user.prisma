@@ -8,10 +8,30 @@ model USER {
     avatarPublicId String?
     provider    Provider    @default(LOCAL)
     role Role @default(USER)
+    status      AccountStatus @default(ACTIVE)
     isVerified  Boolean     @default(false)
+    bannedAt    DateTime?
+    bannedReason String?
     createdAt   DateTime    @default(now())
     updatedAt   DateTime?    @updatedAt
     deletedAt   DateTime?
+
+    ownedOrganization Organization? @relation("OrganizationOwner")
+    memberships       OrganizationMember[]
+    invitations       OrganizationInvitation[] @relation("InvitedUser")
+    sentInvitations   OrganizationInvitation[] @relation("Inviter")
+    teamMemberships   TeamMember[]
+    ledTeams          Team[] @relation("TeamLeader")
+    createdTasks      Task[] @relation("TaskCreator")
+    assignedSubtasks  Subtask[]
+    submissions       SubtaskSubmission[]
+    reviewedSubmissions SubtaskSubmission[] @relation("SubmissionReviewer")
+    complaintsFiled   Complaint[] @relation("Complainant")
+    complaintsAgainst Complaint[] @relation("ReportedUser")
+    complaintsReviewed Complaint[] @relation("ComplaintReviewer")
+    notifications     Notification[]
+    auditLogs         AuditLog[]
+
     @@index([email, role], name: "email_role_index")
     @@unique([email])
     @@map("users")

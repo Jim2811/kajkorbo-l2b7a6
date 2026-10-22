@@ -33,6 +33,7 @@ authRouter.get(
 	auth(
 		Role.SUPER_ADMIN,
 		Role.ORG_OWNER,
+		Role.ORG_MEMBER,
 		Role.TEAM_LEADER,
 		Role.TEAM_MEMBER,
 		Role.USER,
@@ -44,6 +45,7 @@ authRouter.patch(
 	auth(
 		Role.SUPER_ADMIN,
 		Role.ORG_OWNER,
+		Role.ORG_MEMBER,
 		Role.TEAM_LEADER,
 		Role.TEAM_MEMBER,
 		Role.USER,
@@ -57,6 +59,7 @@ authRouter.post(
 	auth(
 		Role.SUPER_ADMIN,
 		Role.ORG_OWNER,
+		Role.ORG_MEMBER,
 		Role.TEAM_LEADER,
 		Role.TEAM_MEMBER,
 		Role.USER,

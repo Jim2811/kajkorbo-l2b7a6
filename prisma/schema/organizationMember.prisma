@@ -3,12 +3,16 @@ model OrganizationMember {
     organizationId String
     userId         String       
     role           Role
-    status         MemberStatus @default(IVITED)
+    status         MemberStatus @default(INVITED)
     createdAt      DateTime     @default(now())
     updatedAt      DateTime     @updatedAt
     deletedAt      DateTime?
 
+    organization Organization @relation(fields: [organizationId], references: [id])
+    user         USER         @relation(fields: [userId], references: [id])
+
     @@unique([organizationId, userId])
-    @@index([organizationId, userId], name: "organizationId_userId_index")
+    @@index([organizationId, status])
+    @@index([userId, status])
     @@map("organization_members")
 }

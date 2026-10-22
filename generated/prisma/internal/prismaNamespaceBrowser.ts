@@ -51,9 +51,20 @@ export const AnyNull = runtime.AnyNull
 
 
 export const ModelName = {
+  AuditLog: 'AuditLog',
+  Payment: 'Payment',
+  OrganizationEntitlement: 'OrganizationEntitlement',
+  Complaint: 'Complaint',
+  Notification: 'Notification',
   Organization: 'Organization',
+  OrganizationInvitation: 'OrganizationInvitation',
   OrganizationMember: 'OrganizationMember',
   Project: 'Project',
+  Task: 'Task',
+  Subtask: 'Subtask',
+  SubtaskSubmission: 'SubtaskSubmission',
+  Team: 'Team',
+  TeamMember: 'TeamMember',
   USER: 'USER'
 } as const
 
@@ -73,14 +84,99 @@ export const TransactionIsolationLevel = runtime.makeStrictEnum({
 export type TransactionIsolationLevel = (typeof TransactionIsolationLevel)[keyof typeof TransactionIsolationLevel]
 
 
+export const AuditLogScalarFieldEnum = {
+  id: 'id',
+  organizationId: 'organizationId',
+  actorId: 'actorId',
+  action: 'action',
+  resourceType: 'resourceType',
+  resourceId: 'resourceId',
+  details: 'details',
+  createdAt: 'createdAt'
+} as const
+
+export type AuditLogScalarFieldEnum = (typeof AuditLogScalarFieldEnum)[keyof typeof AuditLogScalarFieldEnum]
+
+
+export const PaymentScalarFieldEnum = {
+  id: 'id',
+  organizationId: 'organizationId',
+  stripePaymentIntentId: 'stripePaymentIntentId',
+  stripeCheckoutSessionId: 'stripeCheckoutSessionId',
+  amount: 'amount',
+  currency: 'currency',
+  purchasedTeamCapacity: 'purchasedTeamCapacity',
+  status: 'status',
+  metadata: 'metadata',
+  paidAt: 'paidAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type PaymentScalarFieldEnum = (typeof PaymentScalarFieldEnum)[keyof typeof PaymentScalarFieldEnum]
+
+
+export const OrganizationEntitlementScalarFieldEnum = {
+  id: 'id',
+  organizationId: 'organizationId',
+  freeTeamCapacity: 'freeTeamCapacity',
+  purchasedTeamCapacity: 'purchasedTeamCapacity',
+  usedTeamCapacity: 'usedTeamCapacity',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type OrganizationEntitlementScalarFieldEnum = (typeof OrganizationEntitlementScalarFieldEnum)[keyof typeof OrganizationEntitlementScalarFieldEnum]
+
+
+export const ComplaintScalarFieldEnum = {
+  id: 'id',
+  organizationId: 'organizationId',
+  complainantId: 'complainantId',
+  reportedUserId: 'reportedUserId',
+  teamId: 'teamId',
+  taskId: 'taskId',
+  subtaskId: 'subtaskId',
+  category: 'category',
+  description: 'description',
+  evidenceUrl: 'evidenceUrl',
+  status: 'status',
+  reviewerId: 'reviewerId',
+  resolutionNotes: 'resolutionNotes',
+  resolvedAt: 'resolvedAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ComplaintScalarFieldEnum = (typeof ComplaintScalarFieldEnum)[keyof typeof ComplaintScalarFieldEnum]
+
+
+export const NotificationScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  organizationId: 'organizationId',
+  type: 'type',
+  title: 'title',
+  message: 'message',
+  readAt: 'readAt',
+  createdAt: 'createdAt'
+} as const
+
+export type NotificationScalarFieldEnum = (typeof NotificationScalarFieldEnum)[keyof typeof NotificationScalarFieldEnum]
+
+
 export const OrganizationScalarFieldEnum = {
   id: 'id',
   name: 'name',
+  description: 'description',
   email: 'email',
   phone: 'phone',
   address: 'address',
+  logo: 'logo',
   slug: 'slug',
+  ownerId: 'ownerId',
   plan: 'plan',
+  status: 'status',
   isSuspended: 'isSuspended',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
@@ -88,6 +184,24 @@ export const OrganizationScalarFieldEnum = {
 } as const
 
 export type OrganizationScalarFieldEnum = (typeof OrganizationScalarFieldEnum)[keyof typeof OrganizationScalarFieldEnum]
+
+
+export const OrganizationInvitationScalarFieldEnum = {
+  id: 'id',
+  organizationId: 'organizationId',
+  invitedUserId: 'invitedUserId',
+  invitedEmail: 'invitedEmail',
+  invitedById: 'invitedById',
+  token: 'token',
+  status: 'status',
+  expiresAt: 'expiresAt',
+  acceptedAt: 'acceptedAt',
+  rejectedAt: 'rejectedAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type OrganizationInvitationScalarFieldEnum = (typeof OrganizationInvitationScalarFieldEnum)[keyof typeof OrganizationInvitationScalarFieldEnum]
 
 
 export const OrganizationMemberScalarFieldEnum = {
@@ -118,6 +232,88 @@ export const ProjectScalarFieldEnum = {
 export type ProjectScalarFieldEnum = (typeof ProjectScalarFieldEnum)[keyof typeof ProjectScalarFieldEnum]
 
 
+export const TaskScalarFieldEnum = {
+  id: 'id',
+  organizationId: 'organizationId',
+  teamId: 'teamId',
+  creatorId: 'creatorId',
+  title: 'title',
+  description: 'description',
+  priority: 'priority',
+  startAt: 'startAt',
+  dueAt: 'dueAt',
+  status: 'status',
+  completedAt: 'completedAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  deletedAt: 'deletedAt'
+} as const
+
+export type TaskScalarFieldEnum = (typeof TaskScalarFieldEnum)[keyof typeof TaskScalarFieldEnum]
+
+
+export const SubtaskScalarFieldEnum = {
+  id: 'id',
+  taskId: 'taskId',
+  assignedUserId: 'assignedUserId',
+  title: 'title',
+  description: 'description',
+  dueAt: 'dueAt',
+  status: 'status',
+  submittedAt: 'submittedAt',
+  reviewedAt: 'reviewedAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  deletedAt: 'deletedAt'
+} as const
+
+export type SubtaskScalarFieldEnum = (typeof SubtaskScalarFieldEnum)[keyof typeof SubtaskScalarFieldEnum]
+
+
+export const SubtaskSubmissionScalarFieldEnum = {
+  id: 'id',
+  subtaskId: 'subtaskId',
+  submittedById: 'submittedById',
+  description: 'description',
+  feedback: 'feedback',
+  reviewedById: 'reviewedById',
+  submittedAt: 'submittedAt',
+  reviewedAt: 'reviewedAt',
+  createdAt: 'createdAt'
+} as const
+
+export type SubtaskSubmissionScalarFieldEnum = (typeof SubtaskSubmissionScalarFieldEnum)[keyof typeof SubtaskSubmissionScalarFieldEnum]
+
+
+export const TeamScalarFieldEnum = {
+  id: 'id',
+  organizationId: 'organizationId',
+  name: 'name',
+  description: 'description',
+  leaderId: 'leaderId',
+  status: 'status',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  deletedAt: 'deletedAt'
+} as const
+
+export type TeamScalarFieldEnum = (typeof TeamScalarFieldEnum)[keyof typeof TeamScalarFieldEnum]
+
+
+export const TeamMemberScalarFieldEnum = {
+  id: 'id',
+  teamId: 'teamId',
+  userId: 'userId',
+  role: 'role',
+  status: 'status',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  deletedAt: 'deletedAt'
+} as const
+
+export type TeamMemberScalarFieldEnum = (typeof TeamMemberScalarFieldEnum)[keyof typeof TeamMemberScalarFieldEnum]
+
+
 export const USERScalarFieldEnum = {
   id: 'id',
   email: 'email',
@@ -128,7 +324,10 @@ export const USERScalarFieldEnum = {
   avatarPublicId: 'avatarPublicId',
   provider: 'provider',
   role: 'role',
+  status: 'status',
   isVerified: 'isVerified',
+  bannedAt: 'bannedAt',
+  bannedReason: 'bannedReason',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
   deletedAt: 'deletedAt'
@@ -145,12 +344,29 @@ export const SortOrder = {
 export type SortOrder = (typeof SortOrder)[keyof typeof SortOrder]
 
 
+export const NullableJsonNullValueInput = {
+  DbNull: DbNull,
+  JsonNull: JsonNull
+} as const
+
+export type NullableJsonNullValueInput = (typeof NullableJsonNullValueInput)[keyof typeof NullableJsonNullValueInput]
+
+
 export const QueryMode = {
   default: 'default',
   insensitive: 'insensitive'
 } as const
 
 export type QueryMode = (typeof QueryMode)[keyof typeof QueryMode]
+
+
+export const JsonNullValueFilter = {
+  DbNull: DbNull,
+  JsonNull: JsonNull,
+  AnyNull: AnyNull
+} as const
+
+export type JsonNullValueFilter = (typeof JsonNullValueFilter)[keyof typeof JsonNullValueFilter]
 
 
 export const NullsOrder = {

@@ -20,6 +20,24 @@ const createOrganizationController = catchAsync(
 	},
 );
 
+const hireOrganizationMemberController = catchAsync(
+	async (req: Request, res: Response) => {
+		const invitation = await organizationService.hireOrganizationMember(
+			req.params.organizationId as string,
+			req.user?.id as string,
+			req.body,
+		);
+
+		sendResponse(res, {
+			success: true,
+			statusCode: httpStatus.CREATED,
+			message: "Organization invitation created successfully",
+			data: { invitation },
+		});
+	},
+);
+
 export const organizationController = {
 	createOrganizationController,
+	hireOrganizationMemberController,
 };

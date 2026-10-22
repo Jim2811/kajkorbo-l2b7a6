@@ -32,7 +32,9 @@ export interface IUpdateProfilePayload {
 
 export interface ICreateOrganizationPayload {
 	name: string;
+	description?: string;
 	email: string;
 	phone?: string;
 	address?: string;
+	logo?: string;
 }

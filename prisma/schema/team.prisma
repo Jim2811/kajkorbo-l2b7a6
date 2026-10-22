@@ -1,0 +1,38 @@
+model Team {
+    id             String     @id @default(uuid())
+    organizationId String
+    name           String
+    description    String?
+    leaderId       String?
+    status         TeamStatus @default(ACTIVE)
+    createdAt      DateTime   @default(now())
+    updatedAt      DateTime   @updatedAt
+    deletedAt      DateTime?
+
+    organization Organization @relation(fields: [organizationId], references: [id])
+    leader       USER?        @relation("TeamLeader", fields: [leaderId], references: [id])
+    members      TeamMember[]
+    tasks        Task[]
+    complaints   Complaint[]
+
+    @@unique([organizationId, name])
+    @@index([organizationId, status])
+}
+
+model TeamMember {
+    id             String           @id @default(uuid())
+    teamId         String
+    userId         String
+    role           TeamMemberRole   @default(MEMBER)
+    status         TeamMemberStatus @default(ACTIVE)
+    createdAt      DateTime         @default(now())
+    updatedAt      DateTime         @updatedAt
+    deletedAt      DateTime?
+
+    team Team @relation(fields: [teamId], references: [id])
+    user USER @relation(fields: [userId], references: [id])
+
+    @@unique([teamId, userId])
+    @@index([teamId, status])
+    @@index([userId, status])
+}
