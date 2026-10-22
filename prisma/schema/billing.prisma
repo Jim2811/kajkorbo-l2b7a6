@@ -3,6 +3,7 @@ model Payment {
     organizationId        String
     stripePaymentIntentId String?       @unique
     stripeCheckoutSessionId String?     @unique
+    idempotencyKey        String        @unique
     amount                Int
     currency              String        @default("usd")
     purchasedTeamCapacity Int
@@ -15,6 +16,12 @@ model Payment {
     organization Organization @relation(fields: [organizationId], references: [id])
 
     @@index([organizationId, status])
+}
+
+model StripeWebhookEvent {
+    id          String   @id
+    type        String
+    processedAt DateTime @default(now())
 }
 
 model OrganizationEntitlement {

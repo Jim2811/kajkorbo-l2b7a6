@@ -37,6 +37,19 @@ const optionalBoolean = (name: string, fallback: boolean): boolean => {
 	return value === "true";
 };
 
+const stripeTeamCapacityUnitAmount = Number(
+	process.env.STRIPE_TEAM_CAPACITY_UNIT_AMOUNT ?? 1000,
+);
+
+if (
+	!Number.isInteger(stripeTeamCapacityUnitAmount) ||
+	stripeTeamCapacityUnitAmount <= 0
+) {
+	throw new Error(
+		"STRIPE_TEAM_CAPACITY_UNIT_AMOUNT must be a positive integer in the smallest currency unit",
+	);
+}
+
 export const env = {
 	databaseUrl: required("DATABASE_URL"),
 	jwt_access_secret: process.env.JWT_ACCESS_SECRET ?? required("JWT_SECRET"),
@@ -72,5 +85,13 @@ export const env = {
 		cloudName: required("CLOUDINARY_CLOUD_NAME"),
 		apiKey: required("CLOUDINARY_API_KEY"),
 		apiSecret: required("CLOUDINARY_API_SECRET"),
+	},
+	stripe: {
+		secretKey: required("STRIPE_SECRET_KEY"),
+		webhookSecret: required("STRIPE_WEBHOOK_SECRET"),
+		teamCapacityUnitAmount: stripeTeamCapacityUnitAmount,
+		currency: process.env.STRIPE_CURRENCY ?? "usd",
+		successUrl: required("STRIPE_CHECKOUT_SUCCESS_URL"),
+		cancelUrl: required("STRIPE_CHECKOUT_CANCEL_URL"),
 	},
 };

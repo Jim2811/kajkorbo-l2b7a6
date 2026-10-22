@@ -10,6 +10,7 @@
  */
 export type * from './models/AuditLog'
 export type * from './models/Payment'
+export type * from './models/StripeWebhookEvent'
 export type * from './models/OrganizationEntitlement'
 export type * from './models/Complaint'
 export type * from './models/Notification'

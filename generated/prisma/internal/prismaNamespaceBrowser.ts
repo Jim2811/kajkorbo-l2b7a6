@@ -53,6 +53,7 @@ export const AnyNull = runtime.AnyNull
 export const ModelName = {
   AuditLog: 'AuditLog',
   Payment: 'Payment',
+  StripeWebhookEvent: 'StripeWebhookEvent',
   OrganizationEntitlement: 'OrganizationEntitlement',
   Complaint: 'Complaint',
   Notification: 'Notification',
@@ -103,6 +104,7 @@ export const PaymentScalarFieldEnum = {
   organizationId: 'organizationId',
   stripePaymentIntentId: 'stripePaymentIntentId',
   stripeCheckoutSessionId: 'stripeCheckoutSessionId',
+  idempotencyKey: 'idempotencyKey',
   amount: 'amount',
   currency: 'currency',
   purchasedTeamCapacity: 'purchasedTeamCapacity',
@@ -114,6 +116,15 @@ export const PaymentScalarFieldEnum = {
 } as const
 
 export type PaymentScalarFieldEnum = (typeof PaymentScalarFieldEnum)[keyof typeof PaymentScalarFieldEnum]
+
+
+export const StripeWebhookEventScalarFieldEnum = {
+  id: 'id',
+  type: 'type',
+  processedAt: 'processedAt'
+} as const
+
+export type StripeWebhookEventScalarFieldEnum = (typeof StripeWebhookEventScalarFieldEnum)[keyof typeof StripeWebhookEventScalarFieldEnum]
 
 
 export const OrganizationEntitlementScalarFieldEnum = {

@@ -28,6 +28,11 @@ export type AuditLog = Prisma.AuditLogModel
  */
 export type Payment = Prisma.PaymentModel
 /**
+ * Model StripeWebhookEvent
+ * 
+ */
+export type StripeWebhookEvent = Prisma.StripeWebhookEventModel
+/**
  * Model OrganizationEntitlement
  * 
  */
