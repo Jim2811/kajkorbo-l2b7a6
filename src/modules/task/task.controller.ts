@@ -44,6 +44,22 @@ const rejectTaskController = catchAsync(async (req: Request, res: Response) => {
 	});
 });
 
+const completeTaskController = catchAsync(
+	async (req: Request, res: Response) => {
+		const task = await taskService.completeTask(
+			req.params.taskId as string,
+			req.user?.id as string,
+		);
+
+		sendResponse(res, {
+			success: true,
+			statusCode: httpStatus.OK,
+			message: "Task completed successfully",
+			data: { task },
+		});
+	},
+);
+
 const createSubtaskController = catchAsync(
 	async (req: Request, res: Response) => {
 		const subtask = await taskService.createSubtask(
@@ -135,6 +151,7 @@ export const taskController = {
 	createTaskController,
 	acceptTaskController,
 	rejectTaskController,
+	completeTaskController,
 	createSubtaskController,
 	submitSubtaskController,
 	approveSubtaskController,

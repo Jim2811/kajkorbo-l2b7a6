@@ -36,6 +36,12 @@ taskRouter.post(
 );
 
 taskRouter.post(
+	"/:taskId/complete",
+	auth(Role.ORG_MEMBER, Role.TEAM_LEADER),
+	taskController.completeTaskController,
+);
+
+taskRouter.post(
 	"/:taskId/subtasks",
 	auth(Role.ORG_OWNER, Role.ORG_MEMBER, Role.TEAM_LEADER, Role.TEAM_MEMBER),
 	validateRequest(createSubtaskValidationSchema),

@@ -122,6 +122,72 @@ const rejectTask = async (
 	});
 };
 
+const completeTask = async (taskId: string, leaderId: string) => {
+	return prisma.$transaction(async (transaction) => {
+		const task = await transaction.task.findFirst({
+			where: {
+				id: taskId,
+				status: {
+					in: [TaskStatus.ACCEPTED, TaskStatus.IN_PROGRESS],
+				},
+				deletedAt: null,
+				team: {
+					status: "ACTIVE",
+					deletedAt: null,
+					leaderId,
+					organization: { status: "ACTIVE", deletedAt: null },
+				},
+			},
+			select: { id: true },
+		});
+
+		if (!task) {
+			throw new AppError(
+				404,
+				"Active task was not found for this team's leader",
+			);
+		}
+
+		const requiredSubtaskCount = await transaction.subtask.count({
+			where: {
+				taskId: task.id,
+				deletedAt: null,
+				status: { not: SubtaskStatus.CANCELLED },
+			},
+		});
+
+		if (requiredSubtaskCount === 0) {
+			throw new AppError(
+				409,
+				"A task must have at least one required subtask before completion",
+			);
+		}
+
+		const incompleteSubtaskCount = await transaction.subtask.count({
+			where: {
+				taskId: task.id,
+				deletedAt: null,
+				status: { notIn: [SubtaskStatus.APPROVED, SubtaskStatus.CANCELLED] },
+			},
+		});
+
+		if (incompleteSubtaskCount > 0) {
+			throw new AppError(
+				409,
+				"All required subtasks must be approved before completing the task",
+			);
+		}
+
+		return transaction.task.update({
+			where: { id: task.id },
+			data: {
+				status: TaskStatus.COMPLETED,
+				completedAt: new Date(),
+			},
+		});
+	});
+};
+
 const createSubtask = async (
 	taskId: string,
 	leaderId: string,
@@ -403,6 +469,7 @@ export const taskService = {
 	createTask,
 	acceptTask,
 	rejectTask,
+	completeTask,
 	createSubtask,
 	submitSubtask,
 	reviewSubtask,
