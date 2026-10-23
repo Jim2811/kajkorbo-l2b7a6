@@ -5,6 +5,7 @@ import { imageUpload } from "../../middlewares/upload.js";
 import { validateRequest } from "../../middlewares/validateRequest.js";
 import { authController } from "./auth.controller.js";
 import {
+	googleLoginValidationSchema,
 	loginValidationSchema,
 	registerValidationSchema,
 	updateProfileValidationSchema,
@@ -67,7 +68,11 @@ authRouter.post(
 	imageUpload.single("avatar"),
 	authController.uploadAvatarController,
 );
-authRouter.post("/google", authController.googleLoginController);
+authRouter.post(
+	"/google",
+	validateRequest(googleLoginValidationSchema),
+	authController.googleLoginController,
+);
 
 authRouter.post("/reset-password", authController.resetPassController);
 authRouter.post("/forgot-password", authController.forgotPassController);

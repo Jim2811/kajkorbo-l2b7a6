@@ -11,7 +11,7 @@ import { complaintService } from "../complaint/complaint.service.js";
 import { superAdminService } from "./super-admin.service.js";
 
 const getDashboardController = catchAsync(
-	async (_req: Request, res: Response) => {
+	async (req: Request, res: Response) => {
 		const dashboard = await superAdminService.getDashboard();
 
 		sendResponse(res, {

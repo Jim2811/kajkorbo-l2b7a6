@@ -94,8 +94,16 @@ const loginIntoDB = async (payload: { email: string; password: string }) => {
 	if (!comparePassword) {
 		throw new Error("Invalid password");
 	}
-	delete (user as any).password;
-	const jwtPayload = user;
+	const userWithoutPassword = await prisma.uSER.findUnique({
+		where: { id: user.id },
+		omit: { password: true },
+	});
+
+	if (!userWithoutPassword) {
+		throw new AppError(404, "User not found");
+	}
+
+	const jwtPayload = userWithoutPassword;
 	const accessToken = jwtUtils.createToken(
 		jwtPayload,
 		env.jwt_access_secret,
@@ -109,7 +117,7 @@ const loginIntoDB = async (payload: { email: string; password: string }) => {
 	);
 
 	return {
-		user,
+		user: userWithoutPassword,
 		accessToken,
 		refreshToken,
 	};
@@ -240,28 +248,67 @@ const googleLogin = async (payload: IGoogleUser) => {
 	if (!googleIdTokenPayload) {
 		throw new Error("Invalid or Expired Google Id Token");
 	}
-	const ifUserExistWithGoogle = await prisma.uSER.findUnique({
-		where: {
-			email: googleIdTokenPayload.email as string,
-			role: Role.USER,
-			googleId: googleIdTokenPayload.sub,
-			provider: Provider.GOOGLE,
-		},
+
+	const googleEmail = googleIdTokenPayload.email?.trim().toLowerCase();
+	const googleId = googleIdTokenPayload.sub;
+	if (
+		!googleEmail ||
+		!googleId ||
+		googleIdTokenPayload.email_verified !== true
+	) {
+		throw new AppError(401, "Google account email is not verified");
+	}
+
+	let user = await prisma.uSER.findUnique({
+		where: { googleId },
 	});
-	let user = ifUserExistWithGoogle;
+
+	if (!user) {
+		user = await prisma.uSER.findFirst({
+			where: {
+				email: { equals: googleEmail, mode: "insensitive" },
+			},
+		});
+	}
+
 	if (!user) {
 		user = await prisma.uSER.create({
 			data: {
-				name: googleIdTokenPayload.name!,
-				email: googleIdTokenPayload.email!,
+				name: googleIdTokenPayload.name ?? googleEmail,
+				email: googleEmail,
 				role: Role.USER,
-				googleId: googleIdTokenPayload.sub,
+				googleId,
 				provider: Provider.GOOGLE,
 				isVerified: true,
 			},
 		});
+	} else if (!user.googleId || user.googleId !== googleId) {
+		user = await prisma.uSER.update({
+			where: { id: user.id },
+			data: {
+				googleId,
+				isVerified: true,
+			},
+		});
 	}
-	const jwtPayload = user;
+
+	if (user.status !== "ACTIVE" || user.deletedAt) {
+		throw new AppError(
+			403,
+			"Your account is not active and cannot access this resource.",
+		);
+	}
+
+	const userWithoutPassword = await prisma.uSER.findUnique({
+		where: { id: user.id },
+		omit: { password: true },
+	});
+
+	if (!userWithoutPassword) {
+		throw new AppError(404, "User not found");
+	}
+
+	const jwtPayload = userWithoutPassword;
 	const accessToken = jwtUtils.createToken(
 		jwtPayload,
 		env.jwt_access_secret,
@@ -275,7 +322,7 @@ const googleLogin = async (payload: IGoogleUser) => {
 	);
 
 	return {
-		user,
+		user: userWithoutPassword,
 		accessToken,
 		refreshToken,
 	};

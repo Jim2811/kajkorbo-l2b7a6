@@ -12,6 +12,10 @@ export const loginValidationSchema = z.object({
 	password: z.string().min(1, "Password is required"),
 });
 
+export const googleLoginValidationSchema = z.object({
+	idToken: z.string().trim().min(1, "Google ID token is required"),
+});
+
 export const verifyEmailValidationSchema = z.object({
 	email: z.string().trim().email("A valid email address is required"),
 	otp: z.string().regex(/^\d{6}$/, "OTP must be a 6-digit number"),
