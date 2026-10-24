@@ -70,9 +70,9 @@ export const env = {
 		"REDIS_PORT",
 		Number(process.env.REEDIS_PORT ?? 6379),
 	),
-	super_admin_name: process.env.SUPER_ADMIN_NAME!,
-	super_admin_email: process.env.SUPER_ADMIN_EMAIL!,
-	super_admin_pass: process.env.SUPER_ADMIN_PASS!,
+	super_admin_name: required("SUPER_ADMIN_NAME"),
+	super_admin_email: required("SUPER_ADMIN_EMAIL"),
+	super_admin_pass: required("SUPER_ADMIN_PASS"),
 	smtp: {
 		host: process.env.SMTP_HOST ?? "smtp.gmail.com",
 		port: optionalPort("SMTP_PORT", 587),

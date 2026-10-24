@@ -7,7 +7,7 @@ const redisClient = createClient({
 	socket: {
 		host: env.redis_host,
 		port: env.redis_port,
-	}
+	},
 });
 
 export default redisClient;

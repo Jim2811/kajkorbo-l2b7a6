@@ -1,38 +1,47 @@
 import bcrypt from "bcryptjs";
-import { Provider, Role } from "../../generated/prisma/enums";
-import { prisma } from "../lib/prisma";
-import { env } from "../config/env";
+import { Provider, Role } from "../../generated/prisma/enums.js";
+import { env } from "../config/env.js";
+import { prisma } from "../lib/prisma.js";
 
 export const seedSuperAdmin = async () => {
-    try{
-        const isSuperAdminExist = await prisma.uSER.findFirst({
-            where:{
-                role: Role.SUPER_ADMIN
-            }
-        });
+	const existingSuperAdmin = await prisma.uSER.findFirst({
+		where: { role: Role.SUPER_ADMIN },
+		select: { id: true, email: true },
+	});
 
-        if(isSuperAdminExist){
-            console.log("Super Admin Exist!")
-        };
-        const name = env.super_admin_name
-        const email = env.super_admin_email;
-        const password = env.super_admin_pass
-        const hashedPass = await bcrypt.hash(password, 10)
-        const superAdmin = await prisma.uSER.create({
-            data: {
-                name,
-                email,
-                password: hashedPass,
-                role: Role.SUPER_ADMIN,
-                isVerified: true,
-                provider: Provider.LOCAL
-            }
-        })
-    } catch (error) {
-        await prisma.uSER.delete({
-            where: {
-                email: env.super_admin_email
-            }
-        })
-    }
-}
+	if (existingSuperAdmin) {
+		console.log(`Super Admin already exists: ${existingSuperAdmin.email}`);
+		return existingSuperAdmin;
+	}
+
+	const existingConfiguredUser = await prisma.uSER.findUnique({
+		where: { email: env.super_admin_email },
+		select: { id: true, role: true },
+	});
+
+	if (existingConfiguredUser) {
+		throw new Error(
+			`Cannot seed Super Admin: ${env.super_admin_email} already belongs to a non-admin user`,
+		);
+	}
+
+	const hashedPassword = await bcrypt.hash(env.super_admin_pass, 10);
+
+	return prisma.uSER.create({
+		data: {
+			name: env.super_admin_name,
+			email: env.super_admin_email,
+			password: hashedPassword,
+			role: Role.SUPER_ADMIN,
+			isVerified: true,
+			provider: Provider.LOCAL,
+		},
+		select: {
+			id: true,
+			name: true,
+			email: true,
+			role: true,
+			isVerified: true,
+		},
+	});
+};
