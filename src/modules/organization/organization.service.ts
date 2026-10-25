@@ -93,6 +93,41 @@ const createOrganization = async (
 	);
 };
 
+const listPublicOrganizations = async (search?: string) => {
+	const normalizedSearch = search?.trim();
+
+	return prisma.organization.findMany({
+		where: {
+			status: "ACTIVE",
+			isSuspended: false,
+			deletedAt: null,
+			...(normalizedSearch
+				? {
+						OR: [
+							{ name: { contains: normalizedSearch, mode: "insensitive" } },
+							{
+								description: {
+									contains: normalizedSearch,
+									mode: "insensitive",
+								},
+							},
+						],
+					}
+				: {}),
+		},
+		select: {
+			id: true,
+			name: true,
+			description: true,
+			logo: true,
+			slug: true,
+			plan: true,
+			createdAt: true,
+		},
+		orderBy: { name: "asc" },
+	});
+};
+
 const hireOrganizationMember = async (
 	organizationId: string,
 	ownerId: string,
@@ -525,6 +560,7 @@ const assignTeamLeader = async (
 
 export const organizationService = {
 	createOrganization,
+	listPublicOrganizations,
 	hireOrganizationMember,
 	updateOrganization,
 	deactivateOrganization,

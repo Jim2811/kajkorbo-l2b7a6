@@ -4,6 +4,21 @@ import { catchAsync } from "../../utils/catchAsync.js";
 import { sendResponse } from "../../utils/sendResponse.js";
 import { organizationService } from "./organization.service.js";
 
+const listPublicOrganizationsController = catchAsync(
+	async (req: Request, res: Response) => {
+		const organizations = await organizationService.listPublicOrganizations(
+			typeof req.query.search === "string" ? req.query.search : undefined,
+		);
+
+		sendResponse(res, {
+			success: true,
+			statusCode: httpStatus.OK,
+			message: "Public organizations fetched successfully",
+			data: { organizations },
+		});
+	},
+);
+
 const createOrganizationController = catchAsync(
 	async (req: Request, res: Response) => {
 		const organization = await organizationService.createOrganization(
@@ -151,6 +166,7 @@ const assignTeamLeaderController = catchAsync(
 );
 
 export const organizationController = {
+	listPublicOrganizationsController,
 	createOrganizationController,
 	hireOrganizationMemberController,
 	updateOrganizationController,

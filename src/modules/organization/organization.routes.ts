@@ -14,6 +14,11 @@ import {
 
 export const organizationRouter = Router();
 
+organizationRouter.get(
+	"/public",
+	organizationController.listPublicOrganizationsController,
+);
+
 organizationRouter.post(
 	"/",
 	auth(Role.USER),
