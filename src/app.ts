@@ -11,6 +11,27 @@ import { AppError } from "./utils/AppError.js";
 
 export const app = express();
 
+app.get("/", (_request, response) => {
+	response.status(200).json({
+		success: true,
+		statusCode: 200,
+		message: "Kajkorbo API is running",
+		data: {
+			apiVersion: "v1",
+			health: "/health",
+		},
+	});
+});
+
+app.get("/health", (_request, response) => {
+	response.status(200).json({
+		success: true,
+		statusCode: 200,
+		message: "Kajkorbo API is healthy",
+		data: {},
+	});
+});
+
 app.use(
 	"/api/v1/billing/stripe/webhook",
 	express.raw({ type: "application/json" }),
