@@ -1,0 +1,21 @@
+import { Router } from "express";
+import { Role } from "../../../generated/prisma/enums.js";
+import { auth } from "../../middlewares/auth.js";
+import { validateRequest } from "../../middlewares/validateRequest.js";
+import { updateComplaintStatusValidationSchema } from "../complaint/complaint.validation.js";
+import { superAdminController } from "./super-admin.controller.js";
+import { updateOrganizationStatusValidationSchema, updateUserStatusValidationSchema, } from "./super-admin.validation.js";
+export const superAdminRouter = Router();
+superAdminRouter.get("/dashboard", auth(Role.SUPER_ADMIN), superAdminController.getDashboardController);
+superAdminRouter.get("/users", auth(Role.SUPER_ADMIN), superAdminController.listUsersController);
+superAdminRouter.get("/users/:userId", auth(Role.SUPER_ADMIN), superAdminController.getUserController);
+superAdminRouter.patch("/users/:userId/status", auth(Role.SUPER_ADMIN), validateRequest(updateUserStatusValidationSchema), superAdminController.updateUserStatusController);
+superAdminRouter.get("/organizations", auth(Role.SUPER_ADMIN), superAdminController.listOrganizationsController);
+superAdminRouter.get("/organizations/:organizationId", auth(Role.SUPER_ADMIN), superAdminController.getOrganizationController);
+superAdminRouter.patch("/organizations/:organizationId/status", auth(Role.SUPER_ADMIN), validateRequest(updateOrganizationStatusValidationSchema), superAdminController.updateOrganizationStatusController);
+superAdminRouter.get("/complaints", auth(Role.SUPER_ADMIN), superAdminController.listComplaintsController);
+superAdminRouter.get("/complaints/:complaintId", auth(Role.SUPER_ADMIN), superAdminController.getComplaintController);
+superAdminRouter.patch("/complaints/:complaintId/status", auth(Role.SUPER_ADMIN), validateRequest(updateComplaintStatusValidationSchema), superAdminController.updateComplaintStatusController);
+superAdminRouter.get("/payments", auth(Role.SUPER_ADMIN), superAdminController.listPaymentsController);
+superAdminRouter.get("/payments/:paymentId", auth(Role.SUPER_ADMIN), superAdminController.getPaymentController);
+//# sourceMappingURL=super-admin.routes.js.map
