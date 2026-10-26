@@ -24,6 +24,25 @@ Create an environment named `Kajkorbo Local` with these variables:
 Select this environment before sending requests. Change `baseUrl` if the
 server is running on another host or port.
 
+## 1.1 Frontend CORS configuration
+
+The backend reads a comma-separated `FRONTEND_URLS` environment variable. Add
+the exact frontend origin in Render, without a trailing slash:
+
+```text
+FRONTEND_URLS=https://your-frontend.example.com
+```
+
+Multiple frontend origins can be separated with commas:
+
+```text
+FRONTEND_URLS=https://your-frontend.example.com,https://admin.example.com
+```
+
+The local default allows `http://localhost:3000` and
+`http://localhost:5173`. Credentials are enabled, so browser requests that
+use authentication cookies must send `credentials: "include"`.
+
 ## 2. Create a collection
 
 Create a collection named `Kajkorbo API`. Add these folders:

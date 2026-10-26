@@ -37,6 +37,13 @@ const optionalBoolean = (name: string, fallback: boolean): boolean => {
 	return value === "true";
 };
 
+const frontendOrigins = (
+	process.env.FRONTEND_URLS ?? "http://localhost:3000,http://localhost:5173"
+)
+	.split(",")
+	.map((origin) => origin.trim())
+	.filter(Boolean);
+
 const stripeTeamCapacityUnitAmount = Number(
 	process.env.STRIPE_TEAM_CAPACITY_UNIT_AMOUNT ?? 1000,
 );
@@ -61,6 +68,7 @@ export const env = {
 		process.env.JWT_ACCESS_EXPIRES_IN ?? process.env.JWT_EXPIRES_IN ?? "1d",
 	jwt_refresh_expires_in: process.env.JWT_REFRESH_EXPIRES_IN ?? "7d",
 	port: Number(process.env.PORT ?? 3000),
+	frontendOrigins,
 	googleClientId: required("GOOGLE_CLIENT_ID"),
 	googleClientSecret: required("GOOGLE_CLIENT_SECRET"),
 	redis_user: process.env.REDIS_USER ?? process.env.REEDIS_USER,

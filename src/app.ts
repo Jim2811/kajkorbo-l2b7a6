@@ -1,5 +1,7 @@
 import cookieParser from "cookie-parser";
+import cors from "cors";
 import express from "express";
+import { env } from "./config/env.js";
 import { globalErrorHandler } from "./middlewares/error-handler.js";
 import { authRouter } from "./modules/auth/auth.routes.js";
 import { billingRouter } from "./modules/billing/billing.routes.js";
@@ -10,6 +12,22 @@ import { taskRouter } from "./modules/task/task.routes.js";
 import { AppError } from "./utils/AppError.js";
 
 export const app = express();
+
+app.use(
+	cors({
+		origin: (origin, callback) => {
+			if (!origin || env.frontendOrigins.includes(origin)) {
+				callback(null, true);
+				return;
+			}
+
+			callback(new Error("Origin is not allowed by CORS"));
+		},
+		credentials: true,
+		methods: ["GET", "POST", "PATCH", "DELETE", "OPTIONS"],
+		allowedHeaders: ["Content-Type", "Authorization", "Idempotency-Key"],
+	}),
+);
 
 app.get("/", (_request, response) => {
 	response.status(200).json({
